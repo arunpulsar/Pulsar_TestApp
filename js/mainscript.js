@@ -3887,7 +3887,7 @@ function checkSerialSupport() {
     document.getElementById("connectionImage").onmouseover = "default";
     document.getElementById("connectionImage").onmouseleave = "default";
     document.getElementById("connectionImage").title = "";
-    alert(lang_map[163]);
+    // alert(lang_map[163]);
   }
 }
 
