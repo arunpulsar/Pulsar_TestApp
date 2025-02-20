@@ -1,3 +1,4 @@
+let prodModal_open = 0;
 /**
  * Opens the production setup modal and overlay for configuring various settings.
  *
@@ -8,6 +9,7 @@ function openProdModal() {
   // Display the production setup modal and overlay
   document.getElementById("modal_prod_setup").style.display = "block";
   document.getElementById("modalOverlayProd").style.display = "block";
+  prodModal_open = 1;
 }
 
 /**
@@ -20,7 +22,26 @@ function closeProdModal() {
   // Hide the production setup modal and overlay
   document.getElementById("modal_prod_setup").style.display = "none";
   document.getElementById("modalOverlayProd").style.display = "none";
-  cloudModal_open = 0;
+  document.getElementById("xAxis").value = "";
+  document.getElementById("yAxis").value = "";
+  document.getElementById("zAxis").value = "";
+  document.getElementById("xMid").value = "";
+  document.getElementById("yMid").value = "";
+  document.getElementById("zMid").value = "";
+  document.getElementById("calStat").value = "";
+  document.getElementById("tiltEnable").value = "";
+  document.getElementById("upTime").value = "";
+  document.getElementById("coreTemp").value = "";
+  document.getElementById("coreMin").value = "";
+  document.getElementById("coreMax").value = "";
+  document.getElementById("avgSig").value = "";
+  document.getElementById("capSupply").value = "";
+  document.getElementById("transducerTemp").value = "";
+  document.getElementById("transducerType").value = "";
+  document.getElementById("measurementUnits").value = "";
+  document.getElementById("serialNumber").value = "";
+  document.getElementById("distGet").value = "";
+  prodModal_open = 0;
 }
 
 let timeoutID_accel_cal; // Declare a variable to store the timeout ID for accelerometer calibration

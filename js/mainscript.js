@@ -1878,7 +1878,9 @@ async function processReceivedData() {
     }
     if (hexToAscii(receiveBufferHex).includes("/P") || hexToAscii(receiveBufferHex).includes("/ACCESS")) {
       if (!(isTraceOn == 1 && (hexToAscii(receiveBufferHex).includes("/P104") || hexToAscii(receiveBufferHex).includes("/P605")))) {
+        // if (!prodModal_open) {
         log(" ← " + hexToAscii(receiveBufferHex).slice(hexToAscii(receiveBufferHex).lastIndexOf("/")));
+        // }
       } else {
         log(" ← " + hexToAscii(receiveBufferHex));
       }
@@ -2865,6 +2867,7 @@ async function sendTX(data, isHex = false) {
         !stringToSend.includes("Reflect_fw_success") &&
         !stringToSend.includes("sleep disable") &&
         cloudModal_open == 0 &&
+        // prodModal_open == 0 &&
         BootLoader_launced == 0 &&
         stringToSend !== "+++" &&
         stringToSend !== "\r\n" &&
