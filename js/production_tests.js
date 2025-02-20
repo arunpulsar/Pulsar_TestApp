@@ -220,8 +220,15 @@ function setTime() {
 }
 function sendAccess() {
   var select = document.getElementById("access-box");
-  sendTX("/ACCESS:" + select.value);
-  CommandSent = "ACCESS";
+  // if (connectionType === "serial") {
+  //   sendTX("/ACCESS:" + select.value);
+  // } else if (connectionType === "bluetooth") {
+  //   sendAT("/ACCESS:" + select.value);
+  // }
+  // CommandSent = "ACCESS";
+  document.getElementById("cmd").value = "/ACCESS:" + select.value;
+  document.getElementById("cmd").type = "password";
+  send_command();
 }
 function copyText() {
   const logText = document.getElementById("log");

@@ -1779,7 +1779,6 @@ async function listenRX() {
                 break;
               case 4:
                 access_string = lang_map[156];
-                // Enable production tab if access level is 4, if id="btnprod"
                 break;
               default:
                 access_string = lang_map[153];
@@ -1886,6 +1885,17 @@ async function processReceivedData() {
       if (hexToAscii(receiveBufferHex).includes("/ACCESS:")) {
         let afterColon = hexToAscii(receiveBufferHex).split(":")[1];
         document.getElementById("reflecte_access-box").innerText = "ACCESS: " + afterColon;
+        if (afterColon.includes("PRODUCTION")) {
+          document.getElementById("btnprod").style.display = "";
+          // start timer to revert the access level after 10 minutes
+          setTimeout(() => {
+            document.getElementById("cmd").value = "/ACCESS:" + 0;
+            document.getElementById("cmd").type = "password";
+            send_command();
+          }, 10 * 60 * 1000); // 10 minutes in milliseconds
+        } else {
+          document.getElementById("btnprod").style.display = "none";
+        }
       }
     }
     if (
@@ -3883,6 +3893,7 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
   getDeviceInfo();
   checkSerialSupport();
   document.getElementById("tableContainer").style.display = "none";
+  document.getElementById("btnprod").style.display = "none";
   connectionType = localStorage.getItem("connectionType");
   if ("serial" in navigator && connectionType === "serial") {
     document.getElementById("connectionImage").src = "img/usb-disconnected.svg";

@@ -407,14 +407,11 @@ async function send_paramset() {
 }
 /**
  * ================================================================
- * @section PREVIOUS IMPLEMENTATIONS
+ * PREVIOUS IMPLEMENTATIONS
  * ================================================================
  * This section includes code or functionality that was implemented before
  * the current version or approach. It is preserved for reference or potential
  * future use, but may be commented out or replaced with newer implementations.
- *
- * Ensure that any unused or outdated code is clearly marked as deprecated
- * or not in use to maintain code clarity and prevent confusion.
  */
 
 // /**

@@ -252,7 +252,7 @@ function breakpoints_to_hex(set) {
 
 /**
  * ================================================================
- * @section Individual Breakpoint Management Functions
+ * Individual Breakpoint Management Functions
  * ================================================================
  * The following functions provide functionality to manage breakpoints individually
  * by setting or resetting specific sets of parameters. These functions are used to:
