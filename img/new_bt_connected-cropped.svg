@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 24 24"
+   version="1.1"
+   fill="#000000"
+   id="svg1"
+   sodipodi:docname="bluetooth-searching-svgrepo-com.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath47">
+      <rect
+         style="opacity:0.56;fill:#000000;stroke-width:0.03"
+         id="rect47"
+         width="12.102314"
+         height="18.007307"
+         x="9.0036535"
+         y="3.0109622" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath48">
+      <rect
+         style="opacity:0.56;fill:#000000;stroke-width:0.03"
+         id="rect48"
+         width="12.102314"
+         height="18.007307"
+         x="6.8112054"
+         y="2.6601706" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath49">
+      <rect
+         style="opacity:0.56;fill:#000000;stroke-width:0.03"
+         id="rect49"
+         width="12.102314"
+         height="18.007307"
+         x="6.8112054"
+         y="2.6601706" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.72566833"
+     inkscape:cx="434.77162"
+     inkscape:cy="372.75982"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="g49"
+     style="fill:#365072;fill-rule:nonzero;fill-opacity:1">
+    <g
+       id="SVGRepo_bgCarrier"
+       stroke-width="0"
+       clip-path="url(#clipPath49)"
+       style="fill:#365072;fill-rule:nonzero;fill-opacity:1" />
+    <g
+       id="SVGRepo_tracerCarrier"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       clip-path="url(#clipPath48)"
+       style="fill:#365072;fill-rule:nonzero;fill-opacity:1" />
+    <g
+       id="SVGRepo_iconCarrier"
+       transform="translate(-2.1924482,-0.35079172)"
+       clip-path="url(#clipPath47)"
+       style="fill:#365072;fill-rule:nonzero;fill-opacity:1">
+      <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+      <title
+         id="title1">ic_fluent_bluetooth_searching_24_regular</title>
+      <desc
+         id="desc1">Created with Sketch.</desc>
+      <g
+         id="🔍-Product-Icons"
+         stroke="none"
+         stroke-width="1"
+         fill="none"
+         fill-rule="evenodd"
+         style="fill:#365072;fill-rule:nonzero;fill-opacity:1">
+        <g
+           id="ic_fluent_bluetooth_searching_24_regular"
+           fill="#212121"
+           fill-rule="nonzero"
+           style="fill:#365072;fill-rule:nonzero;fill-opacity:1">
+          <path
+             d="M 9.0042702,9.6080595 V 3.7534136 c 0,-0.6467999 0.7521271,-0.9749116 1.2250448,-0.5810991 l 0.07606,0.072389 4.711673,5.1043128 c 0.266836,0.2890717 0.261854,0.7289763 0.0052,1.0118861 l -0.07622,0.073033 -3.076859,2.5635766 3.077152,2.56648 c 0.30196,0.251847 0.354265,0.688395 0.136839,1.002232 l -0.066,0.08232 -4.711673,5.106629 C 9.8668305,21.2306 9.0914615,20.96159 9.0110589,20.351378 l -0.00679,-0.104792 V 14.38449 l -1.1205263,0.9336 c -0.3182304,0.265145 -0.79115,0.222109 -1.0562942,-0.09612 -0.2410403,-0.289302 -0.2273862,-0.706444 0.016181,-0.979104 l 0.079943,-0.07719 2.0806985,-1.733596 v -0.87077 L 6.923278,9.8256656 C 6.6051815,9.5603592 6.5623867,9.0874177 6.8276932,8.7693212 7.0688809,8.4801426 7.4816678,8.418486 7.7937172,8.6089943 l 0.09032,0.064742 1.1202326,0.9343231 V 3.7534136 Z m 1.6933458,3.3655695 -0.193346,0.161092 v 5.192988 l 2.875764,-3.116825 z m 7.572306,-5.6021089 c 0.315313,-0.2686085 0.788675,-0.2307469 1.057283,0.084566 1.071128,1.2573711 1.669932,2.8528479 1.669932,4.5387759 0,1.691188 -0.602561,3.291281 -1.679752,4.550278 -0.269285,0.314735 -0.742727,0.351579 -1.057462,0.08229 -0.314736,-0.269285 -0.35158,-0.742727 -0.08229,-1.057463 0.846843,-0.989771 1.319508,-2.244927 1.319508,-3.575108 0,-1.32605 -0.469715,-2.5775771 -1.311782,-3.5660586 -0.268608,-0.3153131 -0.230746,-0.7886751 0.08457,-1.0572835 z M 16.27523,9.1847588 c 0.315313,-0.2686084 0.788675,-0.2307468 1.057283,0.084566 0.643644,0.7555582 1.003698,1.7149012 1.003698,2.7278332 0,1.016094 -0.362312,1.97821 -1.009597,2.734743 -0.269286,0.314735 -0.742728,0.351579 -1.057463,0.08229 -0.314735,-0.269285 -0.351579,-0.742727 -0.08229,-1.057462 0.416938,-0.487308 0.649354,-1.104487 0.649354,-1.759574 0,-0.653054 -0.230965,-1.268447 -0.645548,-1.755116 -0.268612,-0.3153097 -0.23075,-0.7886717 0.08456,-1.0572802 z M 10.50427,5.6716514 v 5.1874736 l 0.193843,0.161674 2.681511,-2.2341807 z"
+             id="🎨-Color"
+             style="fill:#365072;fill-rule:nonzero;fill-opacity:1" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

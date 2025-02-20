@@ -1,0 +1,577 @@
+.my_text {
+  font-family: "Segoe UI SemiBold";
+  font-size: 40px;
+  font-weight: bold;
+  width: 83%;
+  padding: 5px 10px;
+}
+.button {
+  background-color: rgb(243, 112, 33);
+  border: none;
+  color: white;
+  height: 100px;
+  width: 268px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.textarea-container {
+  position: relative;
+  width: 400px;
+  height: 556px;
+}
+
+.textarea_c {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-color: #9b9ca0;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+  resize: none;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #9b9ca0;
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: none;
+}
+
+.textarea-container:hover .copy-btn {
+  display: block;
+}
+
+.textarea1 {
+  background-color: white;
+  /* border: none; */
+  border-color: #9b9ca0;
+  /* color: white; */
+  /* padding: 10px 30px; */
+  height: 170px;
+  width: 273px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  resize: none;
+  left: 10px;
+}
+.textarea2 {
+  background-color: white;
+  /* border: none; */
+  border-color: #9b9ca0;
+  /* color: white; */
+  /* padding: 10px 30px; */
+  height: 170px;
+  width: 500px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  resize: none;
+  left: 10px;
+}
+.label_default {
+  color: black;
+}
+
+.container1 {
+  display: flex;
+}
+.fixed {
+  width: 200px;
+}
+.flex-item {
+  flex-grow: 1;
+}
+.blocks_textbox {
+  display: inline-block;
+  /* border: solid 2px red;    */
+  /* padding: 16px 20px; */
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  margin: 0 auto;
+  height: 50px;
+  width: 100px;
+  font-weight: bold;
+  font-size: medium;
+  color: rgb(0, 0, 0);
+  /* font-family: "verdana"; */
+  font-size: 4.5em;
+  overflow: scroll;
+  /*Hide content before animation*/
+  /* border-right: .1em solid white; */
+  /*Cursor*/
+  white-space: nowrap;
+  /*Keep text on same line*/
+  margin: 0 auto;
+  /*Scrolling effect while typing*/
+  letter-spacing: 0.1em;
+  animation: typing 3s steps(30, end), blink-caret 0.75s steps(1, end) infinite alternate;
+}
+
+.blocks {
+  display: inline-block;
+  /* border: solid 2px red;    */
+  /* padding: 16px 20px; */
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  margin: 0 auto;
+  /* height:50px; 
+    width: 100px; */
+  font-weight: bold;
+
+  color: rgb(0, 0, 0);
+  /* font-family: "verdana"; */
+  font-size: 3.5em;
+  overflow: hidden;
+  /*Hide content before animation*/
+  /* border-right: .1em solid white; */
+  /*Cursor*/
+  white-space: nowrap;
+  /*Keep text on same line*/
+  margin: 0 auto;
+  /*Scrolling effect while typing*/
+  letter-spacing: 0.1em;
+  animation: typing 3s steps(30, end), blink-caret 0.75s steps(1, end) infinite alternate;
+}
+.blocks_txtarea {
+  display: inline-block;
+  /* border: solid 2px red;    */
+  /* padding: 16px 20px; */
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  margin: 0 auto;
+  /* height:50px; 
+    width: 100px; */
+  font-weight: bold;
+  font-size: medium;
+  color: rgb(0, 0, 0);
+  /* font-family: "verdana"; */
+  font-size: 4.5em;
+  overflow: hidden;
+  /*Hide content before animation*/
+  /* border-right: .1em solid white; */
+  /*Cursor*/
+  white-space: nowrap;
+  /*Keep text on same line*/
+  margin: 0 auto;
+  /*Scrolling effect while typing*/
+  letter-spacing: 0.1em;
+  animation: typing 3s steps(30, end), blink-caret 0.75s steps(1, end) infinite alternate;
+}
+.wrap {
+  width: 210px;
+}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  /* position: fixed; */
+  position: relative;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+  left: 0px;
+  width: 508px;
+  max-width: 600px;
+  border: 1px solid #03681cd0;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 600px;
+  width: 505px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type="text"],
+.form-container input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04aa6d;
+  color: rgb(255, 255, 255);
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: rgb(55, 85, 7);
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+  opacity: 1;
+}
+
+/* Used in the label of Impromptu message */
+.emphasized {
+  font-size: 20pt;
+  color: red;
+  font-style: italic;
+  font-weight: normal;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+.tab-container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+/* Style the buttons inside the tab container */
+.tablinks {
+  background-color: #365072;
+  float: left;
+  border-radius: 2pt;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-family: "Segoe UI Bold";
+  font-size: 24pt;
+  font-weight: bold;
+  color: white;
+}
+
+/* Change background color of tabs on hover */
+.tablinks:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tablinks.active {
+  background-color: #33b34a;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border-top: none;
+  border-radius: 5px;
+  height: 80%;
+  /* Adjust this as needed */
+}
+.label_default {
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+}
+.button {
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+  width: 270px;
+  height: 80px;
+}
+
+.loading-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Disable scrolling */
+  background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
+}
+
+.loading-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(51, 179, 74);
+  font-size: 72px;
+  text-align: center;
+}
+
+/* Spinner with changing color */
+.loading-content.spinner:after {
+  content: " ";
+  display: block;
+  width: 85px;
+  height: 85px;
+  margin: 10px auto;
+  border-radius: 50%;
+  border: 20px solid white;
+  border-color: rgb(243, 112, 33) transparent rgb(54, 80, 114) transparent; /* Initial colors */
+  animation: spin 1.2s linear infinite, colorChange 4s linear infinite; /* Add colorChange animation */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} /* Overlay Styles */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Changed background color */
+  border-radius: 15px; /* Updated border-radius */
+  width: auto; /* Allow width to adapt to content */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Updated box-shadow */
+  z-index: 1000;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px; /* Added padding */
+  background-color: #28a745; /* Updated background color */
+  color: #fff; /* Updated text color */
+  border-top-left-radius: 15px; /* Added border radius */
+  border-top-right-radius: 15px; /* Added border radius */
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 2rem; /* Updated font-size */
+  margin: 0; /* Kept margin 0 */
+}
+
+.close-btn {
+  font-size: 32px;
+  font-weight: 300;
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-content {
+  padding: 30px; /* Added padding */
+  display: grid; /* Changed from flex to grid */
+  grid-template-columns: repeat(3, 1fr); /* Define three equal-width columns */
+  gap: 20px; /* Keep the gap between grid items */
+}
+
+.modal-column {
+  padding: 20px; /* Added padding */
+  background-color: #f9f9f9; /* Set background color */
+  border-radius: 10px; /* Added border radius */
+}
+
+.modal-section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.modal-section h3 {
+  text-align: left; /* Added text alignment */
+  color: black; /* Set text color to black */
+  font-size: 2.5rem; /* Updated font size */
+  margin-bottom: 15px; /* Keep the existing margin-bottom */
+}
+
+.modal-item {
+  display: flex; /* Keep flex display */
+  align-items: center; /* Keep center alignment */
+  margin-bottom: 15px; /* Updated margin-bottom */
+}
+
+.modal-item label {
+  font-size: 28px; /* Keep the font size */
+  font-weight: bold; /* Keep bold font */
+  width: 150px; /* Updated width */
+  margin-right: 10px; /* Keep margin-right */
+}
+
+.modal-item input[type="text"],
+.modal-item select,
+.modal-item input[type="number"] {
+  font-family: "Segoe UI SemiBold";
+  font-size: 24pt;
+  font-weight: 500;
+  width: 500px;
+  height: 75px;
+  padding: 8px; /* Updated padding */
+  display: block; /* Ensure block-level element */
+  margin: 0 auto; /* Center the input */
+  text-align: center; /* Center text inside the input */
+  flex-grow: 1; /* Added flex-grow */
+  border: 2px solid #ccc; /* Added border */
+  border-radius: 5px; /* Added border-radius */
+}
+
+input[readonly],
+select[disabled] {
+  background-color: rgb(182, 178, 178); /* Same color for readonly and disabled fields */
+  color: black; /* Ensure the text is readable */
+  opacity: 1; /* Remove the greyed-out appearance that browsers apply by default */
+  pointer-events: none; /* Prevent interaction */
+}
+
+input[readonly]:focus,
+select[disabled]:focus {
+  outline: none; /* Remove any default browser outline */
+}
+
+.modal-footer {
+  text-align: center; /* Updated text alignment */
+  padding: 20px; /* Added padding */
+  background-color: #28a745; /* Added background color */
+  border-bottom-left-radius: 15px; /* Added border radius */
+  border-bottom-right-radius: 15px; /* Added border radius */
+}
+
+.hidden {
+  display: none;
+}
+
+.loading-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+.loading-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 48px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: relative;
+  width: 90%;
+  height: 50px;
+  background: linear-gradient(135deg, #2c3e50, #4c5f6a);
+  border-radius: 25px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  margin: 50px auto;
+  border: 3px solid #ffffff; /* Adds a border around the bar */
+}
+
+/* Animated Progress Bar Fill with Gradient and Glow */
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #33b34a, #67e063);
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px rgba(51, 179, 74, 0.7), 0px 0px 20px rgba(51, 179, 74, 0.5);
+  animation: pulse 1.5s infinite ease-in-out; /* Pulsating effect */
+  transition: width 0.4s ease;
+}
+
+/* Pulsating Glow Animation */
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0px 0px 10px rgba(51, 179, 74, 0.7), 0px 0px 20px rgba(51, 179, 74, 0.5);
+  }
+  50% {
+    box-shadow: 0px 0px 20px rgba(51, 179, 74, 1), 0px 0px 30px rgba(51, 179, 74, 0.8);
+  }
+}
