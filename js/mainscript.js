@@ -3857,7 +3857,7 @@ function updateProgress() {
   const estimatedTimeLeft = (remainingSteps * timeperstep).toFixed(0); // Estimated time left in seconds
 
   // Update the timer display
-  document.getElementById("timer").textContent = estimatedTimeLeft;
+  // document.getElementById("timer").textContent = estimatedTimeLeft;
 }
 async function hideLoadingScreen_succesful() {
   clearTimeout(responseTimeout);
