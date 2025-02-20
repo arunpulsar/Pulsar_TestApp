@@ -272,10 +272,12 @@ function fetchedit_defaultXML() {
       } else {
         downloadFile(updatedXmlText, "reflect-e_0.1.7_live.xml", "text/xml"); // Download the XML file
       }
+      hideLoadingScreen_succesful();
     })
     .catch((error) => {
       console.error("Error fetching XML:", error);
       alert("Error fetching XML");
+      hideLoadingScreen_fail();
     });
 }
 /**
