@@ -55,7 +55,7 @@ function volume_param(id) {
   var inputValue = document.getElementById(id).value.trim();
 
   // Check if the input value is a valid number
-  if (!isNaN(inputValue) && inputValue !== "") {
+  if (!isNaN(inputValue) && inputValue !== "" && inputValue <= 100e3) {
     var number = parseFloat(inputValue);
     // Define an interval to repeatedly send the command
     p_tid[`p${id.slice(1, 4)}_tid`] = setInterval(function () {
@@ -81,10 +81,18 @@ function volume_param(id) {
         }
       }
       if (id === "p606-box") {
-        if (connectionType === "serial") {
-          sendTX("/P606:" + number);
-        } else if (connectionType === "bluetooth") {
-          sendAT("/P606:" + number);
+        if (number <= 10e8) {
+          if (connectionType === "serial") {
+            sendTX("/P606:" + number);
+          } else if (connectionType === "bluetooth") {
+            sendAT("/P606:" + number);
+          }
+        } else {
+          // Handle the case where the input is not a valid number
+          document.getElementById(id).value = "";
+          hideLoadingScreen_fail();
+          reset_volume_ui();
+          alert(lang_map[164]);
         }
       }
       CommandSent = "";
@@ -92,7 +100,19 @@ function volume_param(id) {
   } else {
     // Handle the case where the input is not a valid number
     document.getElementById(id).value = "";
+    hideLoadingScreen_fail();
+    reset_volume_ui();
     alert(lang_map[164]);
+  }
+}
+
+function reset_volume_ui() {
+  for (let i = 601; i <= 603; i++) {
+    document.getElementById(`p${i}-box`).value = "";
+  }
+  document.getElementById(`p606-box`).value = "";
+  for (let i = 610; i <= 641; i++) {
+    document.getElementById(`p${i}-box`).value = "";
   }
 }
 /**
