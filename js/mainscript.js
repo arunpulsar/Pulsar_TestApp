@@ -891,6 +891,9 @@ function getVal(i) {
     //console.log(i, hexToFloat("0x" + hexValue));
     return hexToFloat("0x" + hexValue);
   } else if (connectionType === "bluetooth") {
+    if (4 * i + 3 >= s.byteLength) {
+      return 0;
+    }
     return hexToFloat(
       "0x" +
         ("00" + s.getUint8(4 * i).toString(16)).slice(-2) +
@@ -2357,6 +2360,10 @@ async function incomingData(event) {
   //alert(login_stage + " " +isIgnore);
   // alert(string_check + "1");
   //log("login_stage="+login_stage+" isIgnore="+isIgnore+" isIgnore_2="+isIgnore_2+" isDisconnecting="+isDisconnecting+" button_press="+button_press);
+  if (string_check === "Ent" && doc_value === "SENDPART1") {
+    console.log("Entered here with error");
+    return;
+  }
   if (BootLoader_launced) {
     listenRX_BL();
   }
