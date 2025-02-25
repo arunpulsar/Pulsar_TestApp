@@ -909,7 +909,7 @@ function param_verify(i) {
   liveParamDataView.push({ index: calculatedIndex, value: getVal(i) });
   switch (param_num[calculatedIndex]) {
     case 241:
-      document.getElementById("p241List").value = parseInt(getVal(i)) + 1;
+      document.getElementById("p241List").value = parseInt(getVal(i) + 1);
       //console.log(document.getElementById('p241List').value);
       if (document.getElementById("p241List").value >= 2 && document.getElementById("p241List").value <= 4) alert(lang_map[85]);
       break;
@@ -940,12 +940,12 @@ function param_verify(i) {
       document.getElementById("p808List").value = parseInt(getVal(i));
       break;
     case 605:
-      document.getElementById("p605List").value = parseInt(getVal(i)) + 1;
+      document.getElementById("p605List").value = parseInt(getVal(i) + 1);
       p605_units_val = parseInt(document.getElementById("p605List").value) - 1;
       p605_volume_units(); // Update the volume units to be displayed
       break;
     case 600:
-      document.getElementById("p600List").value = parseInt(getVal(i)) + 1;
+      document.getElementById("p600List").value = parseInt(getVal(i) + 1);
       displayVesselShape(0);
       break;
     case 601:
@@ -1223,7 +1223,7 @@ function Uint8tohex(incoming_data) {
     myChart.data.labels = xdata;
     myChart.config.options.scales.x.title.text = p104_units;
     myChart.update();
-  } else if (doc_value == "SENDPART1") {
+  } else if (doc_value == "SENDPART1" && incoming_data.byteLength == 240) {
     offset = 0;
     for (let i = 0; i < 60; i++) {
       param_verify(i);
@@ -2348,262 +2348,263 @@ function interpretHex(incoming_data) {
 }
 // Incoming GATT notification was received
 async function incomingData(event) {
-  // Read data from BLE CodeLess peer
-  let readInValue = await outboundChar.readValue();
-  // console.log(readInValue);
-  let decoder = new TextDecoder("utf-8");
-  // var checkBox = document.getElementById("myCheck");
-  const doc_value = CommandSent; //document.getElementById('cmd').value;
-  const string_check = decoder.decode(readInValue).replace("\r", "\r ← ").replace("\n", "").replace("\0", "");
-  receiveBufferBT = readInValue;
-  //alert("button_press="+button_press+" readInValue="+readInValue+"login_stage="+login_stage+" string_check="+string_check);
-  //alert(login_stage + " " +isIgnore);
-  // alert(string_check + "1");
-  //log("login_stage="+login_stage+" isIgnore="+isIgnore+" isIgnore_2="+isIgnore_2+" isDisconnecting="+isDisconnecting+" button_press="+button_press);
-  if (string_check === "Ent" && doc_value === "SENDPART1") {
-    console.log("Entered here with error");
-    return;
-  }
-  if (BootLoader_launced) {
-    listenRX_BL();
-  }
-  if (isIgnore_2 === 2) {
-    //NEED TO CHECK
-    isIgnore_2 = 0;
-    //await delay(2 * 1000);
-    //return;
-  }
+  try {
+    // Read data from BLE CodeLess peer
+    let readInValue = await outboundChar.readValue();
+    // console.log(readInValue);
+    let decoder = new TextDecoder("utf-8");
+    // var checkBox = document.getElementById("myCheck");
+    const doc_value = CommandSent; //document.getElementById('cmd').value;
+    const string_check = decoder.decode(readInValue).replace("\r", "\r ← ").replace("\n", "").replace("\0", "");
+    receiveBufferBT = readInValue;
+    //alert("button_press="+button_press+" readInValue="+readInValue+"login_stage="+login_stage+" string_check="+string_check);
+    //alert(login_stage + " " +isIgnore);
+    // alert(string_check + "1");
+    //log("login_stage="+login_stage+" isIgnore="+isIgnore+" isIgnore_2="+isIgnore_2+" isDisconnecting="+isDisconnecting+" button_press="+button_press);
+    console.log(string_check);
+    if (BootLoader_launced) {
+      listenRX_BL();
+    }
+    if (isIgnore_2 === 2) {
+      //NEED TO CHECK
+      isIgnore_2 = 0;
+      //await delay(2 * 1000);
+      //return;
+    }
 
-  if (isIgnore == 1) {
-    isIgnore = 0;
-    return; //--> need to check
-  }
+    if (isIgnore == 1) {
+      isIgnore = 0;
+      return; //--> need to check
+    }
 
-  if (!BootLoader_launced) {
-    if (
-      /*(button_press == 10) || (button_press == 11) || (button_press == 16) || (button_press == 17) || (button_press == 18) ||*/ /*(button_press == 8) &&*/ doc_value ==
-        "GET ECHO" ||
-      doc_value == "GET DATEM" ||
-      doc_value == "SENDPART1" ||
-      doc_value == "SENDPART2" ||
-      doc_value == "SENDPART3"
-    ) {
-      var hex = Uint8tohex(readInValue);
-      // if((button_press == 10) || ((button_press == 8) && (doc_value == "GET ECHO")))
-      //   log(" ← ECHO Received");
-      // else if ((button_press == 11) || ((button_press == 8) && (doc_value == "GET DATEM")))
-      //   log(" ← DATEM Received");
-    } else {
-      //alert(string_check + "3");
-      if (string_check.includes("Entered PASSTHROUGH mode")) {
-        login_stage = 3; // Entered PT mode
-        log(lang_map[67]); //log(" ← Log in Success");
-      } else if (string_check.includes("Exit PASSTHROUGH mode")) {
-        //alert("Exit : isIgnore="+isIgnore+" login_stage="+login_stage+" isDisconnecting="+isDisconnecting+" string_check="+string_check);
-        login_stage = 2; // moving to AT mode
-      } else if (string_check.includes("PASSTHROUGH failed")) {
-        login_stage = 2;
-        log(lang_map[68]); //log(" ← Normal mode failed");
-      } else if (string_check.includes("Logged In Success") || (string_check.includes("OK") && login_stage == 1)) {
-        login_stage = 2; // Logged in success mode
-        closeForm();
-        if (isDisconnecting == 0) {
-          log(lang_map[69]); //log(" ← Connected");
-          document.getElementById("connectionImage").src = "img/new_bt_connected-cropped.svg";
-          var elements = document.querySelectorAll("button[type=button]");
-          for (var i = 0, len = elements.length; i < len; i++) document.getElementById(elements[i].id).style.background = "#33B34A"; //PULSAR GREEN
-
-          //sendATL('AT+PT=1');
-          sendAT("AT+PWRLVL");
-          setTimeout(ptLModeON, 1000);
-          // FOR BT DEMO COMMENT THE FOLLOWING
-          setTimeout(trace_button_check, 3000); //2000); // UNDER TEST 1
-        } else {
-          // alert(isDisconnecting+" ::"+string_check);
-          log(lang_map[70]); //log(" ← Disconnecting");
-        }
-      } else if ((string_check.includes("ERROR") || string_check.includes("Logged In failed")) && login_stage == 1) {
-        document.getElementById("lblpsw").innerHTML = lang_map[125]; //'Login failed';
-        document.getElementById("lblpsw").style.color = "red";
-        document.getElementById("pswbox").value = "";
-        openForm();
+    if (!BootLoader_launced) {
+      if (
+        /*(button_press == 10) || (button_press == 11) || (button_press == 16) || (button_press == 17) || (button_press == 18) ||*/ /*(button_press == 8) &&*/ doc_value ==
+          "GET ECHO" ||
+        doc_value == "GET DATEM" ||
+        doc_value == "SENDPART1" ||
+        doc_value == "SENDPART2" ||
+        doc_value == "SENDPART3"
+      ) {
+        var hex = Uint8tohex(readInValue);
+        // if((button_press == 10) || ((button_press == 8) && (doc_value == "GET ECHO")))
+        //   log(" ← ECHO Received");
+        // else if ((button_press == 11) || ((button_press == 8) && (doc_value == "GET DATEM")))
+        //   log(" ← DATEM Received");
       } else {
-        var disp = 0;
-        if ((button_press >= 20 && button_press <= 26) || string_check.includes("/P")) populate_params(string_check);
-        //alert(string_check+"st");
-        if (isTerminated === 1 || isDisconnecting === 1 || isDisconnecting === 2) {
-          disp = 1;
-          await delay(2 * 1000);
-        }
+        //alert(string_check + "3");
+        if (string_check.includes("Entered PASSTHROUGH mode")) {
+          login_stage = 3; // Entered PT mode
+          log(lang_map[67]); //log(" ← Log in Success");
+        } else if (string_check.includes("Exit PASSTHROUGH mode")) {
+          //alert("Exit : isIgnore="+isIgnore+" login_stage="+login_stage+" isDisconnecting="+isDisconnecting+" string_check="+string_check);
+          login_stage = 2; // moving to AT mode
+        } else if (string_check.includes("PASSTHROUGH failed")) {
+          login_stage = 2;
+          log(lang_map[68]); //log(" ← Normal mode failed");
+        } else if (string_check.includes("Logged In Success") || (string_check.includes("OK") && login_stage == 1)) {
+          login_stage = 2; // Logged in success mode
+          closeForm();
+          if (isDisconnecting == 0) {
+            log(lang_map[69]); //log(" ← Connected");
+            document.getElementById("connectionImage").src = "img/new_bt_connected-cropped.svg";
+            var elements = document.querySelectorAll("button[type=button]");
+            for (var i = 0, len = elements.length; i < len; i++) document.getElementById(elements[i].id).style.background = "#33B34A"; //PULSAR GREEN
 
-        if (disp == 0) {
-          if (sysState == 2 && string_check.length > 12) {
-            //log(" ← param state" + sysState );
-          } else if (string_check.includes("/P")) {
-            if (!(isTraceOn == 1 && (string_check.includes("/P104") || string_check.includes("/P605"))))
-              log(" ← " + string_check.slice(string_check.lastIndexOf("/"))); //   alert(string_check.slice(string_check.lastIndexOf('/')));
+            //sendATL('AT+PT=1');
+            sendAT("AT+PWRLVL");
+            setTimeout(ptLModeON, 1000);
+            // FOR BT DEMO COMMENT THE FOLLOWING
+            setTimeout(trace_button_check, 3000); //2000); // UNDER TEST 1
           } else {
-            if (cmd_sent == "AT+PWRLVL") {
-              update_range(parseInt(string_check));
-              // Add a send for "Reflect_fw_end" here to ensure that at the
-              // beginning of bt comms, the Unite keeps the bootload pin low and resets the host
-              sendAT("Reflect_fw_end");
-              await delay(1000);
-            } else if (cmd_sent == "AT+PWRLVL=") {
-              if (string_check.includes("ERROR")) update_range(power_lvl);
-              else if (string_check.includes("OK")) update_range(new_power_lvl);
-            }
-            log(" ← " + string_check);
+            // alert(isDisconnecting+" ::"+string_check);
+            log(lang_map[70]); //log(" ← Disconnecting");
           }
-        }
-        if (string_check.includes("/P600")) {
-          updateProgress();
-          clearInterval(p_tid[`p600_tid`]); // Clear interval once response is received
-          await delay(1000);
-          volume_param("p601-box");
-        }
+        } else if ((string_check.includes("ERROR") || string_check.includes("Logged In failed")) && login_stage == 1) {
+          document.getElementById("lblpsw").innerHTML = lang_map[125]; //'Login failed';
+          document.getElementById("lblpsw").style.color = "red";
+          document.getElementById("pswbox").value = "";
+          openForm();
+        } else {
+          var disp = 0;
+          if ((button_press >= 20 && button_press <= 26) || string_check.includes("/P")) populate_params(string_check);
+          //alert(string_check+"st");
+          if (isTerminated === 1 || isDisconnecting === 1 || isDisconnecting === 2) {
+            disp = 1;
+            await delay(2 * 1000);
+          }
 
-        if (string_check.includes("/P601")) {
-          updateProgress();
-          clearInterval(p_tid[`p601_tid`]);
-          await delay(1000);
-          volume_param("p602-box");
-        }
+          if (disp == 0) {
+            if (sysState == 2 && string_check.length > 12) {
+              //log(" ← param state" + sysState );
+            } else if (string_check.includes("/P")) {
+              if (!(isTraceOn == 1 && (string_check.includes("/P104") || string_check.includes("/P605"))))
+                log(" ← " + string_check.slice(string_check.lastIndexOf("/"))); //   alert(string_check.slice(string_check.lastIndexOf('/')));
+            } else {
+              if (cmd_sent == "AT+PWRLVL") {
+                update_range(parseInt(string_check));
+                // Add a send for "Reflect_fw_end" here to ensure that at the
+                // beginning of bt comms, the Unite keeps the bootload pin low and resets the host
+                sendAT("Reflect_fw_end");
+                await delay(1000);
+              } else if (cmd_sent == "AT+PWRLVL=") {
+                if (string_check.includes("ERROR")) update_range(power_lvl);
+                else if (string_check.includes("OK")) update_range(new_power_lvl);
+              }
+              log(" ← " + string_check);
+            }
+          }
+          if (string_check.includes("/P600")) {
+            updateProgress();
+            clearInterval(p_tid[`p600_tid`]); // Clear interval once response is received
+            await delay(1000);
+            volume_param("p601-box");
+          }
 
-        if (string_check.includes("/P602")) {
-          updateProgress();
-          clearInterval(p_tid[`p602_tid`]);
-          await delay(1000);
-          volume_param("p603-box");
-        }
+          if (string_check.includes("/P601")) {
+            updateProgress();
+            clearInterval(p_tid[`p601_tid`]);
+            await delay(1000);
+            volume_param("p602-box");
+          }
 
-        if (string_check.includes("/P603")) {
-          updateProgress();
-          clearInterval(p_tid[`p603_tid`]);
-          await delay(1000);
-          var select = document.getElementById("p605List");
-          var selectedValue = select.value;
-          if (selectedValue != 0) {
-            p_tid[`p${605}_tid`] = setInterval(function () {
+          if (string_check.includes("/P602")) {
+            updateProgress();
+            clearInterval(p_tid[`p602_tid`]);
+            await delay(1000);
+            volume_param("p603-box");
+          }
+
+          if (string_check.includes("/P603")) {
+            updateProgress();
+            clearInterval(p_tid[`p603_tid`]);
+            await delay(1000);
+            var select = document.getElementById("p605List");
+            var selectedValue = select.value;
+            if (selectedValue != 0) {
+              p_tid[`p${605}_tid`] = setInterval(function () {
+                if (connectionType === "serial") {
+                  // Send a command over serial connection
+                  sendTX("/P605:" + (selectedValue - 1));
+                } else if (connectionType === "bluetooth") {
+                  // Send a command over AT connection
+                  sendAT("/P605:" + (selectedValue - 1));
+                }
+              }, 1500); // Set your desired interval time
+              CommandSent = "";
+            }
+          }
+
+          if (string_check.includes("/P605")) {
+            updateProgress();
+            clearInterval(p_tid[`p605_tid`]);
+            await delay(1000);
+            volume_param("p606-box");
+          }
+
+          if (string_check.includes("/P606")) {
+            updateProgress();
+            clearInterval(p_tid[`p606_tid`]);
+            await delay(1000);
+            p_tid[`p${604}_tid`] = setInterval(function () {
               if (connectionType === "serial") {
                 // Send a command over serial connection
-                sendTX("/P605:" + (selectedValue - 1));
+                sendTX("/P604");
               } else if (connectionType === "bluetooth") {
                 // Send a command over AT connection
-                sendAT("/P605:" + (selectedValue - 1));
+                sendAT("/P604");
               }
             }, 1500); // Set your desired interval time
             CommandSent = "";
           }
-        }
 
-        if (string_check.includes("/P605")) {
-          updateProgress();
-          clearInterval(p_tid[`p605_tid`]);
-          await delay(1000);
-          volume_param("p606-box");
-        }
-
-        if (string_check.includes("/P606")) {
-          updateProgress();
-          clearInterval(p_tid[`p606_tid`]);
-          await delay(1000);
-          p_tid[`p${604}_tid`] = setInterval(function () {
-            if (connectionType === "serial") {
-              // Send a command over serial connection
-              sendTX("/P604");
-            } else if (connectionType === "bluetooth") {
-              // Send a command over AT connection
-              sendAT("/P604");
-            }
-          }, 1500); // Set your desired interval time
-          CommandSent = "";
-        }
-
-        if (string_check.includes("/P604")) {
-          updateProgress();
-          clearInterval(p_tid[`p604_tid`]);
-          await delay(1000);
-          document.getElementById("p604-box").innerHTML = Number(
-            string_check
-              .slice(string_check.lastIndexOf(":") + 1)
-              .split("\r")[0]
-              .trim()
-          );
-          p_tid[`p${607}_tid`] = setInterval(function () {
-            if (connectionType === "serial") {
-              // Send a command over serial connection
-              sendTX("/P607");
-            } else if (connectionType === "bluetooth") {
-              // Send a command over AT connection
-              sendAT("/P607");
-            }
-          }, 1500); // Set your desired interval time
-          CommandSent = "";
-        }
-
-        if (string_check.includes("/P607")) {
-          updateProgress();
-          clearInterval(p_tid[`p607_tid`]);
-          await delay(1000);
-          document.getElementById("p607-box").innerHTML = Number(
-            string_check
-              .slice(string_check.lastIndexOf(":") + 1)
-              .split("\r")[0]
-              .trim()
-          );
-          p_tid[`p${697}_tid`] = setInterval(function () {
-            if (connectionType === "serial") {
-              // Send a command over serial connection
-              sendTX("/P697");
-            } else if (connectionType === "bluetooth") {
-              // Send a command over AT connection
-              sendAT("/P697");
-            }
-          }, 1500); // Set your desired interval time
-          CommandSent = "";
-        }
-
-        if (string_check.includes("/P697")) {
-          updateProgress();
-          clearInterval(p_tid[`p697_tid`]);
-          await delay(1000);
-          document.getElementById("p697-box").innerHTML = Number(
-            string_check
-              .slice(string_check.lastIndexOf(":") + 1)
-              .split("\r")[0]
-              .trim()
-          );
-          hideLoadingScreen_succesful();
-        }
-        if (
-          !string_check.includes("/P600") &&
-          !string_check.includes("/P601") &&
-          !string_check.includes("/P602") &&
-          !string_check.includes("/P603") &&
-          !string_check.includes("/P605") &&
-          !string_check.includes("/P606") &&
-          !string_check.includes("/P604") &&
-          !string_check.includes("/P607") &&
-          !string_check.includes("/P697") &&
-          c_state == 3
-        ) {
-          if (string_check.includes("/P641")) {
-            hideLoadingScreen_succesful();
+          if (string_check.includes("/P604")) {
+            updateProgress();
+            clearInterval(p_tid[`p604_tid`]);
+            await delay(1000);
+            document.getElementById("p604-box").innerHTML = Number(
+              string_check
+                .slice(string_check.lastIndexOf(":") + 1)
+                .split("\r")[0]
+                .trim()
+            );
+            p_tid[`p${607}_tid`] = setInterval(function () {
+              if (connectionType === "serial") {
+                // Send a command over serial connection
+                sendTX("/P607");
+              } else if (connectionType === "bluetooth") {
+                // Send a command over AT connection
+                sendAT("/P607");
+              }
+            }, 1500); // Set your desired interval time
+            CommandSent = "";
           }
 
-          handle_breakpoint_update(string_check);
+          if (string_check.includes("/P607")) {
+            updateProgress();
+            clearInterval(p_tid[`p607_tid`]);
+            await delay(1000);
+            document.getElementById("p607-box").innerHTML = Number(
+              string_check
+                .slice(string_check.lastIndexOf(":") + 1)
+                .split("\r")[0]
+                .trim()
+            );
+            p_tid[`p${697}_tid`] = setInterval(function () {
+              if (connectionType === "serial") {
+                // Send a command over serial connection
+                sendTX("/P697");
+              } else if (connectionType === "bluetooth") {
+                // Send a command over AT connection
+                sendAT("/P697");
+              }
+            }, 1500); // Set your desired interval time
+            CommandSent = "";
+          }
+
+          if (string_check.includes("/P697")) {
+            updateProgress();
+            clearInterval(p_tid[`p697_tid`]);
+            await delay(1000);
+            document.getElementById("p697-box").innerHTML = Number(
+              string_check
+                .slice(string_check.lastIndexOf(":") + 1)
+                .split("\r")[0]
+                .trim()
+            );
+            hideLoadingScreen_succesful();
+          }
+          if (
+            !string_check.includes("/P600") &&
+            !string_check.includes("/P601") &&
+            !string_check.includes("/P602") &&
+            !string_check.includes("/P603") &&
+            !string_check.includes("/P605") &&
+            !string_check.includes("/P606") &&
+            !string_check.includes("/P604") &&
+            !string_check.includes("/P607") &&
+            !string_check.includes("/P697") &&
+            c_state == 3
+          ) {
+            if (string_check.includes("/P641")) {
+              hideLoadingScreen_succesful();
+            }
+
+            handle_breakpoint_update(string_check);
+          }
+          //alert(string_check + "2");
+          // Log the incoming string (format slightly)
+          //var res=decoder.decode(readInValue).replace('\r','\r <- ').replace('\n','').replace('\0','');
+          //log(" <- " + sizeof(res) + " "+res);
+          //await delay(2 * 1000);
         }
-        //alert(string_check + "2");
-        // Log the incoming string (format slightly)
-        //var res=decoder.decode(readInValue).replace('\r','\r <- ').replace('\n','').replace('\0','');
-        //log(" <- " + sizeof(res) + " "+res);
-        //await delay(2 * 1000);
+        // if (string_check.includes("DONE") && doc_value.includes("ACCEL CAL")) {
+        //   alert("DONE!");
+        // }
       }
-      // if (string_check.includes("DONE") && doc_value.includes("ACCEL CAL")) {
-      //   alert("DONE!");
-      // }
     }
+  } catch (error) {
+    setTimeout(reload_webpage);
   }
 }
 

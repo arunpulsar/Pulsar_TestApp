@@ -34,7 +34,7 @@ function displayVesselShape(call) {
           // Send a command over AT connection
           sendAT("/P600:" + (selectedValue - 1));
         }
-      }, 1000); // Set your desired interval time
+      }, 1000);
       CommandSent = "";
     } else {
       // If call is not 1, update the vessel image
@@ -96,7 +96,7 @@ function volume_param(id) {
         }
       }
       CommandSent = "";
-    }, 1500); // Set your desired interval time
+    }, 1500);
   } else {
     // Handle the case where the input is not a valid number
     document.getElementById(id).value = "";
@@ -143,7 +143,7 @@ function breakpoints(id) {
         } else if (connectionType === "bluetooth") {
           sendAT(formattedId + number);
         }
-      }, 1500); // Set your desired interval time
+      }, 1500);
       CommandSent = "";
     } else {
       // Handle the case where the ID does not match the expected pattern
