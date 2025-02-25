@@ -34,7 +34,7 @@ function displayVesselShape(call) {
           // Send a command over AT connection
           sendAT("/P600:" + (selectedValue - 1));
         }
-      }, 1000);
+      }, 1500);
       CommandSent = "";
     } else {
       // If call is not 1, update the vessel image
