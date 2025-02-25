@@ -2361,7 +2361,7 @@ async function incomingData(event) {
     //alert(login_stage + " " +isIgnore);
     // alert(string_check + "1");
     //log("login_stage="+login_stage+" isIgnore="+isIgnore+" isIgnore_2="+isIgnore_2+" isDisconnecting="+isDisconnecting+" button_press="+button_press);
-    console.log(string_check);
+    // console.log(string_check);
     if (BootLoader_launced) {
       listenRX_BL();
     }
@@ -3676,7 +3676,7 @@ function page_lang_switch() {
   document.getElementById("p604").innerHTML = lang_map[188];
   document.getElementById("p607").innerHTML = lang_map[189];
   document.getElementById("p697").innerHTML = lang_map[190];
-  document.getElementsByName("p600dropdown")[0].options[0].innerHTML = lang_map[170];
+  document.getElementsByName("p600dropdown")[0].options[0].innerHTML = lang_map[206];
   document.getElementsByName("p600dropdown")[0].options[1].innerHTML = lang_map[171];
   document.getElementsByName("p600dropdown")[0].options[2].innerHTML = lang_map[172];
   document.getElementsByName("p600dropdown")[0].options[3].innerHTML = lang_map[173];
@@ -4274,7 +4274,7 @@ document.getElementById("p606").innerHTML = lang_map[187];
 document.getElementById("p604").innerHTML = lang_map[188];
 document.getElementById("p607").innerHTML = lang_map[189];
 document.getElementById("p697").innerHTML = lang_map[190];
-document.getElementsByName("p600dropdown")[0].options[0].innerHTML = lang_map[170]; // need to change the
+document.getElementsByName("p600dropdown")[0].options[0].innerHTML = lang_map[206];
 document.getElementsByName("p600dropdown")[0].options[1].innerHTML = lang_map[171];
 document.getElementsByName("p600dropdown")[0].options[2].innerHTML = lang_map[172];
 document.getElementsByName("p600dropdown")[0].options[3].innerHTML = lang_map[173];

@@ -859,8 +859,8 @@ var lang_array = [
   },
   {
     //Index 170
-    English: "VESSEL SHAPE",
-    German: "Gefäßform",
+    English: "VESSEL SHAPE (P600)",
+    German: "Gefäßform (P600)",
   },
   {
     //Index 171
@@ -1036,5 +1036,10 @@ var lang_array = [
     //Index 205
     English: "VOLUME PARAMETERS",
     German: "VOLUMENPARAMETER",
+  },
+  {
+    //Index 206
+    English: "Choose Shape",
+    German: "Shape auswählen",
   },
 ];
