@@ -3844,7 +3844,7 @@ function showLoadingScreen() {
   document.getElementById("loadingModal").style.display = "block";
   circular_responseTimeout = setTimeout(() => {
     hideLoadingScreen_fail();
-  }, 15000); // previous value was 10 seconds
+  }, 30000); // previous value was 10 seconds
 }
 function showLoadingScreen_bar(startValue, endValue) {
   currentProgress = startValue;
