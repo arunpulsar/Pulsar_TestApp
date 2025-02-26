@@ -268,7 +268,7 @@ function fetchedit_defaultXML() {
       // Copy or download the updated XML content based on device type
       if (deviceInfo.includes("Bluefy")) {
         document.getElementById("xmlContent").style.display = "block";
-        copyText(); // Copy XML content to clipboard
+        // copyText(); // Copy XML content to clipboard
       } else {
         downloadFile(updatedXmlText, "reflect-e_0.1.7_live.xml", "text/xml"); // Download the XML file
       }
@@ -345,6 +345,30 @@ function formatValue(value) {
   }
 
   return formattedValue;
+}
+/**
+ * Displays the copy button when the mouse enters the XML container.
+ */
+document.getElementById("xmlContainer").addEventListener("mouseenter", function () {
+  // Show the copy button when the user hovers over the XML container
+  document.getElementById("xmlCopyButton").style.display = "block";
+});
+/**
+ * Hides the copy button when the mouse leaves the XML container.
+ */
+document.getElementById("xmlContainer").addEventListener("mouseleave", function () {
+  // Hide the copy button when the user stops hovering over the XML container
+  document.getElementById("xmlCopyButton").style.display = "none";
+});
+/**
+ * Copies the content of the XML text area to the clipboard.
+ */
+function copyXML() {
+  const xmlTextArea = document.getElementById("xmlContent");
+  // Select the text inside the XML content text area
+  xmlTextArea.select();
+  // Execute the copy command to copy the selected text to the clipboard
+  document.execCommand("copy");
 }
 // Solve for execCommand deprecation:
 // /**
@@ -839,3 +863,4 @@ async function send_paramset() {
 //   // Revoke the object URL to release memory
 //   URL.revokeObjectURL(url);
 // }
+

@@ -1535,8 +1535,12 @@
             </tbody>
           </table>
         </div>
-        <div style="margin-top: 20px;">
-          <textarea id="xmlContent" rows="10" style="width: 100%; display: none;"></textarea>
+        <div id="xmlContainer" style="position: relative; display: inline-block; width: 100%; margin-top: 20px;">
+          <textarea id="xmlContent" rows="10" style="width: 100%; display: none; resize: none;"></textarea>
+          <button id="xmlCopyButton" onclick="copyXML()"
+            style="position: absolute; top: 10px; right: 10px; font-size: 16pt; background-color: grey; color: white; height: 50px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; display: none;">
+            <i class="fa fa-copy"></i>
+          </button>
         </div>
         </div>
       </article>
@@ -1552,7 +1556,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;1.1.0<br></p>
+              &alpha;1.1.1<br></p>
           </td>
         </tr>
       </table>
@@ -2003,8 +2007,14 @@
         </div>
         <div class="modal-section" id="logSection" style="justify-content: center; display: none;">
           <div class="modal-item" style="justify-content: center; display: flex; align-items: center; width: 100%;">
-            <div id="blTextBox"
-              style="font-size: 18pt; background-color: black; color: black; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px; overflow-y: auto; height: 400px; width: 100%; white-space: pre-wrap; word-wrap: break-word;">
+            <div id="blTextBox_container" style="position: relative; display: inline-block; width: 100%;">
+              <div id="blTextBox"
+                style="font-size: 18pt; background-color: black; color: black; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px; overflow-y: auto; height: 400px; width: 100%; white-space: pre-wrap; word-wrap: break-word;">
+              </div>
+              <button id="blTextBox_copyButton" onclick="blTextBox_copyText()"
+                style="position: absolute; top: 10px; right: 10px; font-size: 16pt; background-color: grey; color: white; height: 50px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; display: none;">
+                <i class="fa fa-copy"></i>
+              </button>
             </div>
           </div>
         </div>

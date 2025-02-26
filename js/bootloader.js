@@ -1158,3 +1158,36 @@ function clearhigher_WriteInterval() {
     higherWriteCounter = 0; // Reset the retry counter to 0
   }
 }
+/**
+ * Displays the copy button when the mouse enters the "blTextBox" container.
+ */
+document.getElementById("blTextBox_container").addEventListener("mouseenter", function () {
+  // Show the copy button when the user hovers over the "blTextBox" container
+  document.getElementById("blTextBox_copyButton").style.display = "block";
+});
+/**
+ * Hides the copy button when the mouse leaves the "blTextBox" container.
+ */
+document.getElementById("blTextBox_container").addEventListener("mouseleave", function () {
+  // Hide the copy button when the user stops hovering over the "blTextBox" container
+  document.getElementById("blTextBox_copyButton").style.display = "none";
+});
+/**
+ * Copies the text content of the "blTextBox" to the clipboard.
+ */
+function blTextBox_copyText() {
+  const textBox = document.getElementById("blTextBox");
+  // Get the text content of the "blTextBox" element (either innerText or textContent)
+  const text = textBox.innerText || textBox.textContent;
+  // Create a temporary text area to hold the text to be copied
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  // Append the text area to the document body to make it selectable
+  document.body.appendChild(textArea);
+  // Select the content inside the text area
+  textArea.select();
+  // Execute the copy command to copy the selected text to the clipboard
+  document.execCommand("copy");
+  // Remove the temporary text area after copying
+  document.body.removeChild(textArea);
+}
