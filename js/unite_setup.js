@@ -150,21 +150,21 @@ async function saveSettings() {
   }
 
   // Check if MQTT broker hostname has changed
-  if (mqttBrokerHostname !== previousSettings.mqttBrokerHostname) {
+  if (mqttBrokerHostname && mqttBrokerHostname !== previousSettings.mqttBrokerHostname) {
     mqttConfigChanged = true;
     await sendTX(`mqtt hostname ${mqttBrokerHostname}`);
     await delay(500);
   }
 
   // Check if MQTT broker port has changed
-  if (mqttBrokerPort !== String(previousSettings.mqttBrokerPort)) {
+  if (mqttBrokerPort && mqttBrokerPort !== String(previousSettings.mqttBrokerPort)) {
     mqttConfigChanged = true;
     await sendTX(`mqtt port ${mqttBrokerPort}`);
     await delay(500);
   }
 
   // Check if MQTT broker username has changed
-  if (mqttBrokerUsername !== previousSettings.mqttBrokerUsername) {
+  if (mqttBrokerUsername && mqttBrokerUsername !== previousSettings.mqttBrokerUsername) {
     mqttConfigChanged = true;
     await sendTX(`mqtt username ${mqttBrokerUsername}`);
     await delay(500);
@@ -178,33 +178,33 @@ async function saveSettings() {
   }
 
   // Check if MQTT TLS level has changed
-  if (mqttTLS !== previousSettings.mqttTLS) {
+  if (mqttTLS && mqttTLS !== previousSettings.mqttTLS) {
     mqttConfigChanged = true;
     await sendTX(`mqtt tls level ${mqttTLS}`);
     await delay(500);
   }
 
   // Check if MQTT TLS security tag has changed
-  if (mqttTLSSec_tag !== previousSettings.mqttTLSSec_tag) {
+  if (mqttTLSSec_tag && mqttTLSSec_tag !== previousSettings.mqttTLSSec_tag) {
     mqttConfigChanged = true;
     await sendTX(`mqtt tls sec_tag ${mqttTLSSec_tag}`);
     await delay(500);
   }
 
   // Check if reboot delay has changed
-  if (Number(rebootDelay) !== previousSettings.rebootDelay) {
+  if (Number(rebootDelay) && Number(rebootDelay) !== previousSettings.rebootDelay) {
     await sendTX(`node reboot delay ${rebootDelay}`);
     await delay(500);
   }
 
   // Check if operator selection has changed
-  if (OperatorSelect !== previousSettings.OperatorSelect) {
+  if (OperatorSelect && OperatorSelect !== previousSettings.OperatorSelect) {
     await sendTX(`modem operator ${OperatorSelect}`);
     await delay(500);
   }
 
   // Check if GNSS interval has changed
-  if (Number(gnssInterval) !== previousSettings.gnssInterval) {
+  if (Number(gnssInterval) && Number(gnssInterval) !== previousSettings.gnssInterval) {
     await sendTX(`gnss interval ${gnssInterval}`);
     await delay(500);
   }
