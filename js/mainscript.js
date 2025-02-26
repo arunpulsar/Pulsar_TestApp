@@ -173,7 +173,8 @@ let set2 = 0;
 let reset_breakpoints_var = 0;
 let temp_set2_storage = "";
 let volume_sent = 0;
-let responseTimeout;
+let circular_responseTimeout;
+let bar_responseTimeout;
 
 let prevSelectedRadioMode = null;
 let prevNodeName = null;
@@ -1857,7 +1858,7 @@ async function processReceivedData() {
       if (afterColon.includes("1:DONE")) {
         await sendTX(combined_secondSet, true);
         CommandSent = "";
-        clearTimeout(responseTimeout);
+        clearTimeout(circular_responseTimeout);
       } else if (afterColon.includes("2:DONE")) {
         // if (volume_sent) {
         //   volume_sent = 0;
@@ -1866,7 +1867,7 @@ async function processReceivedData() {
         await sendTX(combined_remainingSet, true);
         CommandSent = "";
         // }
-        clearTimeout(responseTimeout);
+        clearTimeout(circular_responseTimeout);
       } else if (afterColon.includes("3:DONE")) {
         hideLoadingScreen_succesful();
         if (send_param_button_press) {
@@ -1912,6 +1913,7 @@ async function processReceivedData() {
       log(" ← " + hexToAscii(receiveBufferHex));
     }
     if (hexToAscii(receiveBufferHex).includes("/P600")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p600_tid`]); // Clear interval once response is received
@@ -1920,6 +1922,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P601")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p601_tid`]);
@@ -1928,6 +1931,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P602")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p602_tid`]);
@@ -1936,6 +1940,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P603")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p603_tid`]);
@@ -1957,6 +1962,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P605")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p605_tid`]);
@@ -1965,6 +1971,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P606")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p606_tid`]);
@@ -1982,6 +1989,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P604")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p604_tid`]);
@@ -2000,6 +2008,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P607")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p607_tid`]);
@@ -2018,6 +2027,7 @@ async function processReceivedData() {
       }
     }
     if (hexToAscii(receiveBufferHex).includes("/P697")) {
+      clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p697_tid`]);
@@ -2334,7 +2344,7 @@ function interpretHex(incoming_data) {
     document.getElementById("zMid").value = getVal(5).toFixed(2);
     document.getElementById("calStat").value = getVal(6).toFixed(2);
     document.getElementById("tiltEnable").value = getVal(7).toFixed(2);
-    console.log(receiveBufferHex);
+    // console.log(receiveBufferHex);
   } else if (doc_value == "REFRESH LIVE") {
     document.getElementById("upTime").value = getVal(0).toFixed(2);
     document.getElementById("coreTemp").value = getVal(1).toFixed(2) + "°";
@@ -2342,7 +2352,7 @@ function interpretHex(incoming_data) {
     document.getElementById("coreMax").value = getVal(3).toFixed(2) + "°";
     document.getElementById("avgSig").value = getVal(4).toFixed(2);
     document.getElementById("capSupply").value = getVal(5).toFixed(2);
-    console.log(receiveBufferHex);
+    // console.log(receiveBufferHex);
   }
   return a;
 }
@@ -2886,7 +2896,7 @@ async function sendTX(data, isHex = false) {
 
       // Encode ASCII string to send
       encodedData = new TextEncoder().encode(stringToSend);
-      console.log("Data sent (ASCII):", stringToSend);
+      // console.log("Data sent (ASCII):", stringToSend);
     }
 
     // Write the encoded data to the port
@@ -3832,23 +3842,23 @@ function getDeviceInfo() {
 }
 function showLoadingScreen() {
   document.getElementById("loadingModal").style.display = "block";
-  responseTimeout = setTimeout(() => {
+  circular_responseTimeout = setTimeout(() => {
     hideLoadingScreen_fail();
-  }, 30000); // previous value was 10 seconds
+  }, 15000); // previous value was 10 seconds
 }
 function showLoadingScreen_bar(startValue, endValue) {
   currentProgress = startValue;
   targetProgress = endValue;
   totalSteps = targetProgress - currentProgress;
   document.getElementById("loadingModal_bar").style.display = "block";
-  // responseTimeout = setTimeout(() => {
-  //   hideLoadingScreen_fail();
-  // }, 100000); // previous value was 10 seconds
+  bar_responseTimeout = setTimeout(() => {
+    hideLoadingScreen_fail();
+  }, 10000); // previous value was 10 seconds
   document.querySelector(".progress-bar-fill").style.width = "0%";
 }
 function updateProgress() {
   // Calculate the percentage complete based on the dynamic range
-  var timeperstep;
+  // var timeperstep;
   currentProgress++;
   const percentComplete = ((currentProgress - (targetProgress - totalSteps)) / totalSteps) * 100;
 
@@ -3856,19 +3866,20 @@ function updateProgress() {
   document.querySelector(".progress-bar-fill").style.width = `${percentComplete}%`;
 
   // Estimate the remaining time based on current rate
-  const remainingSteps = targetProgress - currentProgress;
-  if (connectionType === "serial") {
-    timeperstep = 1.6;
-  } else if (connectionType === "bluetooth") {
-    timeperstep = 2.5;
-  }
-  const estimatedTimeLeft = (remainingSteps * timeperstep).toFixed(0); // Estimated time left in seconds
+  // const remainingSteps = targetProgress - currentProgress;
+  // if (connectionType === "serial") {
+  //   timeperstep = 1.6;
+  // } else if (connectionType === "bluetooth") {
+  //   timeperstep = 2.5;
+  // }
+  // const estimatedTimeLeft = (remainingSteps * timeperstep).toFixed(0); // Estimated time left in seconds
 
   // Update the timer display
   // document.getElementById("timer").textContent = estimatedTimeLeft;
 }
 async function hideLoadingScreen_succesful() {
-  clearTimeout(responseTimeout);
+  clearTimeout(circular_responseTimeout);
+  clearTimeout(bar_responseTimeout);
   document.getElementById("loadingModal").style.display = "none";
   document.getElementById("loadingModal_bar").style.display = "none";
   document.getElementById("loadingModal_success").style.display = "block";
@@ -3877,7 +3888,8 @@ async function hideLoadingScreen_succesful() {
   currentProgress = 0;
 }
 async function hideLoadingScreen_fail() {
-  clearTimeout(responseTimeout);
+  clearTimeout(circular_responseTimeout);
+  clearTimeout(bar_responseTimeout);
   document.getElementById("loadingModal").style.display = "none";
   document.getElementById("loadingModal_bar").style.display = "none";
   document.getElementById("loadingModal_fail").style.display = "block";

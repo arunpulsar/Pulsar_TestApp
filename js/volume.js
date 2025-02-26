@@ -327,6 +327,7 @@ function handle_breakpoint_update(asciiMessage) {
     // Update the corresponding input box with the extracted value
     document.getElementById(`p${pNumber}-box`).value = value;
     clearInterval(p_tid[`p${pNumber}_tid`]);
+    clearTimeout(bar_responseTimeout);
     // Calculate the next parameter number (e.g., for '610', the next would be '611')
     const nextPNumber = parseInt(pNumber) + 1;
     delay(1000);
