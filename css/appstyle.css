@@ -473,7 +473,7 @@ td {
 .modal-item label {
   font-size: 28px; /* Keep the font size */
   font-weight: bold; /* Keep bold font */
-  width: 150px; /* Updated width */
+  width: 275px; /* Updated width */
   margin-right: 10px; /* Keep margin-right */
 }
 
@@ -483,7 +483,7 @@ td {
   font-family: "Segoe UI SemiBold";
   font-size: 24pt;
   font-weight: 500;
-  width: 500px;
+  width: 375px;
   height: 75px;
   padding: 8px; /* Updated padding */
   display: block; /* Ensure block-level element */

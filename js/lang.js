@@ -995,7 +995,7 @@ var lang_array = [
   {
     //Index 197
     English: "DEVICE INFO",
-    German: "GERÄTEINFORMATIONEN",
+    German: "GERÄTEINFO",
   },
   {
     //Index 198
@@ -1041,5 +1041,380 @@ var lang_array = [
     //Index 206
     English: "Choose Shape",
     German: "Shape auswählen",
+  },
+  {
+    //Index 207
+    English: "UPDATE FIRMWARE",
+    German: "FIRMWARE AKTUALISIEREN",
+  },
+  {
+    //Index 208
+    English: "CLOUD SETTINGS",
+    German: "CLOUD-EINSTELLUNGEN",
+  },
+  {
+    //Index 209
+    English: "Upload Firmware File",
+    German: "Firmware-Datei Hochladen",
+  },
+  {
+    //Index 210
+    English: "Start Update",
+    German: "Update starten",
+  },
+  {
+    //Index 211
+    English: "FW VERSION",
+    German: "FW-VERSION",
+  },
+  {
+    //Index 212
+    English: "FW SIZE",
+    German: "FW-GRÖSSE",
+  },
+  {
+    //Index 213
+    English: "Progress",
+    German: "Fortschritt",
+  },
+  {
+    //Index 214
+    English: "Toggle Logs",
+    German: "Protokolle umschalten",
+  },
+  {
+    //Index 215
+    English: "Live Data",
+    German: "Echtzeitdaten",
+  },
+  {
+    //Index 216
+    English: "Up Time",
+    German: "Betriebszeit",
+  },
+  {
+    //Index 217
+    English: "Core Temp",
+    German: "Kern-Temperatur",
+  },
+  {
+    //Index 218
+    English: "Core Min",
+    German: "Kern-Minimum",
+  },
+  {
+    //Index 219
+    English: "Core Max",
+    German: "Kern-Maximum",
+  },
+  {
+    //Index 220
+    English: "Avg Str",
+    German: "Durchschnittl. Stärke",
+  },
+  {
+    //Index 221
+    English: "Caps Supply",
+    German: "Kondensator-Versorgung",
+  },
+  {
+    //Index 222
+    English: "Accelerometer",
+    German: "Beschleunigungssensor",
+  },
+  {
+    //Index 223
+    English: "Calibrate",
+    German: "Kalibrieren",
+  },
+  {
+    //Index 224
+    English: "Cal Status",
+    German: "Kalibrierstatus",
+  },
+  {
+    //Index 225
+    English: "Tilt Enable",
+    German: "Neigung aktivieren",
+  },
+  {
+    //Index 226
+    English: "X-mid",
+    German: "X-Mitte",
+  },
+  {
+    //Index 227
+    English: "X-axis",
+    German: "X-Achse",
+  },
+  {
+    //Index 228
+    English: "Y-mid",
+    German: "Y-Mitte",
+  },
+  {
+    //Index 229
+    English: "Y-axis",
+    German: "Y-Achse",
+  },
+  {
+    //Index 230
+    English: "Z-mid",
+    German: "Z-Mitte",
+  },
+  {
+    //Index 231
+    English: "Z-axis",
+    German: "Z-Achse",
+  },
+  {
+    //Index 232
+    English: "Transducer Settings",
+    German: "Wandler-Einstellungen",
+  },
+  {
+    //Index 233
+    English: "Transducer Temp",
+    German: "Wandler-Temperatur",
+  },
+  {
+    //Index 234
+    English: "Transducer Type",
+    German: "Wandler-Typ",
+  },
+  {
+    //Index 235
+    English: "Units",
+    German: "Einheiten",
+  },
+  {
+    //Index 236
+    English: "Reset Unit",
+    German: "Einheit zurücksetzen",
+  },
+  {
+    //Index 237
+    English: "Distributor",
+    German: "Vertriebspartner",
+  },
+  {
+    //Index 238
+    English: "Default Unit",
+    German: "Standardeinheit",
+  },
+  {
+    //Index 239
+    English: "Serial Number",
+    German: "Seriennummer",
+  },
+  {
+    //Index 240
+    English: "SET",
+    German: "SETZEN",
+  },
+  {
+    //Index 241
+    English: "GET",
+    German: "ABRUFEN",
+  },
+  {
+    //Index 242
+    English: "SAVE to Factory Memory",
+    German: "In Werksspeicher speichern",
+  },
+  {
+    //Index 243
+    English: "Production Setup",
+    German: "Produktionssetup",
+  },
+  {
+    //Index 244
+    English: "System Setup",
+    German: "Systemeinrichtung",
+  },
+  {
+    //Index 245
+    English: "Uptime",
+    German: "Betriebszeit",
+  },
+  {
+    //Index 246
+    English: "Modem Status",
+    German: "Modem-Status",
+  },
+  {
+    //Index 247
+    English: "Modem IMEI",
+    German: "Modem IMEI",
+  },
+  {
+    //Index 248
+    English: "Modem State",
+    German: "Modem-Zustand",
+  },
+  {
+    //Index 249
+    English: "Operator Select",
+    German: "Betreiber auswählen",
+  },
+  {
+    //Index 250
+    English: "Radio Mode",
+    German: "Funkmodus",
+  },
+  {
+    //Index 251
+    English: "Modem eDRX",
+    German: "Modem eDRX",
+  },
+  {
+    //Index 252
+    English: "Operator Name",
+    German: "Betreibername",
+  },
+  {
+    //Index 253
+    English: "APN",
+    German: "APN",
+  },
+  {
+    //Index 254
+    English: "ACT",
+    German: "ACT",
+  },
+  {
+    //Index 255
+    English: "RSRP",
+    German: "RSRP",
+  },
+  {
+    //Index 256
+    English: "RSRQ",
+    German: "RSRQ",
+  },
+  {
+    //Index 257
+    English: "MQTT Status",
+    German: "MQTT-Status",
+  },
+  {
+    //Index 258
+    English: "State",
+    German: "Zustand",
+  },
+  {
+    //Index 259
+    English: "Broker Hostname",
+    German: "Broker-Hostname",
+  },
+  {
+    //Index 260
+    English: "Broker Port",
+    German: "Broker-Port",
+  },
+  {
+    //Index 261
+    English: "Username",
+    German: "Benutzername",
+  },
+  {
+    //Index 262
+    English: "TLS Level",
+    German: "TLS-Level",
+  },
+  {
+    //Index 263
+    English: "TLS Security Tag",
+    German: "TLS-Sicherheitstag",
+  },
+  {
+    //Index 264
+    English: "Password",
+    German: "Passwort",
+  },
+  {
+    //Index 265
+    English: "Node Settings",
+    German: "Knoteneinstellungen",
+  },
+  {
+    //Index 266
+    English: "Node Name",
+    German: "Knotenname",
+  },
+  {
+    //Index 267
+    English: "Report Interval (sec)",
+    German: "Berichtsintervall (Sek)",
+  },
+  {
+    //Index 268
+    English: "Reboot Delay (hr)",
+    German: "Neustartverzögerung (Std)",
+  },
+  {
+    //Index 269
+    English: "Temp",
+    German: "Temp",
+  },
+  {
+    //Index 270
+    English: "Battery",
+    German: "Batterie",
+  },
+  {
+    //Index 271
+    English: "GNSS Settings",
+    German: "GNSS-Einstellungen",
+  },
+  {
+    //Index 272
+    English: "Interval(sec)",
+    German: "Intervall (Sek.)",
+  },
+  {
+    //Index 273
+    English: "SAVE",
+    German: "SPEICHERN",
+  },
+  {
+    //Index 274
+    English: "PARAM NUMBER",
+    German: "PARAMETER-NUMMER",
+  },
+  {
+    //Index 275
+    English: "VALUE",
+    German: "WERT",
+  },
+  {
+    //Index 276
+    English: "Sending commands...",
+    German: "Befehle senden...",
+  },
+  {
+    //Index 277
+    English: "Failed",
+    German: "Fehlgeschlagen",
+  },
+  {
+    //Index 278
+    English: "Successful",
+    German: "Erfolgreich",
+  },
+  {
+    //Index 279
+    English: "Updating...",
+    German: "Aktualisiere...",
+  },
+  {
+    //Index 280
+    English: "System Uptime",
+    German: "Systembetriebszeit",
+  },
+  {
+    //Index 281
+    English: "MCCMNC",
+    German: "MCCMNC",
   },
 ];

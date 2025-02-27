@@ -370,40 +370,6 @@ function copyXML() {
   // Execute the copy command to copy the selected text to the clipboard
   document.execCommand("copy");
 }
-// Solve for execCommand deprecation:
-// /**
-//  * Copies the content of the textarea with id "xmlContent" to the clipboard.
-//  *
-//  * This function checks if the device is iOS or not. For iOS devices, it uses
-//  * a workaround with contentEditable and selection ranges, as Clipboard API
-//  * doesn't work on iOS devices. For non-iOS devices, it uses the modern
-//  * Clipboard API to copy the text to the clipboard.
-//  */
-// function copyText() {
-//   const input = document.querySelector("#xmlContent");
-//   // Check if the device is iOS (iPhone, iPad, iPod)
-//   if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-//     // Handle iOS devices with a workaround
-//     input.contentEditable = true; // Make the input editable
-//     input.readOnly = false; // Allow modifications
-//     // Create a range and select the text in the input
-//     const range = document.createRange();
-//     range.selectNodeContents(input);
-//     const selection = window.getSelection();
-//     selection.removeAllRanges(); // Clear any previous selections
-//     selection.addRange(range); // Add the new range for selection
-//     input.setSelectionRange(0, 999999); // Ensure all content is selected
-//   } else {
-//     // Use the Clipboard API for non-iOS devices
-//     navigator.clipboard.writeText(input.value)
-//       .then(() => {
-//         console.log("Text copied to clipboard"); // Successfully copied
-//       })
-//       .catch(err => {
-//         console.error("Failed to copy text: ", err); // Handle any errors
-//       });
-//   }
-// }
 /**
  * Sends the parameter set from the XML data.
  *
@@ -863,4 +829,37 @@ async function send_paramset() {
 //   // Revoke the object URL to release memory
 //   URL.revokeObjectURL(url);
 // }
-
+// Solve for execCommand deprecation:
+// /**
+//  * Copies the content of the textarea with id "xmlContent" to the clipboard.
+//  *
+//  * This function checks if the device is iOS or not. For iOS devices, it uses
+//  * a workaround with contentEditable and selection ranges, as Clipboard API
+//  * doesn't work on iOS devices. For non-iOS devices, it uses the modern
+//  * Clipboard API to copy the text to the clipboard.
+//  */
+// function copyText() {
+//   const input = document.querySelector("#xmlContent");
+//   // Check if the device is iOS (iPhone, iPad, iPod)
+//   if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+//     // Handle iOS devices with a workaround
+//     input.contentEditable = true; // Make the input editable
+//     input.readOnly = false; // Allow modifications
+//     // Create a range and select the text in the input
+//     const range = document.createRange();
+//     range.selectNodeContents(input);
+//     const selection = window.getSelection();
+//     selection.removeAllRanges(); // Clear any previous selections
+//     selection.addRange(range); // Add the new range for selection
+//     input.setSelectionRange(0, 999999); // Ensure all content is selected
+//   } else {
+//     // Use the Clipboard API for non-iOS devices
+//     navigator.clipboard.writeText(input.value)
+//       .then(() => {
+//         console.log("Text copied to clipboard"); // Successfully copied
+//       })
+//       .catch(err => {
+//         console.error("Failed to copy text: ", err); // Handle any errors
+//       });
+//   }
+// }

@@ -1556,7 +1556,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;1.1.2<br></p>
+              &alpha;1.1.3<br></p>
           </td>
         </tr>
       </table>
@@ -1564,22 +1564,22 @@
   </section>
   <div id="loadingModal" class="loading-modal">
     <div class="loading-content spinner">
-      <p style="font-size: 48pt; color: #33B34A;">Sending commands...</p>
+      <p id="SendingCommands_label" style="font-size: 48pt; color: #33B34A;">Sending commands...</p>
     </div>
   </div>
   <div id="loadingModal_success" class="loading-modal">
     <div class="loading-content">
-      <p style="font-size: 48pt;color: #33B34A;">Successful &checkmark;</p>
+      <p id="Successful_label" style="font-size: 48pt;color: #33B34A;">Successful &checkmark;</p>
     </div>
   </div>
   <div id="loadingModal_fail" class="loading-modal">
     <div class="loading-content">
-      <p style="font-size: 48pt;color: red;">Failed &Cross;</p>
+      <p id="failed_label" style="font-size: 48pt;color: red;">Failed &Cross;</p>
     </div>
   </div>
   <div id="loadingModal_bar" class="loading-modal">
     <div class="loading-content">
-      <p style="font-size: 48pt; color: #33B34A;" id="loadingText">Sending commands...
+      <p id="SendingCommandsBar_label" style="font-size: 48pt; color: #33B34A;" id="loadingText">Sending commands...
       </p>
       <div class="progress-bar">
         <div class="progress-bar-fill"></div>
@@ -1591,7 +1591,7 @@
   <!-- Modal Setup -->
   <div id="modal_setup" class="modal">
     <div class="modal-header">
-      <h2 style="font-size: 24pt; font-weight: bold;">System Setup &#9881;</h2>
+      <h2 id="SystemSetup_unite" style="font-size: 24pt; font-weight: bold;">System Setup &#9881;</h2>
       <div style="display: flex; gap: 10px;">
         <button class="edit-btn" onclick="edit_metrics()"
           style="background-color: #f37021; color: white; border: 2px solid black; padding: 15px 25px; font-size: 1.75rem; cursor: pointer; transition: background-color 0.3s; border-radius: 5px;">&#128393;</button>
@@ -1603,28 +1603,28 @@
       <!-- Column 1: System Uptime and Modem Status -->
       <div class="modal-column">
         <div class="modal-section">
-          <h3>System Uptime &#9200;</h3>
+          <h3 id="SystemUptime_unite">System Uptime &#9200;</h3>
           <div class="modal-item">
-            <label for="uptime">Uptime:</label>
+            <label id="uptime-label" for="uptime">Uptime:</label>
             <input type="text" id="uptime" value="" readonly>
           </div>
         </div>
         <div class="modal-section">
-          <h3>Modem Status &#128246;</h3>
+          <h3 id="ModemStatus_unite">Modem Status &#128246;</h3>
           <div class="modal-item">
-            <label for="modemIMEI">Modem IMEI:</label>
+            <label id="modemIMEI-label" for="modemIMEI">Modem IMEI:</label>
             <input type="text" id="modemIMEI" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="modemState">Modem State:</label>
+            <label id="modemState-label" for="modemState">Modem State:</label>
             <input type="text" id="modemState" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="modeOperatorSelect">Operator Select:</label>
+            <label id="modeOperatorSelect-label" for="modeOperatorSelect">Operator Select:</label>
             <input type="text" id="modeOperatorSelect" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="modemRadioMode">Modem Radio Mode:</label>
+            <label id="modemRadioMode-label" for="modemRadioMode">Radio Mode:</label>
             <select id="modemRadioMode" disabled>
               <option value="LTE-M">LTE-M</option>
               <option value="NB-IoT">NB-IoT</option>
@@ -1632,34 +1632,34 @@
             </select>
           </div>
           <div class="modal-item">
-            <label for="modemeDRX">Modem eDRX:</label>
+            <label id="modemeDRX-label" for="modemeDRX">Modem eDRX:</label>
             <select id="modemeDRX" disabled>
               <option value="factory_reset">Default</option>
               <option value="disable">Disable</option>
             </select>
           </div>
           <div class="modal-item hidden" id="operator-mccmnc-container">
-            <label for="modemOperatorMCCMNC">MCCMNC:</label>
+            <label id="modemOperatorMCCMNC-label" for="modemOperatorMCCMNC">MCCMNC:</label>
             <input type="text" id="modemOperatorMCCMNC" value="" readonly>
           </div>
           <div class="modal-item" id="operator-name-container">
-            <label for="modemOperatorName">Operator Name:</label>
+            <label id="modemOperatorName-label" for="modemOperatorName">Operator Name:</label>
             <input type="text" id="modemOperatorName" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="modemAPN">APN:</label>
+            <label id="modemAPN-label" for="modemAPN">APN:</label>
             <input type="text" id="modemAPN" value="" maxlength="64" autocomplete="off" readonly>
           </div>
           <div class="modal-item">
-            <label for="modemACT">ACT:</label>
+            <label id="modemACT-label" for="modemACT">ACT:</label>
             <input type="text" id="modemACT" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="modemRSRP">RSRP:</label>
+            <label id="modemRSRP-label" for="modemRSRP">RSRP:</label>
             <input type="text" id="modemRSRP" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="modemRSRQ">RSRQ:</label>
+            <label id="modemRSRQ-label" for="modemRSRQ">RSRQ:</label>
             <input type="text" id="modemRSRQ" value="" readonly>
           </div>
         </div>
@@ -1667,74 +1667,74 @@
       <!-- Column 2: MQTT Status and Node Settings -->
       <div class="modal-column">
         <div class="modal-section">
-          <h3>MQTT Status &#9729;</h3>
+          <h3 id="MQTTStatus_unite">MQTT Status &#9729;</h3>
           <div class="modal-item">
-            <label for="mqttState">State:</label>
+            <label id="mqttState-label" for="mqttState">State:</label>
             <input type="text" id="mqttState" value="" readonly>
             <button id="MQTTToggleButton" onclick="toggleMQTTConnection()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">&olarr;</button>
           </div>
           <div class="modal-item">
-            <label for="mqttBrokerHostname">Broker Hostname:</label>
+            <label id="mqttBrokerHostname-label" for="mqttBrokerHostname">Broker Hostname:</label>
             <input type="text" id="mqttBrokerHostname" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="mqttBrokerPort">Broker Port:</label>
+            <label id="mqttBrokerPort-label" for="mqttBrokerPort">Broker Port:</label>
             <input type="text" id="mqttBrokerPort" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="mqttUsername">Username:</label>
+            <label id="mqttUsername-label" for="mqttUsername">Username:</label>
             <input type="text" id="mqttUsername" autocomplete="off" value="" readonly>
             <button id="PasswordtoggleButton" disabled="true" onclick="togglePassword()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">*</button>
           </div>
           <div class="modal-item">
-            <label for="mqttPassword" style="display: none;">Password:</label>
+            <label id="mqttPassword-label" for="mqttPassword" style="display: none;">Password:</label>
             <input type="text" id="mqttPassword" autocomplete="off" value="" readonly style="display: none;">
           </div>
           <div class="modal-item">
-            <label for="mqttTLS">TLS Level:</label>
+            <label id="mqttTLS-label" for="mqttTLS">TLS Level:</label>
             <input type="text" id="mqttTLS" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="mqttTLSSecTag">TLS Security Tag:</label>
+            <label id="mqttTLSSecTag-label" for="mqttTLSSecTag">TLS Security Tag:</label>
             <input type="text" id="mqttTLSSecTag" autocomplete="off" value="" readonly>
           </div>
         </div>
         <div class="modal-section">
-          <h3>Node Settings &#9738;</h3>
+          <h3 id="NodeSettings_unite">Node Settings &#9738;</h3>
           <div class="modal-item">
-            <label for="nodeName">Node Name:</label>
+            <label id="nodeName-label" for="nodeName">Node Name:</label>
             <input type="text" id="nodeName" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="reportInterval">Report Interval (sec)</label>
+            <label id="reportInterval-label" for="reportInterval">Report Interval (sec)</label>
             <input type="number" id="reportInterval" autocomplete="off" value="" min="60" max="43200" readonly>
           </div>
           <div class="modal-item">
-            <label for="rebootDelay">Reboot Delay (hr)</label>
+            <label id="rebootDelay-label" for="rebootDelay">Reboot Delay (hr)</label>
             <input type="number" id="rebootDelay" autocomplete="off" value="" min="0" max="240" readonly>
           </div>
           <div class="modal-item">
-            <label for="temperature">Temp:</label>
+            <label id="temperature-label" for="temperature">Temp:</label>
             <input type="text" id="temperature" value="" readonly>
           </div>
           <div class="modal-item">
-            <label for="battery">Battery:</label>
+            <label id="battery-label" for="battery">Battery:</label>
             <input type="text" id="battery" value="" readonly>
           </div>
         </div>
         <div class="modal-section">
-          <h3>GNSS Settings &#128205;</h3>
+          <h3 id="GNSSSettings_unite">GNSS Settings &#128205;</h3>
           <div class="modal-item">
-            <label for="GNSSinterval">Interval (sec):</label>
+            <label id="GNSSinterval-label" for="GNSSinterval">Interval (sec):</label>
             <input type="number" id="GNSSinterval" autocomplete="off" value="" min="0" max="3600" readonly>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button onclick="saveSettings()"
+      <button id="saveSettings_unite" onclick="saveSettings()"
         style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; padding: 15px 25px; border-radius: 10px; border: none; cursor: pointer; transition: background-color 0.3s;">SAVE</button>
     </div>
   </div>
@@ -1743,7 +1743,8 @@
   <!-- Modal Production Setup -->
   <div id="modal_prod_setup" class="modal">
     <div class="modal-header">
-      <h2 style="margin: 0; font-size: 24pt; font-weight: bold;">Production Setup &#128295;</h2>
+      <h2 id="ProductionSetup_label" style="margin: 0; font-size: 24pt; font-weight: bold;">Production Setup &#128295;
+      </h2>
       <div style="display: flex; gap: 10px;">
         <button class="close-btn" onclick="closeProdModal()"
           style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
@@ -1756,7 +1757,7 @@
           <!-- Flex container for heading and refresh button -->
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
             <!-- Live Data on the left -->
-            <h3 style="margin: 0;">Live Data</h3>
+            <h3 id="LiveData_prod" style="margin: 0;">Live Data</h3>
             <!-- Buttons grouped on the right -->
             <div>
               <button onclick="refreshLiveData()"
@@ -1765,21 +1766,25 @@
           </div>
           <table class="modal-item" style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="upTime">Up Time:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="upTime-label" for="upTime">Up Time:</label></td>
               <td style="padding: 10px;"><input type="text" id="upTime" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="coreTemp">Core Temp:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="coreTemp-label" for="coreTemp">Core Temp:</label>
+              </td>
               <td style="padding: 10px;"><input type="text" id="coreTemp" readonly style="width: 150px;"></td>
             </tr>
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="coreMin">Core Min:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="coreMin-label" for="coreMin">Core Min:</label>
+              </td>
               <td style="padding: 10px;"><input type="text" id="coreMin" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="coreMax">Core Max:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="coreMax-label" for="coreMax">Core Max:</label>
+              </td>
               <td style="padding: 10px;"><input type="text" id="coreMax" readonly style="width: 150px;"></td>
             </tr>
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="avgSig">Avg Str:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="avgSig-label" for="avgSig">Avg Str:</label></td>
               <td style="padding: 10px;"><input type="text" id="avgSig" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="capSupply">Caps Supply:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="capSupply-label" for="capSupply">Caps
+                  Supply:</label></td>
               <td style="padding: 10px;"><input type="text" id="capSupply" readonly style="width: 150px;"></td>
             </tr>
           </table>
@@ -1788,38 +1793,40 @@
           <!-- Flex container for heading and refresh button -->
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
             <!-- Accelerometer Settings on the left -->
-            <h3 style="margin: 0;">Accelerometer Settings</h3>
+            <h3 id="AccelerometerSettings_prod" style="margin: 0;">Accelerometer Settings</h3>
             <!-- Buttons grouped on the right -->
             <div>
               <button onclick="refreshAccelerometer()"
                 style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; height: 75px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">&#8634;</button>
-              <button onclick="calibrateAccelerometer()"
+              <button id="Calibrate_prod" onclick="calibrateAccelerometer()"
                 style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; height: 75px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">Calibrate</button>
             </div>
           </div>
           <table class="modal-item" style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="calStat">Cal Status:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="calStat-label" for="calStat">Cal Status:</label>
+              </td>
               <td style="padding: 10px;"><input type="text" id="calStat" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="tiltEnable">Tilt Enable:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="tiltEnable-label" for="tiltEnable">Tilt
+                  Enable:</label></td>
               <td style="padding: 10px;"><input type="text" id="tiltEnable" readonly style="width: 150px;"></td>
             </tr>
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="xMid">X-mid:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="xMid-label" for="xMid">X-mid:</label></td>
               <td style="padding: 10px;"><input type="text" id="xMid" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="xAxis">X-axis:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="xAxis-label" for="xAxis">X-axis:</label></td>
               <td style="padding: 10px;"><input type="text" id="xAxis" readonly style="width: 150px;"></td>
             </tr>
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="yMid">Y-mid:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="yMid-label" for="yMid">Y-mid:</label></td>
               <td style="padding: 10px;"><input type="text" id="yMid" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="yAxis">Y-axis:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="yAxis-label" for="yAxis">Y-axis:</label></td>
               <td style="padding: 10px;"><input type="text" id="yAxis" readonly style="width: 150px;"></td>
             </tr>
             <tr>
-              <td style="padding: 10px; text-align: right;"><label for="zMid">Z-mid:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="zMid-label" for="zMid">Z-mid:</label></td>
               <td style="padding: 10px;"><input type="text" id="zMid" readonly style="width: 150px;"></td>
-              <td style="padding: 10px; text-align: right;"><label for="zAxis">Z-axis:</label></td>
+              <td style="padding: 10px; text-align: right;"><label id="zAxis-label" for="zAxis">Z-axis:</label></td>
               <td style="padding: 10px;"><input type="text" id="zAxis" readonly style="width: 150px;"></td>
             </tr>
           </table>
@@ -1847,61 +1854,61 @@
           </div>
         </div> -->
         <div class="modal-section">
-          <h3>Transducer Settings</h3>
+          <h3 id="TransducerSettings_prod">Transducer Settings</h3>
           <div class="modal-item">
-            <label for="transducerTemp">Transducer Temp:</label>
+            <label id="transducerTemp-label" for="transducerTemp">Transducer Temp:</label>
             <input type="text" id="transducerTemp">
-            <button onclick="setTransducerTemp()"
+            <button id="setTransducerTemp-button" onclick="setTransducerTemp()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SET</button>
-            <button onclick="getTransducerTemp()"
+            <button id="getTransducerTemp-button" onclick="getTransducerTemp()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">GET</button>
           </div>
           <div class="modal-item">
-            <label for="transducerType">Transducer Type:</label>
+            <label id="transducerType-label" for="transducerType">Transducer Type:</label>
             <input type="text" id="transducerType" autocomplete="off">
-            <button onclick="setTransducerType()"
+            <button id="setTransducerType-button" onclick="setTransducerType()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SET</button>
-            <button onclick="getTransducerType()"
+            <button id="getTransducerType-button" onclick="getTransducerType()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">GET</button>
           </div>
           <div class="modal-item">
-            <label for="measurementUnits">Units:</label>
+            <label id="measurementUnits-label" for="measurementUnits">Units:</label>
             <input type="text" id="measurementUnits" autocomplete="off">
-            <button onclick="setMeasurementUnits()"
+            <button id="setMeasurementUnits-label" onclick="setMeasurementUnits()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SET</button>
-            <button onclick="getMeasurementUnits()"
+            <button id="getMeasurementUnits-label" onclick="getMeasurementUnits()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; height: 75px;padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">GET</button>
           </div>
         </div>
         <div class="modal-section">
-          <h3>Reset Unit</h3>
+          <h3 id="ResetUnit_prod">Reset Unit</h3>
           <div class="modal-item" style="justify-content: center;">
-            <button onclick="resetUnit()"
+            <button id="resetUnit-button" onclick="resetUnit()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">Reset
               Unit</button>
           </div>
         </div>
         <div class="modal-section">
-          <h3>Distributor</h3>
+          <h3 id="Distributor_prod">Distributor</h3>
           <div class="modal-item">
-            <label for="distSelect">Distributor:</label>
+            <label id="setDistributor-label" for="distSelect">Distributor:</label>
             <select id="distSelect">
             </select>
             <button onclick="opendistXML()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">&#128193;</button>
-            <button onclick="setdistSelect()"
+            <button id="setdistSelect-button" onclick="setdistSelect()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SET</button>
           </div>
           <div class="modal-item">
-            <label for="distGet">Distributor:</label>
+            <label id="getDistributor-label" for="distGet">Distributor:</label>
             <input type="text" id="distGet" readonly>
             </select>
-            <button onclick="getdistSelect()"
+            <button id="getdistSelect-button" onclick="getdistSelect()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">GET</button>
           </div>
         </div>
         <div class="modal-section">
-          <h3>Default Unit</h3>
+          <h3 id="DefaultUnit_prod">Default Unit</h3>
           <div class="modal-item" style="justify-content: center;">
             <button onclick="defaultUnit()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">Default
@@ -1909,13 +1916,13 @@
           </div>
         </div>
         <div class="modal-section">
-          <h3>Serial Number</h3>
+          <h3 id="SerialNumber_prod">Serial Number</h3>
           <div class="modal-item">
-            <label for="serialNumber">Serial Number:</label>
+            <label id="serialNumber-label" for="serialNumber">Serial Number:</label>
             <input type="text" id="serialNumber" autocomplete="off">
-            <button onclick="setSerialNumber()"
+            <button id="setSerialNumber-label" onclick="setSerialNumber()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SET</button>
-            <button onclick="getSerialNumber()"
+            <button id="getSerialNumber-label" onclick="getSerialNumber()"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">GET</button>
           </div>
         </div>
@@ -1923,7 +1930,7 @@
     </div>
     <!-- Footer -->
     <div class="modal-footer">
-      <button onclick="saveProdSettings()"
+      <button id="saveProdSettings-button" onclick="saveProdSettings()"
         style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 15px 25px; border-radius: 10px; border: none; cursor: pointer; transition: background-color 0.3s;">SAVE
         to Factory Memory</button>
     </div>
@@ -1933,7 +1940,7 @@
   <!-- Modal Production Setup -->
   <div id="modal_BL_setup" class="modal">
     <div class="modal-header">
-      <h2 style="margin: 0; font-size: 24pt; font-weight: bold;">Update Firmware &Uparrow;</h2>
+      <h2 id="UpdateFirmware_head" style="margin: 0; font-size: 24pt; font-weight: bold;">Update Firmware &Uparrow;</h2>
       <div style="display: flex; gap: 10px;">
         <button class="close-btn" onclick="closeBootLoaderModal()"
           style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
@@ -1944,7 +1951,7 @@
         <div class="modal-section">
           <!-- Flex container for heading and buttons -->
           <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-            <h3 style="margin: 0;">Upload Firmware File</h3>
+            <h3 id="UploadFirmwareFile" style="margin: 0;">Upload Firmware File</h3>
             <div style="display: flex; gap: 10px;">
               <!-- File Upload Button -->
               <label for="fileInputHex" id="label-fileInputHex"
@@ -1987,7 +1994,7 @@
         </div>
         <div class="modal-section" id="progressSection" style="justify-content: center;">
           <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-            <h3>Progress</h3>
+            <h3 id="FirmwareProgress">Progress</h3>
             <div class="progress-container"
               style="margin-left: 10px; display: flex; align-items: center; gap: 25px; border: 2px solid black; width: 100%; height: 35px; position: relative; background-color: #ccc;">
               <div id="progressBar"
@@ -2000,7 +2007,7 @@
         </div>
         <div class="modal-section">
           <div class="modal-item" style="justify-content: center;">
-            <button onclick="showLogs();"
+            <button id="showLogs_button" onclick="showLogs();"
               style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">
               Toggle Logs</button>
           </div>

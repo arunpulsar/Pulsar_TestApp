@@ -45,7 +45,7 @@ function openBootLoaderModal() {
 
   // Enable and style the "Start Update" button
   document.getElementById("blstart_button").disabled = false;
-  document.getElementById("blstart_button").textContent = "Start Update";
+  document.getElementById("blstart_button").textContent = lang_map[210];
   document.getElementById("blstart_button").style.backgroundColor = "#F37021";
 
   // Enable and style the file input button for firmware upload
@@ -726,7 +726,7 @@ async function sendNextWrite() {
 
         // Re-enable the start button and reset the UI
         document.getElementById("blstart_button").disabled = false;
-        document.getElementById("blstart_button").textContent = "Start Update";
+        document.getElementById("blstart_button").textContent = lang_map[210];
         document.getElementById("blstart_button").style.backgroundColor = "#F37021";
         document.getElementById("fileInputHex").disabled = false;
         document.getElementById("label-fileInputHex").style.cursor = "pointer";
@@ -786,7 +786,7 @@ async function BLStart() {
   document.getElementById("blstart_button").style.cursor = "default";
 
   // Change start button text and color to indicate the update has started
-  document.getElementById("blstart_button").textContent = "Updating...";
+  document.getElementById("blstart_button").textContent = lang_map[279];
   document.getElementById("blstart_button").style.backgroundColor = "#33B34A"; // Change to Pulsar Green
 
   // Send start command depending on the connection type
