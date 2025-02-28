@@ -1680,7 +1680,7 @@ async function listenRX() {
     while (true) {
       const { value, done } = await reader.read(); // Await data from the UART port
       if (done) {
-        console.log("[readLoop] DONE"); // Log when the reading loop is complete
+        // console.log("[readLoop] DONE"); // Log when the reading loop is complete
         break;
       }
       if (value) {
@@ -1730,7 +1730,7 @@ async function listenRX() {
           // Handle reboot success
           if (receiveBufferASCII.includes("Marking firmware image good...") && reboot_flag === 1) {
             reboot_flag = 0;
-            console.log("Rebooting done!");
+            // console.log("Rebooting done!");
             // clear fields for mqtt and gnss and node settings
             document.getElementById("mqttState").value = "";
             document.getElementById("mqttBrokerHostname").value = "";
@@ -1748,14 +1748,12 @@ async function listenRX() {
             hideLoadingScreen_succesful(); // Hide loading screen on successful reboot
             clearTimeout(rebootTimeout); // Clear the reboot timeout
           } else if (receiveBufferASCII.includes("Marking firmware image good...")) {
-            console.log("Tunnel lost");
+            alert(lang_map[292]);
             setTimeout(reload_webpage, 1000);
           }
           // Process device information if "REFLECT-E" is in the data
           if (hexToAscii(receiveBufferHex).includes("REFLECT-E") && CommandSent === "/DEVINFO") {
             const metrics = parseMetrics(receiveBufferASCII); // Parse the metrics from data
-            console.log(metrics);
-
             // Extract specific device information
             const reflecte_name = metrics.reflect;
             const reflecte_fwversion = metrics.fwversion;
@@ -2163,6 +2161,7 @@ async function processReceivedData() {
     if (hexToAscii(receiveBufferHex).includes("Battery:") && doc_value == "node show") {
       const nodeMetrics = node_parser(hexToAscii(receiveBufferHex));
       document.getElementById("nodeName").value = nodeMetrics.nodeName;
+      // This extracts the minimum time for the reporting interval based on the type of subscription
       report_interval_min = nodeMetrics.subscription.match(/RPT+(\d+)$/)[1];
       document.getElementById("reportInterval").min = report_interval_min;
       document.getElementById("reportInterval").value = nodeMetrics.reportInterval;
@@ -2697,15 +2696,15 @@ async function serialDisconnect() {
     await reader.cancel();
     await reader.releaseLock();
     reader = null;
-    console.log("Reader cancelled and released.");
+    // console.log("Reader cancelled and released.");
     // Reload Webpage is not working for some reason
-    setTimeout(reload_webpage, 1000);
+    // setTimeout(reload_webpage, 1000);
   }
   setTimeout(reload_webpage, 1000);
   if (port) {
     await port.close();
     port = null;
-    console.log("Serial port closed.");
+    // console.log("Serial port closed.");
   }
 }
 async function bleDisconnect() {
@@ -3751,8 +3750,8 @@ function page_lang_switch() {
   document.getElementById("btncloudsetup").innerHTML = lang_map[208] + "⚙";
   document.getElementById("UploadFirmwareFile").innerHTML = lang_map[209];
   document.getElementById("blstart_button").innerHTML = lang_map[210];
-  document.getElementById("hex_fwversion").innerHTML = lang_map[211] + ":";
-  document.getElementById("hex_size").innerHTML = lang_map[212] + ":";
+  document.getElementById("hex_fwversion").innerHTML = lang_map[211];
+  document.getElementById("hex_size").innerHTML = lang_map[212];
   document.getElementById("FirmwareProgress").innerHTML = lang_map[213];
   document.getElementById("showLogs_button").innerHTML = lang_map[214];
   document.getElementById("LiveData_prod").innerHTML = lang_map[215];
@@ -3828,11 +3827,11 @@ function page_lang_switch() {
   document.getElementById("saveSettings_unite").innerHTML = lang_map[273];
   document.getElementById("SendingCommands_label").innerHTML = lang_map[276];
   document.getElementById("SendingCommandsBar_label").innerHTML = lang_map[276];
-  document.getElementById("failed_label").innerHTML = lang_map[277] + "❌";
-  document.getElementById("Successful_label").innerHTML = lang_map[278] + "✔";
+  document.getElementById("failed_label").innerHTML = lang_map[277] + " ❌";
+  document.getElementById("Successful_label").innerHTML = lang_map[278] + " ✔";
   document.getElementById("SystemUptime_unite").innerHTML = lang_map[280];
   document.getElementById("modemOperatorMCCMNC-label").innerHTML = lang_map[281];
-  document.getElementById("UpdateFirmware_head").innerHTML = lang_map[207] + "⇑";
+  document.getElementById("UpdateFirmware_head").innerHTML = lang_map[207] + " ⇑";
 
   clearlog();
   save_curr_lang();
@@ -4515,8 +4514,8 @@ document.getElementById("GNSSinterval-label").innerHTML = lang_map[272] + ":";
 document.getElementById("saveSettings_unite").innerHTML = lang_map[273];
 document.getElementById("SendingCommands_label").innerHTML = lang_map[276];
 document.getElementById("SendingCommandsBar_label").innerHTML = lang_map[276];
-document.getElementById("failed_label").innerHTML = lang_map[277] + "❌";
-document.getElementById("Successful_label").innerHTML = lang_map[278] + "✔";
+document.getElementById("failed_label").innerHTML = lang_map[277] + " ❌";
+document.getElementById("Successful_label").innerHTML = lang_map[278] + " ✔";
 document.getElementById("SystemUptime_unite").innerHTML = lang_map[280];
 document.getElementById("modemOperatorMCCMNC-label").innerHTML = lang_map[281];
-document.getElementById("UpdateFirmware_head").innerHTML = lang_map[207] + "⇑";
+document.getElementById("UpdateFirmware_head").innerHTML = lang_map[207] + " ⇑";

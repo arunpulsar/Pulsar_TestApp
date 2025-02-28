@@ -65,25 +65,25 @@ async function saveSettings() {
 
   // Validate the report interval
   if (Number(reportInterval) < Number(report_interval_min) || Number(reportInterval) > Number(43200)) {
-    alert(`Report interval must be between ${report_interval_min} and 43200 seconds.`);
+    alert(lang_map[283] + ` ${report_interval_min} - 43200`);
     return;
   }
 
   // Validate the APN string length
   if (apnstring.length > 64) {
-    alert("APN name must be less than 64 characters.");
+    alert(lang_map[284]);
     return;
   }
 
   // Validate GNSS interval
-  if (Number(gnssInterval) && Number(gnssInterval) > 3600 && Number(gnssInterval) <= 0) {
-    alert("GNSS interval should be less than 3600 seconds.");
+  if (Number(gnssInterval) < 0 || Number(gnssInterval) > 64800) {
+    alert(lang_map[285]);
     return;
   }
 
   // Validate reboot delay
   if (rebootDelay < 0 && rebootDelay >= 240) {
-    alert("Reboot delay must be between 0 and 240 hours.");
+    alert(lang_map[286]);
     return;
   }
 
@@ -115,19 +115,19 @@ async function saveSettings() {
   }
 
   // Check if node name has changed
-  if (String(nodeName) !== String(previousSettings.nodeName)) {
+  if (nodeName && String(nodeName) !== String(previousSettings.nodeName)) {
     await sendTX(`node name ${nodeName}`);
     await delay(500);
   }
 
   // Check if report interval has changed
-  if (Number(reportInterval) !== previousSettings.reportInterval) {
+  if (reportInterval && Number(reportInterval) !== previousSettings.reportInterval) {
     await sendTX(`node report interval ${reportInterval}`);
     await delay(500);
   }
 
   // Check if APN string has changed
-  if (apnstring !== previousSettings.apnstring) {
+  if (apnstring && apnstring !== previousSettings.apnstring) {
     rebootNeeded = true; // Reboot required
     await sendTX(`modem apn ${apnstring}`);
     await delay(500);
@@ -192,7 +192,7 @@ async function saveSettings() {
   }
 
   // Check if reboot delay has changed
-  if (Number(rebootDelay) && Number(rebootDelay) !== previousSettings.rebootDelay) {
+  if (rebootDelay && Number(rebootDelay) !== previousSettings.rebootDelay) {
     await sendTX(`node reboot delay ${rebootDelay}`);
     await delay(500);
   }
@@ -204,14 +204,20 @@ async function saveSettings() {
   }
 
   // Check if GNSS interval has changed
-  if (Number(gnssInterval) && Number(gnssInterval) !== previousSettings.gnssInterval) {
+  if (gnssInterval && Number(gnssInterval) !== previousSettings.gnssInterval) {
     await sendTX(`gnss interval ${gnssInterval}`);
     await delay(500);
+    if (Number(gnssInterval) == 0) {
+      await sendTX(`gnss stop`);
+      await delay(500);
+      await sendTX(`gnss priority disable`);
+      await delay(500);
+    }
   }
 
   // Handle reboot if needed
   if (rebootNeeded) {
-    if (confirm("Changes require a reboot. Do you want to reboot now?")) {
+    if (confirm(lang_map[288])) {
       reboot_flag = 1;
       await sendTX("reboot");
       CommandSent = "reboot";
@@ -222,7 +228,7 @@ async function saveSettings() {
         hideLoadingScreen_fail();
       }, 100000); // Reboot timeout
     } else {
-      alert("Settings will take effect after the next reboot.");
+      alert(lang_map[287]);
     }
   }
   CommandSent = "update";

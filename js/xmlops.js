@@ -276,7 +276,7 @@ function fetchedit_defaultXML() {
     })
     .catch((error) => {
       console.error("Error fetching XML:", error);
-      alert("Error fetching XML");
+      alert(lang_map[282]);
       hideLoadingScreen_fail();
     });
 }

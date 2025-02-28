@@ -107,10 +107,10 @@ function closeBootLoaderModal() {
  */
 function BLConnect() {
   // Log the connection attempt with a timestamp in yellow for visibility
-  console.log(
-    `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Connecting to Bootloader...`,
-    `color:yellow;`
-  );
+  // console.log(
+  //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Connecting to Bootloader...`,
+  //   `color:yellow;`
+  // );
 
   // Update the log section in the UI to indicate connection initiation
   updateLogSection("Connecting to Bootloader...", "yellow");
@@ -133,10 +133,10 @@ function BLConnect() {
  */
 function BLVersion() {
   // Log the Bootloader version request with a timestamp in yellow for visibility
-  console.log(
-    `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Getting Bootloader version...`,
-    `color:yellow;`
-  );
+  // console.log(
+  //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Getting Bootloader version...`,
+  //   `color:yellow;`
+  // );
 
   // Update the log section in the UI to indicate the request
   updateLogSection("Getting Bootloader version...", "yellow");
@@ -216,12 +216,12 @@ function BLEraseAddr(address) {
  */
 function BLWriteAddr_lowermemory(address, data) {
   // Log the data write attempt with the number of bytes and address
-  console.log(
-    `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Writing ${
-      data.length
-    } bytes to address: ${address}...`,
-    `color: yellow;`
-  );
+  // console.log(
+  //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Writing ${
+  //     data.length
+  //   } bytes to address: ${address}...`,
+  //   `color: yellow;`
+  // );
 
   // Update the log section in the UI to indicate the write operation
   updateLogSection(`Writing ${data.length} bytes to address: ${address}...`, "yellow");
@@ -298,12 +298,12 @@ function BLWriteAddr_lowermemory(address, data) {
  */
 function BLWriteAddr_highermemory(address, data) {
   // Log the data write attempt with the number of bytes and the address
-  console.log(
-    `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Writing ${
-      data.length
-    } bytes to address: ${address}...`,
-    `color: yellow;`
-  );
+  // console.log(
+  //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Writing ${
+  //     data.length
+  //   } bytes to address: ${address}...`,
+  //   `color: yellow;`
+  // );
 
   // Update the log section to indicate the write operation
   updateLogSection(`Writing ${data.length} bytes to address: ${address}...`, "yellow");
@@ -453,20 +453,20 @@ function interpretBLHex(incoming_data, conv) {
     // BLConnect
     if (result.dataBytes[2] == 6) {
       ClearBLConnectInterval(); // Clear the connection interval
-      console.log(
-        `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- Bootloader connected successfully!`,
-        `color:lime`
-      );
+      // console.log(
+      //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- Bootloader connected successfully!`,
+      //   `color:lime`
+      // );
       updateLogSection(`Bootloader connected successfully!`, "lime", "incoming");
 
       // Start the BLVersion interval for version retrieval
       let interval = connectionType === "serial" ? 1250 : 3000; // Set interval dynamically
       startBLVersionInterval(interval);
     } else {
-      console.log(
-        `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- Bootloader connect fail!`,
-        `color:red`
-      );
+      // console.log(
+      //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- Bootloader connect fail!`,
+      //   `color:red`
+      // );
       updateLogSection(`Bootloader connect fail!`, "red", "incoming");
     }
   }
@@ -474,20 +474,20 @@ function interpretBLHex(incoming_data, conv) {
   if (result.command == 2) {
     // BLVersion
     ClearBLVersionInterval(); // Clear the version interval
-    console.log(
-      `%c[${
-        new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
-      }] <- Received Bootloader version successfully: ${result.dataBytes[2]}`,
-      `color:lime`
-    );
+    // console.log(
+    //   `%c[${
+    //     new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
+    //   }] <- Received Bootloader version successfully: ${result.dataBytes[2]}`,
+    //   `color:lime`
+    // );
     updateLogSection(`Received Bootloader version successfully: ${result.dataBytes[2]}`, "lime", "incoming");
 
     // Start erasing at the specified address (12544)
     BLEraseAddr(12544);
-    console.log(
-      `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Erasing at address: 12544...`,
-      `color:yellow;`
-    );
+    // console.log(
+    //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Erasing at address: 12544...`,
+    //   `color:yellow;`
+    // );
     updateLogSection(`Erasing at address: 12544...`, "yellow");
   }
 
@@ -590,22 +590,22 @@ function handleWriteResponse(result) {
   if ((writeStatus === 0 || writeStatus === 2) && result.dataBytes[1] === 0) {
     // If it's the first erase operation, adjust address by adding 65536
     if (init_erase_74240 == true) {
-      console.log(
-        `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- ${
-          result.dataBytes[4]
-        } bytes written successfully at address: ${writeAddress + 65536} ✓`, // Log success message
-        `color:lime;`
-      );
+      // console.log(
+      //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- ${
+      //     result.dataBytes[4]
+      //   } bytes written successfully at address: ${writeAddress + 65536} ✓`, // Log success message
+      //   `color:lime;`
+      // );
       updateLogSection(`${result.dataBytes[4]} bytes written successfully at address: ${writeAddress + 65536} ✓`, "lime", "incoming");
       clearhigher_WriteInterval(); // Clear higher write interval after success
     } else {
       // If it's not the erase operation, log success with the original address
-      console.log(
-        `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- ${
-          result.dataBytes[4]
-        } bytes written successfully at address: ${writeAddress} ✓`, // Log success message
-        `color:lime;`
-      );
+      // console.log(
+      //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] <- ${
+      //     result.dataBytes[4]
+      //   } bytes written successfully at address: ${writeAddress} ✓`, // Log success message
+      //   `color:lime;`
+      // );
       updateLogSection(`${result.dataBytes[4]} bytes written successfully at address: ${writeAddress} ✓`, "lime", "incoming");
       clearlower_WriteInterval(); // Clear lower write interval after success
     }
@@ -632,12 +632,12 @@ function handleEraseResponse(result) {
 
   // Check if the erase operation was successful (status 0 or 2, data byte 1 equals 0)
   if ((eraseStatus === 0 || eraseStatus === 2) && result.dataBytes[1] === 0) {
-    console.log(
-      `%c[${
-        new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
-      }] <- Erase successful at address: ${eraseAddress} ✓`, // Log success message
-      `color:lime`
-    );
+    // console.log(
+    //   `%c[${
+    //     new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
+    //   }] <- Erase successful at address: ${eraseAddress} ✓`, // Log success message
+    //   `color:lime`
+    // );
     updateLogSection(`Erase successful at address: ${eraseAddress} ✓`, "lime", "incoming"); // Update the log section
 
     lastErasedAddress = eraseAddress; // Update the last erased address
@@ -667,10 +667,10 @@ async function sendNextWrite() {
     if (address == 74240 && init_erase_74240 == false) {
       init_erase_74240 = true;
       index--; // Decrement index before erase operation
-      console.log(
-        `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Erasing at address: 74240...`,
-        `color:yellow;`
-      );
+      // console.log(
+      //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Erasing at address: 74240...`,
+      //   `color:yellow;`
+      // );
       updateLogSection(`Erasing at address: 74240...`, "yellow");
       BLEraseAddr(74240); // Trigger the erase at address 74240
     } else {
@@ -683,24 +683,24 @@ async function sendNextWrite() {
 
         // If it's the first erase operation, erase the initial address (12544)
         if (lastErasedAddress === null) {
-          console.log(
-            `%c[${
-              new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
-            }] -> Erasing at address: ${INITIAL_ERASE_ADDRESS} for ${INITIAL_ERASE_SIZE} bytes...`,
-            `color:yellow;`
-          );
+          // console.log(
+          //   `%c[${
+          //     new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
+          //   }] -> Erasing at address: ${INITIAL_ERASE_ADDRESS} for ${INITIAL_ERASE_SIZE} bytes...`,
+          //   `color:yellow;`
+          // );
           updateLogSection(`Erasing at address: ${INITIAL_ERASE_ADDRESS} for ${INITIAL_ERASE_SIZE} bytes...`, "yellow");
           BLEraseAddr(INITIAL_ERASE_ADDRESS); // Trigger erase at the initial address
           lastErasedAddress = INITIAL_ERASE_ADDRESS;
         } else if (writeAddress >= nextEraseBoundary || writeAddress + dataLength > nextEraseBoundary) {
           // If write address crosses erase boundary, trigger another erase
           const nextEraseAddress = lastErasedAddress + (lastErasedAddress === INITIAL_ERASE_ADDRESS ? INITIAL_ERASE_SIZE : ERASE_SIZE);
-          console.log(
-            `%c[${
-              new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
-            }] -> Erasing at address: ${nextEraseAddress} for ${ERASE_SIZE} bytes...`,
-            `color:yellow;`
-          );
+          // console.log(
+          //   `%c[${
+          //     new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()
+          //   }] -> Erasing at address: ${nextEraseAddress} for ${ERASE_SIZE} bytes...`,
+          //   `color:yellow;`
+          // );
           updateLogSection(`Erasing at address: ${nextEraseAddress} for ${ERASE_SIZE} bytes...`, "yellow");
           BLEraseAddr(nextEraseAddress); // Trigger erase at the next address boundary
           lastErasedAddress = nextEraseAddress;
@@ -720,7 +720,7 @@ async function sendNextWrite() {
         const elapsedTimeMs = endTimestamp - startTimestamp;
         const minutes = Math.floor(elapsedTimeMs / 60000);
         const seconds = ((elapsedTimeMs % 60000) / 1000).toFixed(2);
-        console.log(`Elapsed Time for firmware upgrade (mm:ss): ${minutes}:${seconds}`);
+        // console.log(`Elapsed Time for firmware upgrade (mm:ss): ${minutes}:${seconds}`);
         updateLogSection(`Elapsed Time for firmware upgrade (mm:ss): ${minutes}:${seconds}`, "orange");
         updateLogSection(`*********** Completed Successfully ✓ ***********`, "orange");
 
@@ -1029,7 +1029,7 @@ function startBLVersionInterval(intervalDuration) {
   BLVersionintervalID = setInterval(() => {
     // If the counter reaches 5, alert the user and stop further checks
     if (BLVersionCounter >= 5) {
-      alert("Firmware update failed! Please close window and try again!");
+      alert(lang_map[291]);
       ClearBLVersionInterval(); // Clear the interval to stop further checks
       return;
     }
@@ -1065,7 +1065,7 @@ function startBLConnectInterval(intervalDuration) {
   BLConnectintervalID = setInterval(() => {
     // If 5 attempts are reached without success, alert the user and stop further attempts
     if (BLConnectCounter >= 5) {
-      alert("Firmware update failed! Please close window and try again!");
+      alert(lang_map[291]);
       ClearBLConnectInterval(); // Clear the interval and stop attempts
       return;
     }
@@ -1100,7 +1100,7 @@ function startlower_WriteInterval(address, memoryChunk, intervalDuration) {
   lower_writeIntervalId = setInterval(() => {
     // Check if the write attempts have exceeded the limit (5 attempts)
     if (lowerWriteCounter >= 5) {
-      alert("Firmware update failed! Please close window and try again!"); // Show failure alert
+      alert(lang_map[291]); // Show failure alert
       clearlower_WriteInterval(); // Clear the write interval
       return; // Stop further attempts
     }
@@ -1138,7 +1138,7 @@ function starthigher_WriteInterval(address, memoryChunk, intervalDuration) {
   higher_writeIntervalId = setInterval(() => {
     // If the number of retry attempts reaches 5, stop the operation and alert the user
     if (higherWriteCounter >= 5) {
-      alert("Firmware update failed! Please close window and try again!");
+      alert(lang_map[291]);
       clearhigher_WriteInterval(); // Clear the interval and stop further retries
       return;
     }

@@ -169,10 +169,7 @@ var lang_array = [
     English: "2 = Inst. Solid",
     German: "2 = Installation FESTSTOFF",
   },
-  // {    // This should only be introduced to the end. Else all the array numbering needs to be changed
-  //     English: "3 = Inst. Liquid",
-  //     German: "3 = Installation FLÜSSIGKEIT",
-  // },
+
   {
     //Index 34
     English: "4 = Meas. Liquid",
@@ -183,10 +180,6 @@ var lang_array = [
     English: "5 = Meas. Solid",
     German: "5 = Messung FESTSTOFF",
   },
-  // {    // This should only be introduced to the end. Else all the array numbering needs to be changed
-  //     English: "6 = Meas. Solid",
-  //     German: "6 = Messung FESTSTOFF",
-  // },
   {
     //Index 36
     English: "7 = Health",
@@ -1416,5 +1409,60 @@ var lang_array = [
     //Index 281
     English: "MCCMNC",
     German: "MCCMNC",
+  },
+  {
+    //Index 282
+    English: "Error fetching XML",
+    German: "Fehler beim Abrufen von XML",
+  },
+  {
+    //Index 283
+    English: "Report interval must be between:",
+    German: "Das Berichtsintervall muss zwischen Folgendem liegen:",
+  },
+  {
+    //Index 284
+    English: "APN name must be less than 64 characters.",
+    German: "Der APN-Name muss weniger als 64 Zeichen enthalten.",
+  },
+  {
+    //Index 285
+    English: "GNSS interval should be between: 0 - 64800 (recommended > 3600 sec)",
+    German: "Das GNSS-Intervall sollte zwischen 0 und 64800 liegen (empfohlen > 3600 Sek.)",
+  },
+  {
+    //Index 286
+    English: "Reboot delay must be between 0 and 240 hours.",
+    German: "Die Neustartverzögerung muss zwischen 0 und 240 Stunden liegen.",
+  },
+  {
+    //Index 287
+    English: "Settings will take effect after the next reboot.",
+    German: "Die Einstellungen werden nach dem nächsten Neustart übernommen.",
+  },
+  {
+    //Index 288
+    English: "Changes require a reboot. Do you want to reboot now?",
+    German: "Änderungen erfordern einen Neustart. Möchten Sie jetzt neu starten?",
+  },
+  {
+    //Index 289
+    English: "Error: Only .hex files are allowed!",
+    German: "Fehler: Es sind nur .hex-Dateien erlaubt!",
+  },
+  {
+    //Index 290
+    English: "Error parsing Intel HEX file.",
+    German: "Fehler beim Parsen der Intel HEX-Datei.",
+  },
+  {
+    //Index 291
+    English: "Firmware update failed! Please close window and try again!",
+    German: "Firmware-Update fehlgeschlagen! Bitte schließen Sie das Fenster und versuchen Sie es erneut!",
+  },
+  {
+    //Index 292
+    English: "Tunnel lost",
+    German: "Tunnel verloren",
   },
 ];

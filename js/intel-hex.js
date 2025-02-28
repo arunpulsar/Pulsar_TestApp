@@ -207,7 +207,7 @@ function handleFileUpload(event) {
   // Validate the file extension to ensure it's a .hex file
   if (file) {
     if (!file.name.endsWith(".hex")) {
-      alert("Error: Only .hex files are allowed!"); // Alert the user if the file is not a .hex file
+      alert(lang_map[289]); // Alert the user if the file is not a .hex file
       return;
     }
 
@@ -252,7 +252,7 @@ function handleFileUpload(event) {
       fwhex_loaded = false; // Set flag to false if error occurs
       updateLogSection(error.message, "red", "incoming"); // Update the log with error details
       console.error(error.message); // Log the error to the console
-      alert(`Error parsing Intel HEX file.`); // Alert the user of the error
+      alert(lang_map[290]); // Alert the user of the error
     }
   };
 

@@ -147,12 +147,12 @@ function breakpoints(id) {
       CommandSent = "";
     } else {
       // Handle the case where the ID does not match the expected pattern
-      console.log("Invalid ID format. Please ensure the ID is in the correct format (e.g., p610-box).");
+      // console.log("Invalid ID format. Please ensure the ID is in the correct format (e.g., p610-box).");
     }
   } else {
     // Handle the case where the input is not a valid number
     document.getElementById(id).value = "";
-    alert("Please enter a valid number.");
+    alert(lang_map[164]);
   }
 }
 
