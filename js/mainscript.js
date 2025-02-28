@@ -3781,6 +3781,7 @@ function page_lang_switch() {
   document.getElementById("getDistributor-label").innerHTML = lang_map[237];
   document.getElementById("setDistributor-label").innerHTML = lang_map[237];
   document.getElementById("DefaultUnit_prod").innerHTML = lang_map[238];
+  document.getElementById("defaultUnit_button").innerHTML = lang_map[238];
   document.getElementById("SerialNumber_prod").innerHTML = lang_map[239];
   document.getElementById("serialNumber-label").innerHTML = lang_map[239];
   document.getElementById("setTransducerTemp-button").innerHTML = lang_map[240];
@@ -4468,6 +4469,7 @@ document.getElementById("Distributor_prod").innerHTML = lang_map[237];
 document.getElementById("getDistributor-label").innerHTML = lang_map[237];
 document.getElementById("setDistributor-label").innerHTML = lang_map[237];
 document.getElementById("DefaultUnit_prod").innerHTML = lang_map[238];
+document.getElementById("defaultUnit_button").innerHTML = lang_map[238];
 document.getElementById("SerialNumber_prod").innerHTML = lang_map[239];
 document.getElementById("serialNumber-label").innerHTML = lang_map[239];
 document.getElementById("setTransducerTemp-button").innerHTML = lang_map[240];
