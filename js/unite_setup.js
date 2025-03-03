@@ -37,6 +37,7 @@ function closeModal() {
   isEditing = false; // Reset the editing flag
   config_modalUI(0); // Disable the modal UI
   sendTX("host tunnel");
+  cloudModal_open = 0;
 }
 
 /**

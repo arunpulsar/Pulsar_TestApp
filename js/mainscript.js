@@ -2888,7 +2888,7 @@ async function sendTX(data, isHex = false) {
         BootLoader_launced == 0 &&
         stringToSend !== "+++" &&
         stringToSend !== "\r\n" &&
-        !(isTraceOn === 1 && (stringToSend.includes("/P104") || stringToSend.includes("/P605")))
+        !(isTraceOn === 1) // && (stringToSend.includes("/P104") || stringToSend.includes("/P605")))
       ) {
         log(" → " + stringToSend);
       }
