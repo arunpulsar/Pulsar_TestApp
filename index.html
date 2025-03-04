@@ -1556,7 +1556,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;2.0.2<br></p>
+              &alpha;2.0.3<br></p>
           </td>
         </tr>
       </table>
@@ -1661,6 +1661,13 @@
           <div class="modal-item">
             <label id="modemRSRQ-label" for="modemRSRQ">RSRQ:</label>
             <input type="text" id="modemRSRQ" value="" readonly>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3 id="AdvancedShell_unite">SHELL</h3>
+          <div class="modal-item" style="justify-content: center;">
+            <button id="shell_button" onclick="shell_enable()"
+              style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SHELL</button>
           </div>
         </div>
       </div>
@@ -2026,6 +2033,49 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- Footer -->
+    <div class="modal-footer">
+    </div>
+  </div>
+  <div id="modalOverlayshell" class="modal-overlay"></div>
+  <div id="modal_shell" class="modal">
+    <div class="modal-header">
+      <h2 id="shell_head" style="margin: 0; font-size: 24pt; font-weight: bold;">Shell ></h2>
+      <div style="display: flex; gap: 10px;">
+        <button class="close-btn" onclick="closeShellModal()"
+          style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
+      </div>
+    </div>
+    <div class="modal-content" style="display: grid; grid-template-columns: repeat(1, 1fr);">
+      <div class="modal-column">
+        <!-- Modal Section for Sending Command Box -->
+        <div class="modal-section" id="sendShellCommandSection" style="justify-content: center; display: block;">
+          <div class="modal-item"
+            style="justify-content: center; display: flex; align-items: center; width: 100%; padding: 10px;">
+            <input type="text" id="shellInput" placeholder="Enter command here..."
+              style="text-align: left; width: 80%; padding: 10px; font-size: 24pt; border-radius: 5px; border: 1px solid #ccc; background-color: #f4f4f4; color: black; margin-right: 10px; outline: none;"
+              onkeydown="handleshellInputKeyPress(event)">
+            <button id="sendShellCommandButton" onclick="sendShellCommand()"
+              style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">SEND</button>
+          </div>
+        </div>
+        <!-- Modal Section for Log and Shell Container -->
+        <div class="modal-section" id="logSection" style="justify-content: center; display: block;">
+          <div class="modal-item" style="justify-content: center; display: flex; align-items: center; width: 100%;">
+            <div id="shell_container" style="position: relative; display: inline-block; width: 100%;">
+              <div id="shell_textbox" contenteditable="false"
+                style="font-size: 18pt; background-color: black; color: white; padding: 10px 15px; border-radius: 5px; border: none; cursor: text; margin-left: 10px; overflow-y: auto; overflow-x: auto; height: 800px; width: 1700px; white-space: pre-wrap; word-wrap: break-word; outline: none;">
+              </div>
+              <button id="shell_textbox_copyButton" onclick="shell_textbox_copyText()"
+                style="position: absolute; top: 10px; right: 10px; font-size: 16pt; background-color: grey; color: white; height: 50px; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; display: block;">
+                <i class="fa fa-copy"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- Footer -->
     <div class="modal-footer">

@@ -1713,7 +1713,7 @@ async function listenRX() {
           }
 
           // Check for specific messages or commands in the ASCII buffer
-          if (receiveBufferASCII.includes("success")) {
+          if (receiveBufferASCII.includes("success") && CommandSent == "/DEVINFO") {
             // Handle a "success" message by updating the UI and logging messages
             log(lang_map[150]);
             log(lang_map[151]);
@@ -1791,6 +1791,11 @@ async function listenRX() {
             // Process any remaining data asynchronously
             // could log dump here
             // dump_log();
+            if (CommandSent == "log_read" && stop_accum == 0) {
+              store_to_log(receiveBufferASCII);
+            } else {
+              appendShell(receiveBufferASCII);
+            }
             if (!BootLoader_launced) {
               await processReceivedData();
             }
@@ -2607,6 +2612,7 @@ async function incomingData(event) {
           //log(" <- " + sizeof(res) + " "+res);
           //await delay(2 * 1000);
         }
+        //
         // if (string_check.includes("DONE") && doc_value.includes("ACCEL CAL")) {
         //   alert("DONE!");
         // }

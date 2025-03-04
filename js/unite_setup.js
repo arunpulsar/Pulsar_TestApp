@@ -1,5 +1,5 @@
 let isEditing = false; // Flag to track if the settings are being edited
-
+let log_read = "";
 /**
  * Initializes cloud setup by sending a command to the device.
  *
@@ -469,5 +469,120 @@ function config_modalUI(config) {
 
     // Disable select elements
     selectsToToggle.forEach((select) => select.setAttribute("disabled", true));
+  }
+}
+async function shell_enable() {
+  closeModal();
+  await delay(500);
+  openShellModal();
+}
+async function openShellModal() {
+  document.getElementById("modal_shell").style.display = "block";
+  document.getElementById("modalOverlayshell").style.display = "block";
+  document.getElementById("shell_textbox").innerHTML = "";
+  await delay(500);
+  sendTX("+++");
+  CommandSent = "shell_open";
+  shell_open = 1;
+}
+async function closeShellModal() {
+  document.getElementById("modal_shell").style.display = "none";
+  document.getElementById("modalOverlayshell").style.display = "none";
+  await delay(500);
+  sendTX("host tunnel");
+}
+const shellTextbox = document.getElementById("shell_textbox");
+let inputLocked = false; // Prevent multiple inputs at once
+
+// Append text to the shell and display a response (simulating the system's reply)
+function appendShell(response, toSend = false) {
+  const newLine = document.createElement("div");
+  if (toSend) {
+    newLine.style.color = "#F37021";
+  } else {
+    response = parseResponse(response).output;
+    newLine.style.color = "#33B34A";
+  }
+  newLine.textContent = response;
+  document.getElementById("shell_textbox").appendChild(newLine);
+  document.getElementById("shell_textbox").scrollTop = document.getElementById("shell_textbox").scrollHeight;
+}
+
+function parseResponse(rawResponse) {
+  // Remove all ANSI escape sequences
+  const cleaned = rawResponse.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, "");
+
+  // Split into segments using prompt as delimiter
+  const promptRegex = /[a-zA-Z0-9_-]+:~\$\s*/g;
+  const segments = cleaned
+    .split(promptRegex)
+    .map((s) => s.trim())
+    .filter((s) => s !== "");
+
+  const commands = [];
+  const outputs = [];
+  const timestampRegex = /^\[\d{2}:\d{2}:\d{2}\.\d{3},\d{3}\]/;
+
+  for (const segment of segments) {
+    const lines = segment.split("\n").filter((line) => line.trim() !== "");
+    if (lines.length === 0) continue;
+
+    if (timestampRegex.test(lines[0])) {
+      // System-generated output (starts with timestamp)
+      outputs.push(lines.join("\n"));
+    } else {
+      // User command followed by output
+      commands.push(lines[0]);
+      if (lines.length > 1) {
+        outputs.push(lines.slice(1).join("\n"));
+      }
+    }
+  }
+  return {
+    commands: commands,
+    output: outputs.join("\n"),
+  };
+}
+
+function shell_textbox_copyText() {
+  const textBox = document.getElementById("shell_textbox");
+  // Get the text content of the "blTextBox" element (either innerText or textContent)
+  const text = textBox.innerText || textBox.textContent;
+  // Create a temporary text area to hold the text to be copied
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  // Append the text area to the document body to make it selectable
+  document.body.appendChild(textArea);
+  // Select the content inside the text area
+  textArea.select();
+  // Execute the copy command to copy the selected text to the clipboard
+  document.execCommand("copy");
+  // Remove the temporary text area after copying
+  document.body.removeChild(textArea);
+}
+function sendShellCommand() {
+  sendTX(document.getElementById("shellInput").value);
+  appendShell(document.getElementById("shellInput").value, true);
+  CommandSent = "shell_command";
+  if (document.getElementById("shellInput").value.includes("log read")) {
+    CommandSent = "log_read";
+    stop_accum = 0;
+    log_read = "";
+  }
+  document.getElementById("shellInput").value = "";
+}
+function handleshellInputKeyPress(event) {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Prevent the default action
+    sendShellCommand();
+  }
+}
+let stop_accum = 0;
+function store_to_log() {
+  log_read += receiveBufferASCII;
+  if (log_read.includes("End of File")) {
+    stop_accum = 1;
+    appendShell(log_read);
+    log_read = "";
   }
 }
