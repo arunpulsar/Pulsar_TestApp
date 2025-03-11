@@ -398,6 +398,18 @@ async function send_paramset() {
   }
 }
 /**
+ * Get all parameter sets if the login stage is not zero.
+ *
+ * This function executes when the user presses the Generate Param File
+ * button. It checks the login stage and starts with the first parameter
+ * set.
+ */
+function generateParamFile() {
+  if (login_stage) {
+    param_set1_start();
+  }
+}
+/**
  * ================================================================
  * PREVIOUS IMPLEMENTATIONS
  * ================================================================

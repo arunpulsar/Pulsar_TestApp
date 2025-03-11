@@ -494,7 +494,6 @@ async function closeShellModal() {
 const shellTextbox = document.getElementById("shell_textbox");
 let inputLocked = false; // Prevent multiple inputs at once
 
-// Append text to the shell and display a response (simulating the system's reply)
 function appendShell(response, toSend = false) {
   const newLine = document.createElement("div");
   if (toSend) {

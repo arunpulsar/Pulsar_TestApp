@@ -2337,6 +2337,8 @@ function interpretHex(incoming_data) {
         gen_param_button_press = 0;
       }
     } else {
+      // This can be added here to avoid the Unite TXRX issue
+      // await delay(500); // Remember for this the function needs to be async
       echo_start();
     }
   } else if (doc_value == "REFRESH ACCEL") {
