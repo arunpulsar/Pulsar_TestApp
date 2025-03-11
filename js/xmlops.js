@@ -406,7 +406,7 @@ async function send_paramset() {
  */
 function generateParamFile() {
   if (login_stage) {
-    login_stage =4;
+    login_stage = 4;
     param_set1_start();
   }
 }

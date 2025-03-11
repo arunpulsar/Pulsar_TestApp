@@ -42,6 +42,9 @@ function closeProdModal() {
   document.getElementById("serialNumber").value = "";
   document.getElementById("distGet").value = "";
   prodModal_open = 0;
+  document.getElementById("cmd").value = "/ACCESS:" + 0;
+  document.getElementById("cmd").type = "password";
+  send_command();
 }
 
 let timeoutID_accel_cal; // Declare a variable to store the timeout ID for accelerometer calibration

@@ -123,7 +123,6 @@
             </table>
           </div>
         </h4>
-        <!-- IMPORTANT : donot remove this tag-->
         <div class="accordion-item__container">
           <div id="home_tab" style="
                 top: -40%;
@@ -148,8 +147,6 @@
             <div class="form-popup" id="myForm">
               <form action="" class="form-container">
                 <h1>LOGIN</h1>
-                <!-- <label for="email"><b>Email</b></label>
-                                                      <input type="text" placeholder="Enter Email" name="email" required> -->
                 <label for="psw" id="lblpsw"
                   style="font-family:'Segoe UI Normal';  font-size: 24pt; font-style:Normal; font-weight:normal; height:50px; display: inline;""><b>Passcode</b></label>
                                                       <input type=" password" name="pswbox"
@@ -159,7 +156,6 @@
                   <button type="button" id="btnLogin" class="btn"
                     style="font-family:'Segoe UI SemiBold';  font-size: 24pt; font-weight: 500;  "
                     onclick="closeForm(); sendLoginCmd(); closeForm2();  ">LOGIN</button>
-                  <!-- <button type="button" class="btn cancel" onclick="closeForm()">Close</button>  -->
               </form>
             </div>
             <table>
@@ -244,15 +240,6 @@
                 </td>
                 <td>
                   <table id="param-id" style="width: 10%">
-                    <!-- <tr>
-                            <td> -->
-                    <!-- needs to be changed back to label, as we get better control -->
-                    <!-- <div class = "blocks" id='lvl'></div> 
-                              <div class = "blocks" id='dist'></div>
-                              <div class = "blocks" id='sensor_status'></div> -->
-                    <!-- <textarea id="main-params-log" class="textarea3" rows="6" cols="8" style="font-family:'Segoe UI SemiBold';  font-size: 40pt; font-weight: 500; width:380px; height:300px; background: rgb(228, 236, 237); resize:none; border: none;" readonly></textarea>
-                            </td>
-                          </tr> -->
                     <tr>
                       <td>
                         <label id="parameters-label" class="label_default" style="
@@ -417,7 +404,6 @@
             </table>
           </div>
         </h4>
-        <!-- IMPORTANT : donot remove this tag-->
         <div id="trace_tab" style="
               top: -40%;
               left: -20%;
@@ -444,7 +430,6 @@
           </div>
           <div class="accordion-item__container">
             <table style="width: 100%">
-              <!-- check here: start of the trace box -->
               <tr>
                 <td>
                   <div class="chartBox" style="position: left; margin: auto; height: 30rem; width: 52rem">
@@ -456,25 +441,6 @@
                 <script src="./js/hammer.min.js"></script>
                 <script src="./js/chartjs-plugin-zoom.min.js"></script>
               </tr>
-
-              <!-- <tr>
-                <td>
-                    <button type="button" class="button" onclick="sendAT('ATrI'); button_press = 4">
-                        Version
-                    </button>
-                </td>
-                <td></td>
-                 <td>
-                    <button type="button" class="button" onclick="sendAT('AT+PT=1'); button_press = 5">
-                        Enter PT
-                    </button>
-                </td>  
-                  <td>
-                    <button type="button" class="button" onclick="sendAT('GET ECHO'); button_press = 10">
-                        GET ECHO
-                    </button>
-                </td>               
-            </tr> -->
             </table>
             <!-- end of the trace box-->
           </div>
@@ -656,12 +622,7 @@
               </tr>
             </table>
           </div>
-          <!-- Introducing new element here-->
-
-          <!-- Introducing new element here-->
         </h4>
-        <!-- IMPORTANT : donot remove this tag-->
-
         <div class="accordion-item__container">
           <!-- <div id="param_fields_main" style=" width:90%; height:90%; border-style: solid; border-width: 1px; border-radius: 10px;  border-color: rgba(243, 112, 33, 0.952);"> -->
           <div id="param_fields" style="
@@ -709,7 +670,6 @@
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 80px; height: 80px">INDICATOR
                     MODE (P241)</label>
                 </td>
-                <!-- <td><input type="text" id="p241-box" style="font-size: 24pt; font-weight: bold; width:180px; height:80px;" onkeydown="button_press = 19; wasEnter2(this);"></td> -->
                 <td>
                   <select name="p241dropdown" id="p241List"
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 270px; height: 80px"
@@ -718,10 +678,8 @@
                     <option value="1">0 = OFF</option>
                     <option value="2">1 = Inst. Liquid</option>
                     <option value="3">2 = Inst. Solid</option>
-                    <!-- <option value="4"> 3 = Inst. Liquid </option>   -->
                     <option value="5">4 = Meas. Liquid</option>
                     <option value="6">5 = Meas. Solid</option>
-                    <!-- <option value="7"> 6 = Meas. Solid </option>   -->
                     <option value="8">7 = Health</option>
                   </select>
                 </td>
@@ -737,7 +695,6 @@
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 80px; height: 80px">MEASUREMENT
                     MODE (P100)</label>
                 </td>
-                <!-- <td><input type="text" id="p100-box" style="font-size: 24pt; font-weight: bold; width:180px; height:80px;" onkeydown="button_press = 20; wasEnter2(this);"></td> -->
                 <td>
                   <select name="p100dropdown" id="p100List"
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 270px; height: 80px"
@@ -761,7 +718,6 @@
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 80px; height: 80px">MEASUREMENT
                     UNITS (P104)</label>
                 </td>
-                <!-- <td><input type="text" id="p104-box" style="font-size: 24pt; font-weight: bold; width:180px; height:80px;" onkeydown="button_press = 21; wasEnter2(this);"></td> -->
                 <td>
                   <select name="p104dropdown" id="p104List"
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 270px; height: 80px"
@@ -820,7 +776,6 @@
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 80px; height: 80px">FAIL
                     MODE (P808)</label>
                 </td>
-                <!-- <td><input type="text" id="p808-box" style="font-size: 24pt; font-weight: bold; width:180px; height:80px;" onkeydown="button_press = 24; wasEnter2(this);"></td> -->
                 <td>
                   <select name="p808dropdown" id="p808List"
                     style="font-family: 'Segoe UI SemiBold'; font-size: 24pt; font-weight: 500; width: 270px; height: 80px"
@@ -879,7 +834,6 @@
             </tr>
           </table>
         </h4>
-        <!-- IMPORTANT : donot remove this tag-->
         <div class="accordion-item__container">
           <div id="param_fields" style="
                                   left: -40%;
@@ -1531,7 +1485,6 @@
               </tr>
             </thead>
             <tbody id="tableBody" style="text-align: center; font-family: 'Segoe UI'; font-size: 14pt;">
-              <!-- Rows will be inserted here -->
             </tbody>
           </table>
         </div>
@@ -1556,7 +1509,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;2.0.6<br></p>
+              &alpha;2.0.7<br></p>
           </td>
         </tr>
       </table>
@@ -1588,7 +1541,7 @@
   </div>
   <!-- Modal Overlay -->
   <div id="modalOverlay" class="modal-overlay"></div>
-  <!-- Modal Setup -->
+  <!-- Modal Unite Setup -->
   <div id="modal_setup" class="modal">
     <div class="modal-header">
       <h2 id="SystemSetup_unite" style="font-size: 24pt; font-weight: bold;">System Setup &#9881;</h2>
@@ -1944,7 +1897,7 @@
   </div>
   <!-- Modal Overlay -->
   <div id="modalOverlayBL" class="modal-overlay"></div>
-  <!-- Modal Production Setup -->
+  <!-- Modal Bootloader -->
   <div id="modal_BL_setup" class="modal">
     <div class="modal-header">
       <h2 id="UpdateFirmware_head" style="margin: 0; font-size: 24pt; font-weight: bold;">Update Firmware &Uparrow;</h2>
