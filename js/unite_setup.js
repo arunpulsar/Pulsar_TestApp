@@ -576,6 +576,8 @@ function handleshellInputKeyPress(event) {
     sendShellCommand();
   }
 }
+// This function is used to store the log read data in a log_read string, this is done because the log_read
+// data is too large, and sometimes gets cut off due to concurrent characters coming after 50ms
 let stop_accum = 0;
 function store_to_log() {
   log_read += receiveBufferASCII;

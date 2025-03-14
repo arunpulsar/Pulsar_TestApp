@@ -725,7 +725,13 @@ function trace_button_check() {
       clearTimeout(datem_tid);
       clearTimeout(param_tid);
       //p104_tid = setInterval(p104_start, 1000);//5000);
-      param_set1_tid = setInterval(param_set1_start, 500);
+      if (connectionType === "serial") {
+        param_set1_tid = setInterval(param_set1_start, 500);
+      } else if (connectionType === "bluetooth") {
+        contSensorMode_bt();
+        //Increased the interval timer here to 1500 to allow for contSensorMode_bt reply
+        param_set1_tid = setInterval(param_set1_start, 1500);
+      }
       //button_press = 14;
     }
   } else {
@@ -1959,7 +1965,7 @@ async function processReceivedData() {
               // Send a command over AT connection
               sendAT("/P605:" + (selectedValue - 1));
             }
-          }, 500); // Set your desired interval time
+          }, 500);
           CommandSent = "";
         }
       }
@@ -2006,7 +2012,7 @@ async function processReceivedData() {
             // Send a command over AT connection
             sendAT("/P607");
           }
-        }, 500); // Set your desired interval time
+        }, 500);
         CommandSent = "";
       }
     }
@@ -2025,7 +2031,7 @@ async function processReceivedData() {
             // Send a command over AT connection
             sendAT("/P697");
           }
-        }, 500); // Set your desired interval time
+        }, 500);
         CommandSent = "";
       }
     }
@@ -2431,7 +2437,7 @@ async function incomingData(event) {
             sendAT("AT+PWRLVL");
             setTimeout(ptLModeON, 1000);
             // FOR BT DEMO COMMENT THE FOLLOWING
-            setTimeout(trace_button_check, 3000); //2000); // UNDER TEST 1
+            setTimeout(trace_button_check, 5000); //2000); // UNDER TEST 1
           } else {
             // alert(isDisconnecting+" ::"+string_check);
             log(lang_map[70]); //log(" ← Disconnecting");
@@ -2506,7 +2512,7 @@ async function incomingData(event) {
                   // Send a command over AT connection
                   sendAT("/P605:" + (selectedValue - 1));
                 }
-              }, 1500); // Set your desired interval time
+              }, 1500);
               CommandSent = "";
             }
           }
@@ -2530,7 +2536,7 @@ async function incomingData(event) {
                 // Send a command over AT connection
                 sendAT("/P604");
               }
-            }, 1500); // Set your desired interval time
+            }, 1500);
             CommandSent = "";
           }
 
@@ -2552,7 +2558,7 @@ async function incomingData(event) {
                 // Send a command over AT connection
                 sendAT("/P607");
               }
-            }, 1500); // Set your desired interval time
+            }, 1500);
             CommandSent = "";
           }
 
@@ -2574,7 +2580,7 @@ async function incomingData(event) {
                 // Send a command over AT connection
                 sendAT("/P697");
               }
-            }, 1500); // Set your desired interval time
+            }, 1500);
             CommandSent = "";
           }
 
@@ -2623,6 +2629,11 @@ async function incomingData(event) {
   } catch (error) {
     setTimeout(reload_webpage);
   }
+}
+
+function contSensorMode_bt() {
+  sendAT("/P239:5");
+  CommandSent = "/P239:5";
 }
 
 function reload_webpage() {
@@ -2831,6 +2842,10 @@ async function connectToSerialPort() {
     await sendTX("host tunnel");
     await delay(1000); // Delay for 1 second
     await sendTX("Reflect_fw_end");
+    await delay(1000); // Delay for 1 second
+    // Set the sensor mode to 5 to allow for conitnuous pinging on connecting
+    await sendTX("/P239:5");
+    CommandSent = "/P239:5";
     await delay(1000); // Delay for 1 second
     await sendTX("/DEVINFO");
     CommandSent = "/DEVINFO";
