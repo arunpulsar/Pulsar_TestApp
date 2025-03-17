@@ -725,13 +725,13 @@ function trace_button_check() {
       clearTimeout(datem_tid);
       clearTimeout(param_tid);
       //p104_tid = setInterval(p104_start, 1000);//5000);
-      if (connectionType === "serial") {
-        param_set1_tid = setInterval(param_set1_start, 500);
-      } else if (connectionType === "bluetooth") {
-        contSensorMode_bt();
-        //Increased the interval timer here to 1500 to allow for contSensorMode_bt reply
-        param_set1_tid = setInterval(param_set1_start, 1500);
-      }
+      // if (connectionType === "serial") {
+      //   param_set1_tid = setInterval(param_set1_start, 500);
+      // } else if (connectionType === "bluetooth") {
+      contSensorMode_bt();
+      //Increased the interval timer here to 1500 to allow for contSensorMode_bt reply
+      param_set1_tid = setInterval(param_set1_start, 1500);
+      // }
       //button_press = 14;
     }
   } else {
@@ -2632,8 +2632,13 @@ async function incomingData(event) {
 }
 
 function contSensorMode_bt() {
-  sendAT("/P239:5");
-  CommandSent = "/P239:5";
+  if (connectionType === "serial") {
+    sendTX("/P239:5");
+    CommandSent = "/P239:5";
+  } else if (connectionType === "bluetooth") {
+    sendAT("/P239:5");
+    CommandSent = "/P239:5";
+  }
 }
 
 function reload_webpage() {
@@ -2844,9 +2849,9 @@ async function connectToSerialPort() {
     await sendTX("Reflect_fw_end");
     await delay(1000); // Delay for 1 second
     // Set the sensor mode to 5 to allow for conitnuous pinging on connecting
-    await sendTX("/P239:5");
-    CommandSent = "/P239:5";
-    await delay(1000); // Delay for 1 second
+    // await sendTX("/P239:5");
+    // CommandSent = "/P239:5";
+    // await delay(1000); // Delay for 1 second
     await sendTX("/DEVINFO");
     CommandSent = "/DEVINFO";
     await delay(1000); // Delay for 1 second
