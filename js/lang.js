@@ -1362,7 +1362,7 @@ var lang_array = [
   },
   {
     //Index 272
-    English: "Interval(sec)",
+    English: "Interval (sec)",
     German: "Intervall (Sek.)",
   },
   {
@@ -1464,5 +1464,46 @@ var lang_array = [
     //Index 292
     English: "Tunnel lost",
     German: "Tunnel verloren",
+  },
+  {
+    //Index 293
+    English: "Enter a node name",
+    German: "Geben Sie eindeutigen Knotennamen ein",
+  },
+  {
+    //Index 294
+    English: "Enter the interval between reports (max 43200 sec), minimum decided by subscription type",
+    German: "Geben Sie das Intervall zwischen den Berichten ein (maximal 43200 Sekunden), das Minimum wird durch den Abonnementtyp bestimmt",
+  },
+  {
+    //Index 295
+    English: "Enter the delay in hours after which Unite reboots (0 - 240), factory_reset will default",
+    German: "Geben Sie die Verzögerung in Stunden ein, nach der Unite neu gestartet wird (0 - 240), factory_reset wird standardmäßig verwendet",
+  },
+  {
+    //Index 296
+    English: "Enter the interval in seconds after which GNSS updates (0 - 64800), values less than 3600 not recommended",
+    German: "Geben Sie das Intervall in Sekunden ein, nach dem GNSS-Updates erfolgen (0 - 64800), Werte unter 3600 werden nicht empfohlen",
+  },
+  {
+    //Index 297
+    English: "Enter the TLS level (0,1,2,3,4)",
+    German: "Geben Sie das TLS-Level ein (0,1,2,3,4)",
+  },
+  {
+    //Index 298
+    English: "Enter the TLS Security Tag (0,1,2)",
+    German: "Geben Sie das TLS-Sicherheitstag ein (0,1,2)",
+  },
+  {
+    //Index 299
+    English: "Enter APN string (up to 64 characters), usually similar to hostname format",
+    German: "Geben Sie die APN-Zeichenfolge ein (bis zu 64 Zeichen), normalerweise ähnlich dem Hostnamen-Format",
+  },
+  {
+    //Index 300
+    English: "Can be Auto, AT&T, Verizon (case-insensitive) or any 5-6 digit number. factory_reset will reset it to Auto, the default.",
+    German:
+      "Kann Auto, AT&T, Verizon (Groß- und Kleinschreibung ignorierend) oder eine beliebige 5-6 stellige Zahl sein. factory_reset setzt es auf Auto zurück, den Standardwert.",
   },
 ];

@@ -3861,6 +3861,15 @@ function page_lang_switch() {
   document.getElementById("SystemUptime_unite").innerHTML = lang_map[280];
   document.getElementById("modemOperatorMCCMNC-label").innerHTML = lang_map[281];
   document.getElementById("UpdateFirmware_head").innerHTML = lang_map[207] + " ⇑";
+  // label titles
+  document.getElementById("modeOperatorSelect-label").title = lang_map[300];
+  document.getElementById("modemAPN-label").title = lang_map[299];
+  document.getElementById("mqttTLS-label").title = lang_map[297];
+  document.getElementById("mqttTLSSecTag-label").title = lang_map[298];
+  document.getElementById("nodeName-label").title = lang_map[293];
+  document.getElementById("reportInterval-label").title = lang_map[294];
+  document.getElementById("rebootDelay-label").title = lang_map[295];
+  document.getElementById("GNSSinterval-label").title = lang_map[296];
 
   clearlog();
   save_curr_lang();
@@ -4549,3 +4558,13 @@ document.getElementById("Successful_label").innerHTML = lang_map[278] + " ✔";
 document.getElementById("SystemUptime_unite").innerHTML = lang_map[280];
 document.getElementById("modemOperatorMCCMNC-label").innerHTML = lang_map[281];
 document.getElementById("UpdateFirmware_head").innerHTML = lang_map[207] + " ⇑";
+
+// label titles
+document.getElementById("modeOperatorSelect-label").title = lang_map[300];
+document.getElementById("modemAPN-label").title = lang_map[299];
+document.getElementById("mqttTLS-label").title = lang_map[297];
+document.getElementById("mqttTLSSecTag-label").title = lang_map[298];
+document.getElementById("nodeName-label").title = lang_map[293];
+document.getElementById("reportInterval-label").title = lang_map[294];
+document.getElementById("rebootDelay-label").title = lang_map[295];
+document.getElementById("GNSSinterval-label").title = lang_map[296];
