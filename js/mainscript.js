@@ -2126,7 +2126,23 @@ async function processReceivedData() {
         }
         document.getElementById("modemACT").value = modemMetrics.modemACT;
         document.getElementById("modemRSRP").value = modemMetrics.modemRSRP + " dB";
+        if (modemMetrics.modemRSRP > -90) {
+          document.getElementById("modemRSRP").style = "background-color:green"; // Excellent
+        } else if (modemMetrics.modemRSRP >= -105) {
+          document.getElementById("modemRSRP").style = "background-color:yellow"; // Good
+        } else if (modemMetrics.modemRSRP >= -120) {
+          document.getElementById("modemRSRP").style = "background-color:orange"; // Fair
+        } else {
+          document.getElementById("modemRSRP").style = "background-color:red"; // Poor
+        }
         document.getElementById("modemRSRQ").value = modemMetrics.modemRSRQ + " dB";
+        if (modemMetrics.modemRSRQ > -9) {
+          document.getElementById("modemRSRQ").style = "background-color:green"; // Excellent
+        } else if (modemMetrics.modemRSRQ >= -12) {
+          document.getElementById("modemRSRQ").style = "background-color:orange"; // Good
+        } else {
+          document.getElementById("modemRSRQ").style = "background-color:red"; // Fair to Poor
+        }
         // Store the previous selected radio mode
         prevOpSelect = modemMetrics.modemOperatorSelect;
         prevSelectedRadioMode = modemMetrics.modemRadioMode;
@@ -3870,7 +3886,11 @@ function page_lang_switch() {
   document.getElementById("reportInterval-label").title = lang_map[294];
   document.getElementById("rebootDelay-label").title = lang_map[295];
   document.getElementById("GNSSinterval-label").title = lang_map[296];
-
+  document.getElementById("modemACT-label").title = lang_map[301];
+  document.getElementById("modemRSRP-label").title = lang_map[302];
+  document.getElementById("modemRSRQ-label").title = lang_map[303];
+  document.getElementById("modemOperatorMCCMNC-label").title = lang_map[304];
+  document.getElementById("battery-label").title = lang_map[305];
   clearlog();
   save_curr_lang();
 }
@@ -4568,3 +4588,8 @@ document.getElementById("nodeName-label").title = lang_map[293];
 document.getElementById("reportInterval-label").title = lang_map[294];
 document.getElementById("rebootDelay-label").title = lang_map[295];
 document.getElementById("GNSSinterval-label").title = lang_map[296];
+document.getElementById("modemACT-label").title = lang_map[301];
+document.getElementById("modemRSRP-label").title = lang_map[302];
+document.getElementById("modemRSRQ-label").title = lang_map[303];
+document.getElementById("modemOperatorMCCMNC-label").title = lang_map[304];
+document.getElementById("battery-label").title = lang_map[305];

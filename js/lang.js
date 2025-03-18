@@ -322,8 +322,8 @@ var lang_array = [
   },
   {
     //Index 64
-    English: "Device not in Normal mode!",
-    German: "Sensor nicht im normalen Modus!",
+    English: "Device not connected!",
+    German: "Sensor nicht verbunden!",
   },
   {
     //Index 65
@@ -1505,5 +1505,32 @@ var lang_array = [
     English: "Can be Auto, AT&T, Verizon (case-insensitive) or any 5-6 digit number. factory_reset will reset it to Auto, the default.",
     German:
       "Kann Auto, AT&T, Verizon (Groß- und Kleinschreibung ignorierend) oder eine beliebige 5-6 stellige Zahl sein. factory_reset setzt es auf Auto zurück, den Standardwert.",
+  },
+  {
+    //Index 301
+    English: "ACT value (9 for NB-IoT, 7 for LTE-M) determines the modem’s communication protocol on reboot.",
+    German: "Der ACT-Wert (9 für NB-IoT, 7 für LTE-M) bestimmt das Kommunikationsprotokoll des Modems beim Neustart.",
+  },
+  {
+    //Index 302
+    English: "RSRP measures the signal strength of reference signals, with higher values indicating stronger signal reception.",
+    German: "RSRP misst die Signalstärke der Referenzsignale, wobei höhere Werte eine stärkere Signalempfang anzeigen.",
+  },
+  {
+    //Index 303
+    English:
+      "RSRQ evaluates signal quality, considering both signal strength and interference, with higher (less negative) values indicating better quality.",
+    German:
+      "RSRQ bewertet die Signalqualität, indem sowohl die Signalstärke als auch die Interferenz berücksichtigt werden, wobei höhere (weniger negative) Werte eine bessere Qualität anzeigen.",
+  },
+  {
+    //Index 304
+    English: "MCCMNC combines the Mobile Country Code and Mobile Network Code to uniquely identify the network operator.",
+    German: "MCCMNC kombiniert den Mobilfunk-Ländercode und den Mobilfunknetzcode, um den Netzbetreiber eindeutig zu identifizieren.",
+  },
+  {
+    //Index 305
+    English: "Battery levels below 4.2V may cause missed reports, as the radar lacks sufficient power to fire.",
+    German: "Batteriestand unter 4,2 V kann zu verpassten Berichten führen, da dem Radar die ausreichende Energie zum Auslösen fehlt.",
   },
 ];
