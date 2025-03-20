@@ -28,12 +28,14 @@ async function openXML() {
       // Create Uint8Array for different sets of parameters from the parsed data
       const firstSet = createUint8Array(parsedData, 0, 60); // First 60 parameters
       const secondSet = createUint8Array(parsedData, 60, 60); // Next 60 parameters
-      const remainingSet = createUint8Array(parsedData, 120, 38); // Remaining parameters up to 158
+      let remainingCount = parsedData.length - 120;
+      const remainingSet = createUint8Array(parsedData, 120, remainingCount); // Remaining parameters up to 158
 
       // Combine the sets with their respective headers and parameter data
       combined_firstSet = concatenateStringAndUint8Array("/SET1(60):", firstSet);
       combined_secondSet = concatenateStringAndUint8Array("/SET2(60):", secondSet);
-      combined_remainingSet = concatenateStringAndUint8Array("/SET3(38):", remainingSet);
+      let remainingSetHeader = "/SET3(" + remainingCount + "):";
+      combined_remainingSet = concatenateStringAndUint8Array(remainingSetHeader, remainingSet);
     };
 
     // Start reading the selected file as text

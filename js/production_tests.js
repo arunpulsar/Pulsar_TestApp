@@ -82,6 +82,7 @@ function refreshAccelerometer() {
  * This function sends the "/P586" command to query the transducer temperature.
  */
 function getTransducerTemp() {
+  document.getElementById("transducerTemp").value = "";
   sendTX("/P586");
   CommandSent = "temp_query";
 }
@@ -102,6 +103,7 @@ function setTransducerTemp() {
  * This function sends the "/P101" command to query the transducer type.
  */
 function getTransducerType() {
+  document.getElementById("transducerType").value = "";
   sendTX("/P101");
   CommandSent = "transducertype_query";
 }
@@ -122,6 +124,7 @@ function setTransducerType() {
  * This function sends the "/P104" command to query the measurement units.
  */
 function getMeasurementUnits() {
+  document.getElementById("measurementUnits").value = "";
   sendTX("/P104");
   CommandSent = "measurementunits_query";
 }
@@ -142,6 +145,7 @@ function setMeasurementUnits() {
  * This function sends the "/P92" command to query the serial number.
  */
 function getSerialNumber() {
+  document.getElementById("serialNumber").value = "";
   sendTX("/P92");
   CommandSent = "serialnumber_query";
 }
@@ -204,6 +208,7 @@ function setdistSelect() {
  * This function sends the "/P88:1" command to set the default unit on the device.
  */
 function defaultUnit() {
+  document.getElementById("defaultUnit_button").style.backgroundColor = "#FFCE34";
   sendTX("/P88:1");
   CommandSent = "DEFAULT UNIT";
 }
@@ -303,6 +308,7 @@ async function opendistXML() {
 
 // saveProdSettings() is going to send "FACTORY CAL"
 function saveProdSettings() {
+  document.getElementById("saveProdSettings-button").style.backgroundColor = "#FFCE34";
   sendTX("FACTORY CAL");
   CommandSent = "FACTORY CAL";
 }

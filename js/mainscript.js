@@ -2233,6 +2233,12 @@ async function processReceivedData() {
     if (hexToAscii(receiveBufferHex).includes("/P92") && doc_value == "serialnumber_query") {
       document.getElementById("serialNumber").value = Number(hexToAscii(receiveBufferHex).slice(hexToAscii(receiveBufferHex).lastIndexOf(":") + 1));
     }
+    if (hexToAscii(receiveBufferHex).includes("/P88") && doc_value == "DEFAULT UNIT") {
+      document.getElementById("defaultUnit_button").style.backgroundColor = "#F37021";
+    }
+    if (hexToAscii(receiveBufferHex).includes("SAVE OK") && doc_value == "FACTORY CAL") {
+      document.getElementById("saveProdSettings-button").style.backgroundColor = "#F37021";
+    }
     if (doc_value == "GET DIST") {
       const receivedData = hexToAscii(receiveBufferHex).trim();
       document.getElementById("distGet").value = receivedData;
