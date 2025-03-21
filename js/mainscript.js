@@ -2499,6 +2499,7 @@ async function incomingData(event) {
             }
           }
           if (string_check.includes("/P600")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p600_tid`]); // Clear interval once response is received
             await delay(1000);
@@ -2506,6 +2507,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P601")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p601_tid`]);
             await delay(1000);
@@ -2513,6 +2515,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P602")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p602_tid`]);
             await delay(1000);
@@ -2520,6 +2523,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P603")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p603_tid`]);
             await delay(1000);
@@ -2540,6 +2544,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P605")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p605_tid`]);
             await delay(1000);
@@ -2547,6 +2552,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P606")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p606_tid`]);
             await delay(1000);
@@ -2563,6 +2569,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P604")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p604_tid`]);
             await delay(1000);
@@ -2585,6 +2592,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P607")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p607_tid`]);
             await delay(1000);
@@ -2607,6 +2615,7 @@ async function incomingData(event) {
           }
 
           if (string_check.includes("/P697")) {
+            clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p697_tid`]);
             await delay(1000);
