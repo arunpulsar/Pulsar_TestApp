@@ -1921,121 +1921,81 @@ async function processReceivedData() {
     ) {
       log(" ← " + hexToAscii(receiveBufferHex));
     }
-    if (hexToAscii(receiveBufferHex).includes("/P600")) {
+    if (hexToAscii(receiveBufferHex).includes("/P600") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p600_tid`]); // Clear interval once response is received
-      if (c_state == 3) {
-        volume_param("p601-box");
-      }
+      volume_param("p601-box");
     }
-    if (hexToAscii(receiveBufferHex).includes("/P601")) {
+    if (hexToAscii(receiveBufferHex).includes("/P601") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p601_tid`]);
-      if (c_state == 3) {
-        volume_param("p602-box");
-      }
+      volume_param("p602-box");
     }
-    if (hexToAscii(receiveBufferHex).includes("/P602")) {
+    if (hexToAscii(receiveBufferHex).includes("/P602") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p602_tid`]);
-      if (c_state == 3) {
-        volume_param("p603-box");
-      }
+      volume_param("p603-box");
     }
-    if (hexToAscii(receiveBufferHex).includes("/P603")) {
+    if (hexToAscii(receiveBufferHex).includes("/P603") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p603_tid`]);
       var select = document.getElementById("p605List");
       var selectedValue = select.value;
-      if (c_state == 3) {
-        if (selectedValue != 0) {
-          p_tid[`p${605}_tid`] = setInterval(function () {
-            if (connectionType === "serial") {
-              // Send a command over serial connection
-              sendTX("/P605:" + (selectedValue - 1));
-            } else if (connectionType === "bluetooth") {
-              // Send a command over AT connection
-              sendAT("/P605:" + (selectedValue - 1));
-            }
-          }, 500);
-          CommandSent = "";
-        }
-      }
-    }
-    if (hexToAscii(receiveBufferHex).includes("/P605")) {
-      clearTimeout(bar_responseTimeout);
-      updateProgress();
-      await delay(100);
-      clearInterval(p_tid[`p605_tid`]);
-      if (c_state == 3) {
-        volume_param("p606-box");
-      }
-    }
-    if (hexToAscii(receiveBufferHex).includes("/P606")) {
-      clearTimeout(bar_responseTimeout);
-      updateProgress();
-      await delay(100);
-      clearInterval(p_tid[`p606_tid`]);
-      if (c_state == 3) {
-        p_tid[`p${604}_tid`] = setInterval(function () {
-          if (connectionType === "serial") {
-            // Send a command over serial connection
-            sendTX("/P604");
-          } else if (connectionType === "bluetooth") {
-            // Send a command over AT connection
-            sendAT("/P604");
-          }
+      if (selectedValue != 0) {
+        p_tid[`p${605}_tid`] = setInterval(function () {
+          sendTX("/P605:" + (selectedValue - 1));
         }, 500);
         CommandSent = "";
       }
     }
-    if (hexToAscii(receiveBufferHex).includes("/P604")) {
+    if (hexToAscii(receiveBufferHex).includes("/P605") && c_state == 3) {
+      clearTimeout(bar_responseTimeout);
+      updateProgress();
+      await delay(100);
+      clearInterval(p_tid[`p605_tid`]);
+      volume_param("p606-box");
+    }
+    if (hexToAscii(receiveBufferHex).includes("/P606") && c_state == 3) {
+      clearTimeout(bar_responseTimeout);
+      updateProgress();
+      await delay(100);
+      clearInterval(p_tid[`p606_tid`]);
+      p_tid[`p${604}_tid`] = setInterval(function () {
+        sendTX("/P604");
+      }, 500);
+      CommandSent = "";
+    }
+    if (hexToAscii(receiveBufferHex).includes("/P604") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p604_tid`]);
       document.getElementById("p604-box").innerHTML = Number(hexToAscii(receiveBufferHex).slice(hexToAscii(receiveBufferHex).lastIndexOf(":") + 1));
-      if (c_state == 3) {
-        p_tid[`p${607}_tid`] = setInterval(function () {
-          if (connectionType === "serial") {
-            // Send a command over serial connection
-            sendTX("/P607");
-          } else if (connectionType === "bluetooth") {
-            // Send a command over AT connection
-            sendAT("/P607");
-          }
-        }, 500);
-        CommandSent = "";
-      }
+      p_tid[`p${607}_tid`] = setInterval(function () {
+        sendTX("/P607");
+      }, 500);
+      CommandSent = "";
     }
-    if (hexToAscii(receiveBufferHex).includes("/P607")) {
+    if (hexToAscii(receiveBufferHex).includes("/P607") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
       clearInterval(p_tid[`p607_tid`]);
       document.getElementById("p607-box").innerHTML = Number(hexToAscii(receiveBufferHex).slice(hexToAscii(receiveBufferHex).lastIndexOf(":") + 1));
-      if (c_state == 3) {
-        p_tid[`p${697}_tid`] = setInterval(function () {
-          if (connectionType === "serial") {
-            // Send a command over serial connection
-            sendTX("/P697");
-          } else if (connectionType === "bluetooth") {
-            // Send a command over AT connection
-            sendAT("/P697");
-          }
-        }, 500);
-        CommandSent = "";
-      }
+      p_tid[`p${697}_tid`] = setInterval(function () {
+        sendTX("/P697");
+      }, 500);
+      CommandSent = "";
     }
-    if (hexToAscii(receiveBufferHex).includes("/P697")) {
+    if (hexToAscii(receiveBufferHex).includes("/P697") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
       await delay(100);
@@ -2498,7 +2458,7 @@ async function incomingData(event) {
               log(" ← " + string_check);
             }
           }
-          if (string_check.includes("/P600")) {
+          if (string_check.includes("/P600") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p600_tid`]); // Clear interval once response is received
@@ -2506,7 +2466,7 @@ async function incomingData(event) {
             volume_param("p601-box");
           }
 
-          if (string_check.includes("/P601")) {
+          if (string_check.includes("/P601") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p601_tid`]);
@@ -2514,7 +2474,7 @@ async function incomingData(event) {
             volume_param("p602-box");
           }
 
-          if (string_check.includes("/P602")) {
+          if (string_check.includes("/P602") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p602_tid`]);
@@ -2522,7 +2482,7 @@ async function incomingData(event) {
             volume_param("p603-box");
           }
 
-          if (string_check.includes("/P603")) {
+          if (string_check.includes("/P603") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p603_tid`]);
@@ -2531,19 +2491,13 @@ async function incomingData(event) {
             var selectedValue = select.value;
             if (selectedValue != 0) {
               p_tid[`p${605}_tid`] = setInterval(function () {
-                if (connectionType === "serial") {
-                  // Send a command over serial connection
-                  sendTX("/P605:" + (selectedValue - 1));
-                } else if (connectionType === "bluetooth") {
-                  // Send a command over AT connection
-                  sendAT("/P605:" + (selectedValue - 1));
-                }
+                sendAT("/P605:" + (selectedValue - 1));
               }, 1500);
               CommandSent = "";
             }
           }
 
-          if (string_check.includes("/P605")) {
+          if (string_check.includes("/P605") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p605_tid`]);
@@ -2551,24 +2505,18 @@ async function incomingData(event) {
             volume_param("p606-box");
           }
 
-          if (string_check.includes("/P606")) {
+          if (string_check.includes("/P606") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p606_tid`]);
             await delay(1000);
             p_tid[`p${604}_tid`] = setInterval(function () {
-              if (connectionType === "serial") {
-                // Send a command over serial connection
-                sendTX("/P604");
-              } else if (connectionType === "bluetooth") {
-                // Send a command over AT connection
-                sendAT("/P604");
-              }
+              sendAT("/P604");
             }, 1500);
             CommandSent = "";
           }
 
-          if (string_check.includes("/P604")) {
+          if (string_check.includes("/P604") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p604_tid`]);
@@ -2580,18 +2528,12 @@ async function incomingData(event) {
                 .trim()
             );
             p_tid[`p${607}_tid`] = setInterval(function () {
-              if (connectionType === "serial") {
-                // Send a command over serial connection
-                sendTX("/P607");
-              } else if (connectionType === "bluetooth") {
-                // Send a command over AT connection
-                sendAT("/P607");
-              }
+              sendAT("/P607");
             }, 1500);
             CommandSent = "";
           }
 
-          if (string_check.includes("/P607")) {
+          if (string_check.includes("/P607") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p607_tid`]);
@@ -2603,18 +2545,12 @@ async function incomingData(event) {
                 .trim()
             );
             p_tid[`p${697}_tid`] = setInterval(function () {
-              if (connectionType === "serial") {
-                // Send a command over serial connection
-                sendTX("/P697");
-              } else if (connectionType === "bluetooth") {
-                // Send a command over AT connection
-                sendAT("/P697");
-              }
+              sendAT("/P697");
             }, 1500);
             CommandSent = "";
           }
 
-          if (string_check.includes("/P697")) {
+          if (string_check.includes("/P697") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
             clearInterval(p_tid[`p697_tid`]);
@@ -2645,16 +2581,7 @@ async function incomingData(event) {
 
             handle_breakpoint_update(string_check);
           }
-          //alert(string_check + "2");
-          // Log the incoming string (format slightly)
-          //var res=decoder.decode(readInValue).replace('\r','\r <- ').replace('\n','').replace('\0','');
-          //log(" <- " + sizeof(res) + " "+res);
-          //await delay(2 * 1000);
         }
-        //
-        // if (string_check.includes("DONE") && doc_value.includes("ACCEL CAL")) {
-        //   alert("DONE!");
-        // }
       }
     }
   } catch (error) {
