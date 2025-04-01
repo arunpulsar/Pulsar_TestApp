@@ -201,6 +201,8 @@ let currentProgress;
 let targetProgress;
 let totalSteps;
 
+let isReflectE = 0;
+
 let receiveBufferBT = "";
 
 // Resetting all the variables
@@ -699,7 +701,7 @@ function param_set3_start() {
     tids_trace_reset();
   }
 }
-
+let who_timeout;
 function trace_button_check() {
   //log("trace_button_check :"+login_stage);
   if (login_stage == 3 || login_stage == 2) {
@@ -724,15 +726,18 @@ function trace_button_check() {
       clearTimeout(echo_tid);
       clearTimeout(datem_tid);
       clearTimeout(param_tid);
-      //p104_tid = setInterval(p104_start, 1000);//5000);
-      // if (connectionType === "serial") {
-      //   param_set1_tid = setInterval(param_set1_start, 500);
-      // } else if (connectionType === "bluetooth") {
-      contSensorMode_bt();
-      //Increased the interval timer here to 1500 to allow for contSensorMode_bt reply
-      param_set1_tid = setInterval(param_set1_start, 1500);
-      // }
-      //button_press = 14;
+      if (connectionType === "serial") {
+        contSensorMode_bt();
+        param_set1_tid = setInterval(param_set1_start, 1500);
+      } else if (connectionType === "bluetooth") {
+        sendAT("/WHO");
+        CommandSent = "/WHO";
+        isIgnore = 0;
+        who_timeout = setTimeout(function () {
+          isReflectE = 0;
+          param_set1_tid = setInterval(param_set1_start, 1500);
+        }, 2000);
+      }
     }
   } else {
     log(lang_map[64]); //log('Device not in Normal mode!');//log('Device not in passthrough mode!');
@@ -1823,10 +1828,7 @@ async function listenRX() {
 }
 
 function dump_log() {
-  const now = new Date();
-  const formattedTime = now.toISOString(); // ISO 8601 format for a precise timestamp
-  console.log(`[${formattedTime}] Data received (hex): ${receiveBufferHex}`);
-  console.log(`[${formattedTime}] Data received (ASCII): ${receiveBufferASCII}`);
+  console.log(`Data received (ASCII): ${receiveBufferASCII}`);
 }
 
 /**
@@ -2365,7 +2367,7 @@ async function incomingData(event) {
     //alert(login_stage + " " +isIgnore);
     // alert(string_check + "1");
     //log("login_stage="+login_stage+" isIgnore="+isIgnore+" isIgnore_2="+isIgnore_2+" isDisconnecting="+isDisconnecting+" button_press="+button_press);
-    // console.log(string_check);
+    // console.log(`Data received (ASCII): ${string_check}`);
     if (BootLoader_launced) {
       listenRX_BL();
     }
@@ -2458,6 +2460,51 @@ async function incomingData(event) {
               log(" ← " + string_check);
             }
           }
+          if (string_check.includes("REFLECT-E") && doc_value == "/WHO") {
+            document.getElementById("reflecte_devinfo").style.display = "block";
+            document.querySelector(".static_image img").src = "img/Picture1.png";
+            document.getElementById("btngenfile").style.display = "";
+            document.getElementById("btnbl").style.display = "";
+            const reflecte_metrics = parseMetrics(string_check); // Parse the metrics from data
+            // Extract specific device information
+            const reflecte_name = reflecte_metrics.reflect;
+            const reflecte_fwversion = reflecte_metrics.fwversion;
+            const reflecte_access = reflecte_metrics.access;
+
+            // Update UI elements with the received device information
+            document.getElementById("id_title").textContent = "REFLECT-E";
+            document.getElementById("reflecte_devinfo-label").textContent = lang_map[152];
+            document.getElementById("device_title").innerHTML = device.name;
+            document.getElementById("deviceInfo-box").innerText = `REFLECT-E: ${reflecte_name}`;
+            document.getElementById("reflecte_fwversion-box").innerText = `version ${reflecte_fwversion}`;
+
+            // Map reflecte access level to a descriptive string
+            let access_string = "";
+            switch (reflecte_access) {
+              case 1:
+                access_string = lang_map[153];
+                break;
+              case 2:
+                access_string = lang_map[154];
+                break;
+              case 3:
+                access_string = lang_map[155];
+                break;
+              case 4:
+                access_string = lang_map[156];
+                break;
+              default:
+                access_string = lang_map[153];
+                break;
+            }
+            document.getElementById("reflecte_access-box").innerText = access_string;
+            clearTimeout(who_timeout);
+            contSensorMode_bt();
+            param_set1_tid = setInterval(param_set1_start, 3000);
+            isReflectE = 1;
+            // console.log("isReflectE = " + isReflectE);
+          }
+
           if (string_check.includes("/P600") && c_state == 3) {
             clearTimeout(bar_responseTimeout);
             updateProgress();
@@ -2901,6 +2948,12 @@ function toggle_connection_type() {
     //document.querySelector('.static_image img').src = "img/tank1.png";
     document.getElementById("bt_range").style.display = "block";
     document.getElementById("reflecte_devinfo").style.display = "none";
+    document.getElementById("btnopenfile").style.display = "none";
+    document.getElementById("btngenfile").style.display = "none";
+    document.getElementById("btnsendfile").style.display = "none";
+    document.getElementById("btnbl").style.display = "none";
+    document.getElementById("btncloudsetup").style.display = "none";
+    document.getElementById("btnprod").style.display = "none";
     sendTX("+++");
     setTimeout(reload_webpage, 1000);
   } else if (connectionType === "bluetooth") {
@@ -2928,7 +2981,7 @@ async function ble_connect() {
     log(lang_map[79]); ////log('Requesting Bluetooth Device...');
     device = await navigator.bluetooth.requestDevice(options);
     log(lang_map[80] + device.name); ////log('Name: ' + device.name);
-    deviceName = lang_map[0] + ":"; /*'REFLECT: '+ '\n' + device.name;*/
+    deviceName = lang_map[0]; /*'REFLECT: '+ '\n' + device.name;*/
     document.getElementById("id_title").innerHTML = deviceName;
     document.getElementById("device_title").innerHTML = device.name;
     document.getElementById("deviceName-box").value = device.name;
@@ -3038,7 +3091,7 @@ async function sendAT(cmd) {
   // if (commandToSend instanceof Uint8Array) {
   //   console.log("Sending as Uint8Array (hex):", [...commandToSend].map((b) => b.toString(16).padStart(2, "0")).join(" "));
   // } else {
-  //   console.log("Sending as string:", commandToSend);
+  //   console.log("Data Sent (ASCII):", commandToSend);
   // }
 
   try {
@@ -4019,6 +4072,8 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
     document.getElementById("btncloudsetup").style.display = "none";
     document.getElementById("btnopenfile").style.display = "none";
     document.getElementById("btnsendfile").style.display = "none";
+    document.getElementById("btngenfile").style.display = "none";
+    document.getElementById("btnbl").style.display = "none";
   }
 });
 

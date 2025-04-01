@@ -11,7 +11,11 @@ function slideTabs(direction) {
   if (direction === 1 && currentIndex === 0) {
     // Move from the first three tabs to the last two tabs
     currentIndex = totalTabs - 2;
-    visibleTabs = 2;
+    if (isReflectE || connectionType == "serial") {
+      visibleTabs = 2;
+    } else {
+      visibleTabs = 1;
+    }
   } else if (direction === -1 && currentIndex === totalTabs - 2) {
     // Move from the last two tabs back to the first three tabs
     currentIndex = 0;

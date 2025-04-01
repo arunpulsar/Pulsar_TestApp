@@ -982,8 +982,8 @@ var lang_array = [
   },
   {
     //Index 196
-    English: "REFLECT INFORMATION",
-    German: "REFLECT INFORMATIONEN",
+    English: "REFLECT-E INFORMATION",
+    German: "REFLECT-E INFORMATIONEN",
   },
   {
     //Index 197
