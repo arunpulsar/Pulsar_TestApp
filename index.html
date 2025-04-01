@@ -35,6 +35,7 @@
   <script src="js/bootloader.js" defer></script>
   <script src="js/intel-hex.js" defer></script>
   <script src="js/battery_calc.js" defer></script>
+  <script src="js/cloudTunnelSettings.js" defer></script>
   <link rel="icon" type="image/x-icon" href="./img/pulsaricon-rgb64_2.png" />
 </head>
 
@@ -66,11 +67,18 @@
             </div>
           </td>
           <td style="text-align: right; padding-left: 100px">
-            <img id="connectionImage" src="" alt="Connection Type" onclick="toggle_connection_type()"
-              style="cursor: pointer; width: 100px; transition: transform 0.3s, opacity 0.3s; display: none"
-              onmouseover="this.style.opacity=0.7; this.style.transform='scale(1.1)'"
-              onmouseout="this.style.opacity=1; this.style.transform='scale(1)'" />
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img id="connectionImage" src="" alt="Connection Type" onclick="toggle_connection_type()"
+                style="cursor: pointer; width: 100px; transition: transform 0.3s, opacity 0.3s; display: none;"
+                onmouseover="this.style.opacity=0.7; this.style.transform='scale(1.1)'"
+                onmouseout="this.style.opacity=1; this.style.transform='scale(1)'" />
+              <img id="cloudTunnelImg" src="" alt="Cloud Tunnel" onclick="openCloudTunnelSettings()"
+                style="cursor: pointer; width: 100px; transition: transform 0.3s, opacity 0.3s; display: none;"
+                onmouseover="this.style.opacity=0.7; this.style.transform='scale(1.1)'"
+                onmouseout="this.style.opacity=1; this.style.transform='scale(1)'" />
+            </div>
           </td>
+
         </tr>
       </table>
     </section>
@@ -1513,7 +1521,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;2.1.8<br></p>
+              &alpha;2.1.9<br></p>
           </td>
         </tr>
       </table>
@@ -2120,8 +2128,56 @@
     <div class="modal-footer">
     </div>
   </div>
-  <!--  -->
-  <script src="js/script-lr2.js"></script>
+  <!-- Cloud Tunnel Settings -->
+  <div id="modalCloudTunnel" class="modal-overlay"></div>
+  <div id="modal_cloudTunnel" class="modal">
+    <div class="modal-header">
+      <h2 id="cloudTunnel_head" style="margin: 0; font-size: 24pt; font-weight: bold;">Cloud Tunnel Settings</h2>
+      <div style="display: flex; gap: 10px;">
+        <button class="close-btn" onclick="closeCloudTunnelModal()"
+          style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
+      </div>
+    </div>
+    <div class="modal-content" style="display: grid; grid-template-columns: repeat(1, 1fr);">
+      <div class="modal-column">
+        <div class="modal-section">
+          <h3 id="Settings_batt"> Settings &#9881;</h3>
+          <div class="modal-item">
+            <label id="TXTimeoutInterval-label" for="TXTimeoutInterval">TX Timeout Interval:</label>
+            <select id="TXTimeoutInterval">
+              <option value="10 sec (Default)">10 sec (Default)</option>
+              <option value="5 sec">5 sec</option>
+              <option value="15 sec">15 sec</option>
+              <option value="20 sec">20 sec</option>
+              <option value="25 sec">25 sec</option>
+              <option value="30 sec">30 sec</option>
+              <option value="60 sec">60 sec</option>
+              <option value="120 sec">120 sec</option>
+            </select>
+          </div>
+          <div class="modal-item">
+            <label id="toggleCloudTunneling_switch-label" for="toggleCloudTunneling_switch" style="width: 600px;">
+              Cloud Tunneling with selected interval?
+            </label>
+            <label style="position: relative; display: inline-block; width: 80px; height: 44px;">
+              <input type="checkbox" id="toggleSwitch" style="opacity: 0; width: 0; height: 0;">
+              <span id="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; 
+                             background-color: #F37021; transition: .4s; border-radius: 44px; 
+                             display: block;">
+                <span id="circle" style="position: absolute; content: ''; height: 36px; width: 36px; 
+                                   left: 4px; bottom: 4px; background-color: white; transition: .4s; 
+                                   border-radius: 50%; display: block;">
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!--  -->
+    <script src="js/script-lr2.js"></script>
 </body>
 
 </html>

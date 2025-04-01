@@ -2842,10 +2842,6 @@ async function connectToSerialPort() {
     await port.open({ baudRate: baudRate, bufferSize: bufferSize });
     await sendTX("");
     await delay(1000); // Delay for 2 second
-    //await sendTX("node show");
-    //await delay(2000); // Delay for 2 second
-    //await sendTX("modem status");
-    //await delay(2000); // Delay for 2 second
     log(lang_map[159]);
     await sendTX("host tunnel");
     await delay(1000); // Delay for 1 second
@@ -2853,10 +2849,6 @@ async function connectToSerialPort() {
     await delay(1000); // Delay for 1 second
     await sendTX("Reflect_fw_end");
     await delay(1000); // Delay for 1 second
-    // Set the sensor mode to 5 to allow for conitnuous pinging on connecting
-    // await sendTX("/P239:5");
-    // CommandSent = "/P239:5";
-    // await delay(1000); // Delay for 1 second
     await sendTX("/DEVINFO");
     CommandSent = "/DEVINFO";
     await delay(1000); // Delay for 1 second
@@ -2954,15 +2946,20 @@ function toggle_connection_type() {
     document.getElementById("btnbl").style.display = "none";
     document.getElementById("btncloudsetup").style.display = "none";
     document.getElementById("btnprod").style.display = "none";
+    document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+    document.getElementById("cloudTunnelImg").style.display = "none";
     sendTX("+++");
     setTimeout(reload_webpage, 1000);
   } else if (connectionType === "bluetooth") {
     if (navigator.serial) {
       connectionType = "serial";
       document.getElementById("connectionImage").src = "img/usb-disconnected.svg";
+      document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
       //document.querySelector('.static_image img').src = "img/Picture1.png";
       document.getElementById("bt_range").style.display = "none";
       document.getElementById("reflecte_devinfo").style.display = "block";
+      document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+      document.getElementById("cloudTunnelImg").style.display = "block";
       setTimeout(reload_webpage, 1000);
     }
   }
@@ -4060,6 +4057,8 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
   if ("serial" in navigator && connectionType === "serial") {
     document.getElementById("connectionImage").src = "img/usb-disconnected.svg";
     document.getElementById("connectionImage").style.display = "block";
+    document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+    document.getElementById("cloudTunnelImg").style.display = "block";
     document.getElementById("bt_range").style.display = "none";
     document.getElementById("reflecte_devinfo").style.display = "block";
   } else {
@@ -4074,6 +4073,7 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
     document.getElementById("btnsendfile").style.display = "none";
     document.getElementById("btngenfile").style.display = "none";
     document.getElementById("btnbl").style.display = "none";
+    document.getElementById("cloudTunnelImg").style.display = "none";
   }
 });
 

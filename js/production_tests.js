@@ -249,12 +249,6 @@ function setTime() {
 }
 function sendAccess() {
   var select = document.getElementById("access-box");
-  // if (connectionType === "serial") {
-  //   sendTX("/ACCESS:" + select.value);
-  // } else if (connectionType === "bluetooth") {
-  //   sendAT("/ACCESS:" + select.value);
-  // }
-  // CommandSent = "ACCESS";
   document.getElementById("cmd").value = "/ACCESS:" + select.value;
   document.getElementById("cmd").type = "password";
   send_command();

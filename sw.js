@@ -49,6 +49,7 @@ self.addEventListener("install", (e) => {
         "./js/bootloader.js",
         "./js/intel-hex.js",
         "./js/battery_calc.js",
+        "./js/cloudTunnelSettings.js",
         "./img/pulsarlogo.svg",
         "./img/Icon256Reflect_new.png",
         "./img/Picture1.png",
@@ -57,6 +58,8 @@ self.addEventListener("install", (e) => {
         "./img/usb-disconnected.svg",
         "./img/new_bt_disconnected-cropped.svg",
         "./img/new_bt_connected-cropped.svg",
+        "./img/cloud-tunneling-off.svg",
+        "./img/cloud-tunneling-on.svg",
         "./img/tank1.png",
         "./xml/reflect-e_0.1.7_default.xml",
       ]);
