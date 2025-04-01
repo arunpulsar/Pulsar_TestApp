@@ -48,6 +48,7 @@ self.addEventListener("install", (e) => {
         "./js/unite_setup.js",
         "./js/bootloader.js",
         "./js/intel-hex.js",
+        "./js/battery_calc.js",
         "./img/pulsarlogo.svg",
         "./img/Icon256Reflect_new.png",
         "./img/Picture1.png",

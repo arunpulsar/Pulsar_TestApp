@@ -34,6 +34,7 @@
   <script src="js/production_tests.js" defer></script>
   <script src="js/bootloader.js" defer></script>
   <script src="js/intel-hex.js" defer></script>
+  <script src="js/battery_calc.js" defer></script>
   <link rel="icon" type="image/x-icon" href="./img/pulsaricon-rgb64_2.png" />
 </head>
 
@@ -1464,6 +1465,9 @@
             </button>
             <button type="button" id="btncloudsetup" class="button" onclick="cloud_setup();">CLOUD SETTINGS &#9881;
             </button>
+            <button type="button" id="btnbatterycalc" class="button" onclick="openBatteryModal();">BATTERY CALCULATOR
+              &#128267;
+            </button>
           </div>
         </div>
         <div id="tableContainer"
@@ -1509,7 +1513,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;2.1.7<br></p>
+              &alpha;2.1.8<br></p>
           </td>
         </tr>
       </table>
@@ -1539,9 +1543,8 @@
       </div>
     </div>
   </div>
-  <!-- Modal Overlay -->
+  <!-- Unite Setup Modal -->
   <div id="modalOverlay" class="modal-overlay"></div>
-  <!-- Modal Unite Setup -->
   <div id="modal_setup" class="modal">
     <div class="modal-header">
       <h2 id="SystemSetup_unite" style="font-size: 24pt; font-weight: bold;">System Setup &#9881;</h2>
@@ -1698,9 +1701,8 @@
         style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; padding: 15px 25px; border-radius: 10px; border: none; cursor: pointer; transition: background-color 0.3s;">SAVE</button>
     </div>
   </div>
-  <!-- Modal Overlay -->
+  <!-- Production Setup Modal -->
   <div id="modalOverlayProd" class="modal-overlay"></div>
-  <!-- Modal Production Setup -->
   <div id="modal_prod_setup" class="modal">
     <div class="modal-header">
       <h2 id="ProductionSetup_label" style="margin: 0; font-size: 24pt; font-weight: bold;">Production Setup &#128295;
@@ -1888,16 +1890,14 @@
         </div>
       </div>
     </div>
-    <!-- Footer -->
     <div class="modal-footer">
       <button id="saveProdSettings-button" onclick="saveProdSettings()"
         style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 15px 25px; border-radius: 10px; border: none; cursor: pointer; transition: background-color 0.3s;">SAVE
         to Factory Memory</button>
     </div>
   </div>
-  <!-- Modal Overlay -->
+  <!-- Bootloader Modal -->
   <div id="modalOverlayBL" class="modal-overlay"></div>
-  <!-- Modal Bootloader -->
   <div id="modal_BL_setup" class="modal">
     <div class="modal-header">
       <h2 id="UpdateFirmware_head" style="margin: 0; font-size: 24pt; font-weight: bold;">Update Firmware &Uparrow;</h2>
@@ -1987,10 +1987,10 @@
         </div>
       </div>
     </div>
-    <!-- Footer -->
     <div class="modal-footer">
     </div>
   </div>
+  <!-- Shell Modal -->
   <div id="modalOverlayshell" class="modal-overlay"></div>
   <div id="modal_shell" class="modal">
     <div class="modal-header">
@@ -2028,12 +2028,99 @@
           </div>
         </div>
       </div>
-
     </div>
-    <!-- Footer -->
     <div class="modal-footer">
     </div>
   </div>
+  <!-- Battery Calculator -->
+  <div id="modalOverlaybatt" class="modal-overlay"></div>
+  <div id="modal_batt" class="modal">
+    <div class="modal-header">
+      <h2 id="batt_head" style="margin: 0; font-size: 24pt; font-weight: bold;">BATTERY CALCULATOR &#128267;</h2>
+      <div style="display: flex; gap: 10px;">
+        <button class="close-btn" onclick="closeBatteryModal()"
+          style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
+      </div>
+    </div>
+    <div class="modal-content" style="display: grid; grid-template-columns: repeat(1, 1fr);">
+      <div class="modal-column">
+        <div class="modal-section">
+          <h3 id="Settings_batt"> Settings &#9881;</h3>
+          <div class="modal-item">
+            <label id="CellType-label" for="CellType">Cells:</label>
+            <select id="CellType">
+              <option value="2 Cells (Non-Haz)">2 Cells (Non-Haz)</option>
+              <option value="3 Cells (Non-Haz)">3 Cells (Non-Haz)</option>
+              <option value="2 Cells (Haz)">2 Cells (Haz)</option>
+              <option value="3 Cells (Haz)">3 Cells (Haz)</option>
+            </select>
+          </div>
+          <div class="modal-item">
+            <label id="modemRadioMode_batt-label" for="modemRadioMode_batt">Radio Mode:</label>
+            <select id="modemRadioMode_batt">
+              <option value="LTE-M">LTE-M</option>
+              <option value="NB-IoT">NB-IoT</option>
+            </select>
+          </div>
+          <div class="modal-item">
+            <label id="reportInterval_batt-label" for="reportInterval_batt">Report Interval (s):</label>
+            <input type="number" id="reportInterval_batt" autocomplete="off" value="60">
+          </div>
+          <div class="modal-item">
+            <label id="SensorSampleInterval-label" for="SensorSampleInterval">Sensor Sample Interval:</label>
+            <select id="SensorSampleInterval">
+              <option value="Report Interval">Report Interval</option>
+              <option value="1 second">1 second</option>
+              <option value="5 seconds">5 seconds</option>
+              <option value="10 seconds">10 seconds</option>
+              <option value="15 seconds">15 seconds</option>
+              <option value="30 seconds">30 seconds</option>
+              <option value="60 seconds">60 seconds</option>
+            </select>
+          </div>
+          <div class="modal-item">
+            <label id="SensorOnTime-label" for="SensorOnTime">Sensor On Time (s):</label>
+            <input type="number" id="SensorOnTime" style="width: 150px;" value="2" autocomplete="off">
+            <input type="checkbox" id="SensorOnTime-checkbox"
+              style="transform: scale(2.5); margin-right: 30px; margin-left: 30px;" unchecked>
+            <label for="SensorOnTime-checkbox" style="font-size: 28px; width: 250px;">Sensor Always On</label>
+          </div>
+          <div class="modal-item">
+            <label id="GPSUpdateInterval-label" for="GPSUpdateInterval">GPS Update Interval:</label>
+            <select id="GPSUpdateInterval">
+              <option value="Disabled (Default)">Disabled (Default)</option>
+              <option value="1 hour">1 hour</option>
+              <option value="3 hours">3 hours</option>
+              <option value="6 hours">6 hours</option>
+              <option value="12 hours">12 hours</option>
+            </select>
+          </div>
+          <div class="modal-item" style="justify-content: center;">
+            <button id="calcBatt-button" onclick="calculateBatt()"
+              style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white;height: 75px; padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; margin-left: 10px;">Calculate</button>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3 id="PowerConsumption_batt">Power Consumption</h3>
+          <div class="modal-item">
+            <label id="AvgSensorCurrent-label" for="AvgSensorCurrent">Average Sensor Current (mA):</label>
+            <input type="text" id="AvgSensorCurrent" value="4">
+          </div>
+          <div class="modal-item">
+            <label id="BattEst-label" for="BattEst">New Battery Life Estimate:</label>
+            <input type="text" id="BattEst" value="0" readonly>
+          </div>
+          <div class="modal-item">
+            <label id="AvgCurrent-label" for="AvgCurrent">Average Current @ 3.3VDC (mA):</label>
+            <input type="text" id="AvgCurrent" value="0" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+  <!--  -->
   <script src="js/script-lr2.js"></script>
 </body>
 
