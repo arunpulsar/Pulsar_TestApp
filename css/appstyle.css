@@ -412,7 +412,7 @@ td {
   align-items: center;
   justify-content: space-between;
   padding: 20px; /* Added padding */
-  background-color: #28a745; /* Updated background color */
+  background-color: #33b34a; /* Updated background color */
   color: #fff; /* Updated text color */
   border-top-left-radius: 15px; /* Added border radius */
   border-top-right-radius: 15px; /* Added border radius */
@@ -509,7 +509,7 @@ select[disabled]:focus {
 .modal-footer {
   text-align: center; /* Updated text alignment */
   padding: 20px; /* Added padding */
-  background-color: #28a745; /* Added background color */
+  background-color: #33b34a; /* Added background color */
   border-bottom-left-radius: 15px; /* Added border radius */
   border-bottom-right-radius: 15px; /* Added border radius */
 }
