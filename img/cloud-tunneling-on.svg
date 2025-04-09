@@ -1,9 +1,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
 <svg height="256px" width="256px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-66.56 -66.56 645.12 645.12" xml:space="preserve" fill="#000000" stroke="#000000" stroke-width="20.48">
-<g id="SVGRepo_bgCarrier" stroke-width="0">
-<rect x="-66.56" y="-66.56" width="645.12" height="645.12" rx="0" fill="#33B34A" strokewidth="0"/>
-</g>
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier"> <path style="fill:#365072;" d="M417.392,228.328h-7.584c-7.536-31.728-36.128-55.504-70.336-55.504c-8.304,0-16.72,1.824-23.68,4.16 c-16.72-47.472-62.032-81.568-115.44-81.568c-67.616,0-122.448,54.544-122.448,121.84c0,4.24,0.224,8.432,0.64,12.544 C34.112,237.432,0,276.136,0,322.456C0,374.232,42.576,416.6,94.608,416.6h322.784c52.032,0,94.608-42.368,94.608-94.144 C512,270.696,469.424,228.328,417.392,228.328z"/> <polygon style="fill:#33B34A;" points="264.992,359.912 146.592,234.584 193.12,190.648 263.76,265.448 416.368,95.4 464,138.152 "/> </g>
+<g id="SVGRepo_iconCarrier"> <path style="fill:#ffffff;" d="M417.392,161.896h-7.584c-7.536-31.728-36.128-55.504-70.336-55.504c-8.304,0-16.72,1.824-23.68,4.16 c-16.72-47.488-62.032-81.584-115.44-81.584c-67.616,0-122.448,54.544-122.448,121.84c0,4.24,0.224,8.432,0.64,12.544 C34.112,171,0,209.704,0,256.024c0,51.776,42.576,94.144,94.608,94.144h322.784c52.032,0,94.608-42.368,94.608-94.144 C512,204.264,469.424,161.896,417.392,161.896z"/> <circle style="fill:#33B34A;" cx="256" cy="345.576" r="137.456"/> <polygon style="fill:#FFFFFF;" points="231.28,409.704 185.184,360.904 196.8,349.912 230.976,386.088 315.04,292.488 326.944,303.176 "/> </g>
 </svg>
