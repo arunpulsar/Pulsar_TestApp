@@ -1127,10 +1127,10 @@ function Uint8tohex(incoming_data) {
   const doc_value = CommandSent; //document.getElementById('cmd').value;
   for (let i = 0; i < s.byteLength; i++) {
     check = s.getUint8(i);
-    if (i >= 46 && i < 246 && doc_value == "GET ECHO") {
+    if (i >= 46 && i <= 246 && doc_value == "GET ECHO") {
       //(((doc_value == "GET ECHO") && (button_press == 8)) || (button_press == 10))) // Changed from (i >= 42) && (i < 242)
       echo[i - 46] = (check * 1000) / 255; // Changed from echo[i-42]
-    } else if (i >= 46 && i < 246 && doc_value == "GET DATEM") {
+    } else if (i >= 46 && i <= 246 && doc_value == "GET DATEM") {
       //(((doc_value == "GET DATEM") && (button_press == 8)) || (button_press == 11)))  // Changed from (i >= 42) && (i < 242)
       datem[i - 46] = (check * 1000) / 255; // Changed from datem[i-42]
     }
@@ -1235,7 +1235,7 @@ function Uint8tohex(incoming_data) {
     myChart.data.labels = xdata;
     myChart.config.options.scales.x.title.text = p104_units;
     myChart.update();
-  } else if (doc_value == "SENDPART1" && incoming_data.byteLength == 240) {
+  } else if (doc_value == "SENDPART1") {
     offset = 0;
     for (let i = 0; i < 60; i++) {
       param_verify(i);
