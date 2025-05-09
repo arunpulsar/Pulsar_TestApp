@@ -205,6 +205,8 @@ let isReflectE = 0;
 
 let receiveBufferBT = "";
 
+let shouldEncode = true; // Flag to determine if encoding is needed for BT commands
+
 // Resetting all the variables
 function reset_params() {
   button_press = 0;

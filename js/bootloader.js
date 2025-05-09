@@ -121,9 +121,8 @@ function BLConnect() {
     sendTX(BLConn, true);
     CommandSent = "BLConnect"; // Track the last command sent
   } else if (connectionType === "bluetooth") {
-    // Encode and send the bootloader connection command over Bluetooth
-    const toSend_bluetooth = encodeDataWithEscape(BLConn);
-    sendAT(toSend_bluetooth);
+    // Encode and send the bootloader connection command over Bluetooth if needed
+    sendAT(shouldEncode ? encodeDataWithEscape(BLConn) : BLConn);
     CommandSent = "BLConnect"; // Track the last command sent
   }
 }
@@ -147,9 +146,8 @@ function BLVersion() {
     sendTX(BLVer, true);
     CommandSent = "BLVersion"; // Track the last command sent
   } else if (connectionType === "bluetooth") {
-    // Encode and send the bootloader version request over Bluetooth
-    const toSend_bluetooth = encodeDataWithEscape(BLVer);
-    sendAT(toSend_bluetooth);
+    // Encode and send the bootloader version request over Bluetooth if needed
+    sendAT(shouldEncode ? encodeDataWithEscape(BLVer) : BLVer);
     CommandSent = "BLVersion"; // Track the last command sent
   }
 }
@@ -201,8 +199,7 @@ function BLEraseAddr(address) {
     CommandSent = "BLEraseAddr"; // Track the last command sent
   } else if (connectionType === "bluetooth") {
     // Encode and send the erase command over Bluetooth
-    const toSend_bluetooth = encodeDataWithEscape(BLEraser);
-    sendAT(toSend_bluetooth);
+    sendAT(shouldEncode ? encodeDataWithEscape(BLEraser) : BLEraser);
     CommandSent = "BLEraseAddr"; // Track the last command sent
   }
 }
@@ -282,8 +279,7 @@ function BLWriteAddr_lowermemory(address, data) {
     CommandSent = "BLWriteAddr_lowermemory"; // Track the last command sent
   } else if (connectionType === "bluetooth") {
     // Encode and send the write command over Bluetooth
-    const toSend_bluetooth = encodeDataWithEscape(writeCommand);
-    sendAT(toSend_bluetooth);
+    sendAT(shouldEncode ? encodeDataWithEscape(writeCommand) : writeCommand);
     CommandSent = "BLWriteAddr_lowermemory"; // Track the last command sent
   }
 }
@@ -364,8 +360,7 @@ function BLWriteAddr_highermemory(address, data) {
     CommandSent = "BLWriteAddr_highermemory"; // Track the last command sent
   } else if (connectionType === "bluetooth") {
     // Encode and send the write command over Bluetooth
-    const toSend_bluetooth = encodeDataWithEscape(writeCommand);
-    sendAT(toSend_bluetooth);
+    sendAT(shouldEncode ? encodeDataWithEscape(writeCommand) : writeCommand);
     CommandSent = "BLWriteAddr_highermemory"; // Track the last command sent
   }
 }
