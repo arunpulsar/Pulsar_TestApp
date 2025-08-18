@@ -73,7 +73,7 @@ var level_var,
   near_blanking_var,
   far_blanking_var,
   empty_distance,
-  mode_var,
+  //mode_var,  // not used
   bit0,
   bit1,
   bit2,
@@ -114,7 +114,7 @@ near_blanking_var = 0.3;
 far_blanking_var = 20.0; //6.0;
 far_blanking_dist = 7.2;
 empty_distance = 6.0;
-mode_var = 6.0;
+//mode_var = 6.0;  // not used
 p104_units_val = 1;
 p605_units_val = 3;
 p104_units = "m";
@@ -229,7 +229,7 @@ function reset_params() {
   far_blanking_var = 20.0;
   far_blanking_dist = 7.2;
   empty_distance = 6.0;
-  mode_var = 6.0;
+  //mode_var = 6.0; // not used
   p104_units_val = 1;
   p605_units_val = 3;
   p104_units = "m";
@@ -1212,6 +1212,8 @@ function Uint8tohex(incoming_data) {
         ("00" + s.getUint8(45).toString(16)).slice(-2)
     ); //hexToFloat('0x' + ('00' + s.getUint8(50).toString(16)).slice(-2) + ('00' + s.getUint8(51).toString(16)).slice(-2) + ('00' + s.getUint8(52).toString(16)).slice(-2) + ('00' + s.getUint8(53).toString(16)).slice(-2));
     compensated_var_m = convert_to_mtrs(compensated_var);
+    /* 
+    // Not used mode_var any more.
     if (Math.round(compensated_var_m) == 24.0) {
       mode_var = 20.0;
     } else if (compensated_var_m.toFixed(1) == 9.6) {
@@ -1219,11 +1221,12 @@ function Uint8tohex(incoming_data) {
     } else {
       mode_var = 40.0;
     }
+*/
     far_blanking_dist = (empty_distance * (100.0 + far_blanking_var)) / 100.0;
     near_blanking_var = convert_to_measurement_units(near_blanking_var);
     far_blanking_dist = convert_to_measurement_units(far_blanking_dist);
     empty_distance = convert_to_measurement_units(empty_distance);
-    mode_var = convert_to_measurement_units(mode_var);
+    //mode_var = convert_to_measurement_units(mode_var); // not used
 
     var xdata = [];
     xdata[0] = 0.0;
@@ -2275,6 +2278,8 @@ function interpretHex(incoming_data) {
     far_blanking_var = getVal(9.5);
     empty_distance = getVal(10.5);
     compensated_var_m = convert_to_mtrs(compensated_var);
+    /*
+    // Not use mode_var any more.
     if (Math.round(compensated_var_m) == 24.0) {
       mode_var = 20.0;
     } else if (compensated_var_m.toFixed(1) == 9.6) {
@@ -2282,11 +2287,12 @@ function interpretHex(incoming_data) {
     } else {
       mode_var = 40.0;
     }
+*/
     far_blanking_dist = (empty_distance * (100.0 + far_blanking_var)) / 100.0;
     near_blanking_var = convert_to_measurement_units(near_blanking_var);
     far_blanking_dist = convert_to_measurement_units(far_blanking_dist);
     empty_distance = convert_to_measurement_units(empty_distance);
-    mode_var = convert_to_measurement_units(mode_var);
+    //mode_var = convert_to_measurement_units(mode_var); // not used
 
     var xdata = [];
     xdata[0] = 0.0;
@@ -4205,20 +4211,42 @@ var arbitraryLine = {
     ctx.fillStyle = "yellow";
     //ctx.fillRect(x.getPixelForValue(0), top, near_blanking_var*width/compensated_var, height); // Near blanking area (x.getPixelForValue(0), top, 0.3*width/7.2, height)
     start_point = Math.max(x.getPixelForValue(0), left);
-    width_val = Math.max(x.getPixelForValue((near_blanking_var * width) / compensated_var), left) - start_point;
+    //width_val = Math.max(x.getPixelForValue((near_blanking_var * width) / compensated_var), left) - start_point;
+
+    // Show Near blanking area from left to P107
+    width_val = Math.max(x.getPixelForValue((near_blanking_var * 200) / compensated_var), left) - start_point;
     ctx.fillRect(start_point, top, width_val, height); // Near blanking area
 
     //console.log(start_point + ", " + near_blanking_var*width/compensated_var + ", " + width_val);
 
     ctx.fillStyle = "#EFFFE8";
     //ctx.fillRect(x.getPixelForValue((200.0/1.2)*(empty_distance - span_val)/mode_var), top, span_val*width/compensated_var, height); // Span
-    start_point = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * (empty_distance - span_val)) / mode_var), left);
-    width_val = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * empty_distance) / mode_var), left) - start_point;
+    //start_point = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * (empty_distance - span_val)) / mode_var), left);
+    //width_val = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * empty_distance) / mode_var), left) - start_point;
+
+    // Show Span area from Empty distance back to near blanking or P106
+    if (span_val > empty_distance - near_blanking_var) {
+      // Case 1:
+      // If SPAN value is greater than the measuring region.
+      // From Near blanking (P107) to Empty distance (P105)
+      start_point = Math.max(x.getPixelForValue((near_blanking_var * 200) / compensated_var), left);
+    } else {
+      // Case 2:
+      // If SPAN value is smaller than or equal to the measuring region.
+      // On the Trace, it will show a white region between near blanking and span.
+      // Calculate from (Empty distance (P105) - SPAN (P106)) to Empty distance (P105)
+      start_point = Math.max(x.getPixelForValue(((empty_distance - span_val) * 200) / compensated_var), left);
+    }
+    width_val = Math.max(x.getPixelForValue((empty_distance * 200) / compensated_var), left) - start_point;
     ctx.fillRect(start_point, top, width_val, height); // Span
 
     ctx.fillStyle = "yellow";
-    start_point = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * empty_distance) / mode_var), left);
-    width_val = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * far_blanking_dist) / mode_var), left) - start_point;
+    //start_point = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * empty_distance) / mode_var), left);
+    //width_val = Math.max(x.getPixelForValue(((200.0 / ((100.0 + far_blanking_var) / 100.0)) * far_blanking_dist) / mode_var), left) - start_point;
+
+    // Show Far blanking area from Empty distance (P105) to Far blanking % (P108)
+    start_point = Math.max(x.getPixelForValue((empty_distance * 200) / compensated_var), left);
+    width_val = Math.max(x.getPixelForValue((((empty_distance * (100 + far_blanking_var)) / 100) * 200) / compensated_var), left) - start_point;
     ctx.fillRect(start_point, top, width_val, height); // Far blanking area
 
     if (Math.max(x.getPixelForValue((distance_var * 200) / compensated_var), left) <= x.getPixelForValue((distance_var * 200) / compensated_var)) {
