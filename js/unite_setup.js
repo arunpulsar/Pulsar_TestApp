@@ -6,8 +6,15 @@ let log_read = "";
  * This function sends the "+++" command to start the cloud setup process.
  */
 function cloud_setup() {
-  sendTX("+++");
-  CommandSent = "+++";
+  if (connectionType === "serial") {
+    sendTX("+++");
+    CommandSent = "+++";
+  } else if (connectionType === "bluetooth") {
+    cloudModal_open = 1;
+    sendAT("sleep disable", true);
+    CommandSent = "sleep disable";
+    openCloudModal();
+  }
 }
 
 /**
@@ -36,7 +43,13 @@ function closeModal() {
   stopRefresh();
   isEditing = false; // Reset the editing flag
   config_modalUI(0); // Disable the modal UI
-  sendTX("host tunnel");
+
+  CommandSent = "";
+  if (connectionType === "serial") {
+    sendTX("host tunnel");
+  } else if (connectionType == "bluetooth") {
+    contSensorMode_bt();
+  }
   cloudModal_open = 0;
 }
 
@@ -111,26 +124,42 @@ async function saveSettings() {
   // Check if modem radio mode has changed
   if (selectedRadioMode !== previousSettings.selectedRadioMode) {
     rebootNeeded = true; // Reboot required
-    await sendTX(`modem mode ${selectedRadioMode}`);
+    if (connectionType == "serial") {
+      await sendTX(`modem mode ${selectedRadioMode}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`modem mode ${selectedRadioMode}`, true);
+    }
     await delay(500);
   }
 
   // Check if node name has changed
   if (nodeName && String(nodeName) !== String(previousSettings.nodeName)) {
-    await sendTX(`node name ${nodeName}`);
+    if (connectionType == "serial") {
+      await sendTX(`node name ${nodeName}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`node name ${nodeName}`, true);
+    }
     await delay(500);
   }
 
   // Check if report interval has changed
   if (reportInterval && Number(reportInterval) !== previousSettings.reportInterval) {
-    await sendTX(`node report interval ${reportInterval}`);
+    if (connectionType == "serial") {
+      await sendTX(`node report interval ${reportInterval}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`node report interval ${reportInterval}`, true);
+    }
     await delay(500);
   }
 
   // Check if APN string has changed
   if (apnstring && apnstring !== previousSettings.apnstring) {
     rebootNeeded = true; // Reboot required
-    await sendTX(`modem apn ${apnstring}`);
+    if (connectionType == "serial") {
+      await sendTX(`modem apn ${apnstring}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`modem apn ${apnstring}`, true);
+    }
     await delay(500);
   }
 
@@ -146,72 +175,120 @@ async function saveSettings() {
     } else if (eDRX === "Disabled") {
       eDRX = "disable";
     }
-    await sendTX(`modem edrx ${eDRX}`);
+    if (connectionType == "serial") {
+      await sendTX(`modem edrx ${eDRX}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`modem edrx ${eDRX}`, true);
+    }
     await delay(500);
   }
 
   // Check if MQTT broker hostname has changed
   if (mqttBrokerHostname && mqttBrokerHostname !== previousSettings.mqttBrokerHostname) {
     mqttConfigChanged = true;
-    await sendTX(`mqtt hostname ${mqttBrokerHostname}`);
+    if (connectionType == "serial") {
+      await sendTX(`mqtt hostname ${mqttBrokerHostname}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`mqtt hostname ${mqttBrokerHostname}`, true);
+    }
     await delay(500);
   }
 
   // Check if MQTT broker port has changed
   if (mqttBrokerPort && mqttBrokerPort !== String(previousSettings.mqttBrokerPort)) {
     mqttConfigChanged = true;
-    await sendTX(`mqtt port ${mqttBrokerPort}`);
+    if (connectionType == "serial") {
+      await sendTX(`mqtt port ${mqttBrokerPort}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`mqtt port ${mqttBrokerPort}`, true);
+    }
     await delay(500);
   }
 
   // Check if MQTT broker username has changed
   if (mqttBrokerUsername && mqttBrokerUsername !== previousSettings.mqttBrokerUsername) {
     mqttConfigChanged = true;
-    await sendTX(`mqtt username ${mqttBrokerUsername}`);
+    if (connectionType == "serial") {
+      await sendTX(`mqtt username ${mqttBrokerUsername}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`mqtt username ${mqttBrokerUsername}`, true);
+    }
     await delay(500);
   }
 
   // only send the password if it is not hidden (i.e., the user has changed it) and it is not empty
   if (document.getElementById("mqttPassword").style.display !== "none" && mqttBrokerPassword !== "") {
     mqttConfigChanged = true;
-    await sendTX(`mqtt password ${mqttBrokerPassword}`);
+    if (connectionType == "serial") {
+      await sendTX(`mqtt password ${mqttBrokerPassword}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`mqtt password ${mqttBrokerPassword}`, true);
+    }
     await delay(500);
   }
 
   // Check if MQTT TLS level has changed
   if (mqttTLS && mqttTLS !== previousSettings.mqttTLS) {
     mqttConfigChanged = true;
-    await sendTX(`mqtt tls level ${mqttTLS}`);
+    if (connectionType == "serial") {
+      await sendTX(`mqtt tls level ${mqttTLS}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`mqtt tls level ${mqttTLS}`, true);
+    }
     await delay(500);
   }
 
   // Check if MQTT TLS security tag has changed
   if (mqttTLSSec_tag && mqttTLSSec_tag !== previousSettings.mqttTLSSec_tag) {
     mqttConfigChanged = true;
-    await sendTX(`mqtt tls sec_tag ${mqttTLSSec_tag}`);
+    if (connectionType == "serial") {
+      await sendTX(`mqtt tls sec_tag ${mqttTLSSec_tag}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`mqtt tls sec_tag ${mqttTLSSec_tag}`, true);
+    }
     await delay(500);
   }
 
   // Check if reboot delay has changed
   if (rebootDelay && Number(rebootDelay) !== previousSettings.rebootDelay) {
-    await sendTX(`node reboot delay ${rebootDelay}`);
+    if (connectionType == "serial") {
+      await sendTX(`node reboot delay ${rebootDelay}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`node reboot delay ${rebootDelay}`, true);
+    }
     await delay(500);
   }
 
   // Check if operator selection has changed
   if (OperatorSelect && OperatorSelect !== previousSettings.OperatorSelect) {
-    await sendTX(`modem operator ${OperatorSelect}`);
+    if (connectionType == "serial") {
+      await sendTX(`modem operator ${OperatorSelect}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`modem operator ${OperatorSelect}`, true);
+    }
     await delay(500);
   }
 
   // Check if GNSS interval has changed
   if (gnssInterval && Number(gnssInterval) !== previousSettings.gnssInterval) {
-    await sendTX(`gnss interval ${gnssInterval}`);
+    if (connectionType == "serial") {
+      await sendTX(`gnss interval ${gnssInterval}`);
+    } else if (connectionType == "bluetooth") {
+      await sendAT(`gnss interval ${gnssInterval}`, true);
+    }
     await delay(500);
     if (Number(gnssInterval) == 0) {
-      await sendTX(`gnss stop`);
+      if (connectionType == "serial") {
+        await sendTX(`gnss stop`);
+      } else if (connectionType == "bluetooth") {
+        await sendAT(`gnss stop`, true);
+      }
       await delay(500);
-      await sendTX(`gnss priority disable`);
+      if (connectionType == "serial") {
+        await sendTX(`gnss priority disable`);
+      } else if (connectionType == "bluetooth") {
+        await sendAT(`gnss priority disable`, true);
+      }
       await delay(500);
     }
   }
@@ -220,7 +297,11 @@ async function saveSettings() {
   if (rebootNeeded) {
     if (confirm(lang_map[288])) {
       reboot_flag = 1;
-      await sendTX("reboot");
+      if (connectionType == "serial") {
+        await sendTX("reboot");
+      } else if (connectionType == "bluetooth") {
+        await sendAT("reboot", true);
+      }
       CommandSent = "reboot";
       stopRefresh();
       showLoadingScreen();
@@ -241,7 +322,11 @@ async function saveSettings() {
  * This function disables the sleep mode of the device and updates the CommandSent flag.
  */
 function refresh_metrics() {
-  sendTX("sleep disable");
+  if (connectionType === "serial") {
+    sendTX("sleep disable");
+  } else if (connectionType === "bluetooth") {
+    sendAT("sleep disable", true);
+  }
   CommandSent = "sleep disable";
 }
 let intervalId_Refresh;
@@ -251,7 +336,12 @@ let intervalId_Refresh;
  * This function starts an interval to refresh the metrics every 5 seconds.
  */
 function startRefresh() {
-  intervalId_Refresh = setInterval(refresh_metrics, 5000); // Start refreshing every 5 seconds
+  if (connectionType === "serial") {
+    intervalId_Refresh = setInterval(refresh_metrics, 5000); // Start refreshing every 5 seconds
+  } else if (connectionType === "bluetooth") {
+    // Whole refresh process take 30s, so set refresh rate to 60 seconds
+    intervalId_Refresh = setInterval(refresh_metrics, 60 * 1000); // Start refreshing every 60 seconds
+  }
 }
 
 /**
@@ -400,7 +490,12 @@ function mqttTLSSecurityTag_mission() {
  * This function sends the "mqtt connect" command to the device and updates the CommandSent flag.
  */
 function mqttConnect() {
-  sendTX("mqtt connect");
+  if (connectionType == "serial") {
+    sendTX("mqtt connect");
+  } else if (connectionType == "bluetooth") {
+    sendAT("mqtt connect", true);
+  }
+
   CommandSent = "mqtt connect";
 }
 /**
@@ -421,10 +516,18 @@ function togglePassword() {
 }
 function toggleMQTTConnection() {
   if (document.getElementById("mqttState").value === "CONNECTED") {
-    sendTX("mqtt disconnect");
+    if (connectionType == "serial") {
+      sendTX("mqtt disconnect");
+    } else if (connectionType == "bluetooth") {
+      sendAT("mqtt disconnect", true);
+    }
     CommandSent = "mqtt disconnect";
   } else {
-    sendTX("mqtt connect");
+    if (connectionType == "serial") {
+      sendTX("mqtt connect");
+    } else if (connectionType == "bluetooth") {
+      sendAT("mqtt connect", true);
+    }
     CommandSent = "mqtt connect";
   }
 }
@@ -473,6 +576,7 @@ function config_modalUI(config) {
 }
 async function shell_enable() {
   closeModal();
+  shell_open = 1;
   await delay(500);
   openShellModal();
 }
@@ -480,16 +584,34 @@ async function openShellModal() {
   document.getElementById("modal_shell").style.display = "block";
   document.getElementById("modalOverlayshell").style.display = "block";
   document.getElementById("shell_textbox").innerHTML = "";
+  document.getElementById("sendShellCommandButton").disabled = false;
+  document.getElementById("sendShellCommandButton").style.backgroundColor = "#33B34A"; // ON state (Pulsar Green)
+  document.getElementById("sendShellCommandButton").style.cursor = "default";
+  document.getElementById("shellInput").value = "";
+
   await delay(500);
-  sendTX("+++");
+
+  if (connectionType == "serial") {
+    sendTX("+++");
+  }
   CommandSent = "shell_open";
   shell_open = 1;
 }
 async function closeShellModal() {
   document.getElementById("modal_shell").style.display = "none";
   document.getElementById("modalOverlayshell").style.display = "none";
+  CommandSent = "";
+
   await delay(500);
-  sendTX("host tunnel");
+  if (connectionType == "serial") {
+    sendTX("host tunnel");
+  }
+
+  await delay(500);
+  // Change back P239 to 5 for trace/echo
+  contSensorMode_bt();
+
+  shell_open = 0;
 }
 const shellTextbox = document.getElementById("shell_textbox");
 let inputLocked = false; // Prevent multiple inputs at once
@@ -499,7 +621,9 @@ function appendShell(response, toSend = false) {
   if (toSend) {
     newLine.style.color = "#F37021";
   } else {
-    response = parseResponse(response).output;
+    if (connectionType == "serial") {
+      response = parseResponse(response).output;
+    }
     newLine.style.color = "#33B34A";
   }
   newLine.textContent = response;
@@ -559,8 +683,57 @@ function shell_textbox_copyText() {
   // Remove the temporary text area after copying
   document.body.removeChild(textArea);
 }
+
+let sendingShellCommand = 0;
+let lastsendTime = 0;
+let lastreceiveTime = 0;
+let checkShellReply;
+
+function check_ShellReply() {
+  let now = Date.now();
+
+  let elapsed = now - lastreceiveTime;
+
+  if (elapsed > 1000) {
+    //clearInterval(checkShellReply); // Stop the interval using the stored ID
+    document.getElementById("sendShellCommandButton").disabled = false;
+    document.getElementById("sendShellCommandButton").style.backgroundColor = "#33B34A"; // ON state (Pulsar Green)
+    document.getElementById("sendShellCommandButton").style.cursor = "default";
+  }
+}
+
 function sendShellCommand() {
-  sendTX(document.getElementById("shellInput").value);
+  // Send button disabled, not allow to send Shell command
+  if (document.getElementById("sendShellCommandButton").disabled == true) {
+    return;
+  }
+
+  // Not send if input is empty.
+  if (document.getElementById("shellInput").value == "") {
+    return;
+  }
+
+/*
+  // Not yet done, comment it first
+  if (sendingShellCommand == 0) {
+    sendingShellCommand = 1; // Set flag
+    //lastsendTime = Date.now(); // Get current Time
+    checkShellReply = setInterval(check_ShellReply, 1 * 1000); // Check every 1 second.
+  }
+
+  // Disable the "SEND" button
+  document.getElementById("sendShellCommandButton").disabled = true;
+  document.getElementById("sendShellCommandButton").style.backgroundColor = "#F37021"; // OFF state (Pulsar Orange)
+  document.getElementById("sendShellCommandButton").style.cursor = "none"; // Hide cursor
+*/
+
+  if (connectionType == "serial") {
+    sendTX(document.getElementById("shellInput").value);
+  } else if (connectionType == "bluetooth") {
+    sendAT(document.getElementById("shellInput").value, true);
+  }
+
+  // Show the Send command to Shell in orange color
   appendShell(document.getElementById("shellInput").value, true);
   CommandSent = "shell_command";
   if (document.getElementById("shellInput").value.includes("log read")) {
@@ -570,20 +743,33 @@ function sendShellCommand() {
   }
   document.getElementById("shellInput").value = "";
 }
+
 function handleshellInputKeyPress(event) {
   if (event.key === "Enter") {
     event.preventDefault(); // Prevent the default action
     sendShellCommand();
   }
 }
+
 // This function is used to store the log read data in a log_read string, this is done because the log_read
 // data is too large, and sometimes gets cut off due to concurrent characters coming after 50ms
 let stop_accum = 0;
-function store_to_log() {
-  log_read += receiveBufferASCII;
+function store_to_log(inputString) {
+  log_read += inputString;
+
+  // For bluetooth, display it per line
+  if (connectionType == "bluetooth") {
+    lastreceiveTime = Date.now();
+    appendShell(inputString);
+  }
+
   if (log_read.includes("End of File")) {
     stop_accum = 1;
-    appendShell(log_read);
+
+    // For serial/USB, display it as one
+    if (connectionType == "serial") {
+      appendShell(log_read);
+    }
     log_read = "";
   }
 }
