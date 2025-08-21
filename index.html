@@ -1521,7 +1521,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;2.2.5<br></p>
+              &alpha;2.2.6<br></p>
           </td>
         </tr>
       </table>
@@ -1563,17 +1563,17 @@
           style="background-color: red; color: white; border: none; padding: 15px 25px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
       </div>
     </div>
-    <div class="modal-content" style="grid-template-columns: repeat(2, 1fr);">
+    <div id="id_unite_setup_modal" class="modal-content" style="grid-template-columns: repeat(2, 1fr);">
       <!-- Column 1: System Uptime and Modem Status -->
-      <div class="modal-column">
-        <div class="modal-section">
+      <div id="id_unite_setup_modal_column1" class="modal-column">
+        <div id="id_unite_setup_modal_section1" class="modal-section">
           <h3 id="SystemUptime_unite">System Uptime &#9200;</h3>
           <div class="modal-item">
             <label id="uptime-label" for="uptime">Uptime:</label>
             <input type="text" id="uptime" value="" readonly>
           </div>
         </div>
-        <div class="modal-section">
+        <div id="id_unite_setup_modal_section2" class="modal-section">
           <h3 id="ModemStatus_unite">Modem Status &#128246;</h3>
           <div class="modal-item">
             <label id="modemIMEI-label" for="modemIMEI">Modem IMEI:</label>
@@ -1627,7 +1627,7 @@
             <input type="text" id="modemRSRQ" value="" readonly>
           </div>
         </div>
-        <div class="modal-section">
+        <div id="id_unite_setup_modal_section3" class="modal-section">
           <h3 id="AdvancedShell_unite">SHELL</h3>
           <div class="modal-item" style="justify-content: center;">
             <button id="shell_button" onclick="shell_enable()"
@@ -1636,8 +1636,8 @@
         </div>
       </div>
       <!-- Column 2: MQTT Status and Node Settings -->
-      <div class="modal-column">
-        <div class="modal-section">
+      <div id="id_unite_setup_modal_column2" class="modal-column">
+        <div id="id_unite_setup_modal_section4" class="modal-section">
           <h3 id="MQTTStatus_unite">MQTT Status &#9729;</h3>
           <div class="modal-item">
             <label id="mqttState-label" for="mqttState">State:</label>
@@ -1672,7 +1672,7 @@
             <input type="text" id="mqttTLSSecTag" autocomplete="off" value="" readonly>
           </div>
         </div>
-        <div class="modal-section">
+        <div id="id_unite_setup_modal_section5" class="modal-section">
           <h3 id="NodeSettings_unite">Node Settings &#9738;</h3>
           <div class="modal-item">
             <label id="nodeName-label" for="nodeName">Node Name:</label>
@@ -1695,7 +1695,7 @@
             <input type="text" id="battery" value="" readonly>
           </div>
         </div>
-        <div class="modal-section">
+        <div id="id_unite_setup_modal_section6" class="modal-section">
           <h3 id="GNSSSettings_unite">GNSS Settings &#128205;</h3>
           <div class="modal-item">
             <label id="GNSSinterval-label" for="GNSSinterval">Interval (sec):</label>
