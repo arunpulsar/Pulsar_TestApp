@@ -72,10 +72,12 @@
                 style="cursor: pointer; width: 100px; transition: transform 0.3s, opacity 0.3s; display: none;"
                 onmouseover="this.style.opacity=0.7; this.style.transform='scale(1.1)'"
                 onmouseout="this.style.opacity=1; this.style.transform='scale(1)'" />
+<!--      // Comment it, not use anymore
               <img id="cloudTunnelImg" src="" alt="Cloud Tunnel" onclick="openCloudTunnelSettings()"
                 style="cursor: pointer; width: 100px; transition: transform 0.3s, opacity 0.3s; display: none;"
                 onmouseover="this.style.opacity=0.7; this.style.transform='scale(1.1)'"
                 onmouseout="this.style.opacity=1; this.style.transform='scale(1)'" />
+-->
             </div>
           </td>
 
@@ -1521,7 +1523,7 @@
           <td style=" text-align:center;font-size:24px;  background-color:rgb(51, 179, 74);;color:#2e2323;">
             <p
               style="font-family:'Segoe UI Normal';  width: 0%; text-align:right; color:#ffffff; font-size:12pt;line-height:40px; font-style: italic;">
-              &alpha;2.2.8<br></p>
+              &alpha;2.2.9<br></p>
           </td>
         </tr>
       </table>
@@ -1558,7 +1560,7 @@
       <h2 id="SystemSetup_unite" style="font-size: 24pt; font-weight: bold;">System Setup &#9881;</h2>
       <div style="display: flex; gap: 10px;">
         <button class="edit-btn" onclick="edit_metrics()"
-          style="background-color: #f37021; color: white; border: 2px solid black; padding: 15px 25px; font-size: 1.75rem; cursor: pointer; transition: background-color 0.3s; border-radius: 5px;">&#128393;</button>
+          style="background-color: #f37021; color: white; border: 2px solid black; padding: 15px 25px; font-size: 1.75rem; cursor: pointer; transition: background-color 0.3s; border-radius: 5px;">&#9998;</button>
         <button class="close-btn" onclick="closeModal()"
           style="background-color: red; color: white; border: none; padding: 15px 25px; font-size: 2.5rem; cursor: pointer; border-radius: 5px;">&Cross;</button>
       </div>
@@ -1641,9 +1643,9 @@
           <h3 id="MQTTStatus_unite">MQTT Status &#9729;</h3>
           <div class="modal-item">
             <label id="mqttState-label" for="mqttState">State:</label>
-            <input type="text" id="mqttState" value="" readonly>
             <button id="MQTTToggleButton" onclick="toggleMQTTConnection()"
-              style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">&olarr;</button>
+              style="font-size: 35pt; font-weight: bold; background-color: #F37021; color: white; padding: 5px 10px; border-radius: 5px; border: none; cursor: pointer;">&olarr;</button>
+            <input type="text" id="mqttState" value="" readonly>
           </div>
           <div class="modal-item">
             <label id="mqttBrokerHostname-label" for="mqttBrokerHostname">Broker Hostname:</label>
@@ -1654,10 +1656,10 @@
             <input type="text" id="mqttBrokerPort" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
-            <label id="mqttUsername-label" for="mqttUsername">Username:</label>
-            <input type="text" id="mqttUsername" autocomplete="off" value="" readonly>
+            <label id="mqttUsername-label" for="mqttUsername">User-name:</label>
             <button id="PasswordtoggleButton" disabled="true" onclick="togglePassword()"
-              style="font-size: 24pt; font-weight: bold; background-color: #F37021; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">*</button>
+              style="font-size: 40pt; font-weight: bold; background-color: #F37021; color: white; padding: 5px 15px; border-radius: 5px; border: none; cursor: pointer;">*</button>
+            <input type="text" id="mqttUsername" autocomplete="off" value="" readonly>
           </div>
           <div class="modal-item">
             <label id="mqttPassword-label" for="mqttPassword" style="display: none;">Password:</label>

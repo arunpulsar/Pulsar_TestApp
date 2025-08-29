@@ -1307,7 +1307,7 @@ var lang_array = [
   },
   {
     //Index 261
-    English: "Username",
+    English: "User-name",
     German: "Benutzername",
   },
   {

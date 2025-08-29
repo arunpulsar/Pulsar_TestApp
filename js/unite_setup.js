@@ -35,17 +35,47 @@ function openCloudModal() {
     navigator.userAgent.match(/iPad|iPod|iPhone/i) || // Using iPhone
     navigator.userAgent.match(/Android/i) || // Using android phone
     navigator.userAgent.match(/BlackBerry/i) || // Using Blackberry
-    navigator.userAgent.match(/IEMobile/i) // Using window phone
+    navigator.userAgent.match(/IEMobile/i) || // Using window phone
+    navigator.userAgent.match(/Opera Mini/i) // Using Opera browser in android
   ) {
     document.getElementById("id_unite_setup_modal").style.padding = "0px";
-    document.getElementById("id_unite_setup_modal_column1").style = "width : 600px; padding: 0px;";
-    document.getElementById("id_unite_setup_modal_column2").style = "width : 600px; padding: 0px;";
+    document.getElementById("id_unite_setup_modal_column1").style = "width : 460px; padding: 0px;";
+    document.getElementById("id_unite_setup_modal_column2").style = "width : 460px; padding: 0px;";
     document.getElementById("id_unite_setup_modal_section1").style.padding = "10px";
     document.getElementById("id_unite_setup_modal_section2").style.padding = "10px";
     document.getElementById("id_unite_setup_modal_section3").style.padding = "10px";
     document.getElementById("id_unite_setup_modal_section4").style.padding = "10px";
     document.getElementById("id_unite_setup_modal_section5").style.padding = "10px";
     document.getElementById("id_unite_setup_modal_section6").style.padding = "10px";
+
+    document.getElementById("uptime").style.width = "310px";
+    document.getElementById("modemIMEI").style.width = "310px";
+    document.getElementById("modemState").style.width = "310px";
+    document.getElementById("modeOperatorSelect").style.width = "310px";
+
+    document.getElementById("modemRadioMode-label").style.width = "150px";
+    document.getElementById("modemRadioMode").style.width = "350px";
+
+    document.getElementById("modemeDRX-label").style.width = "150px";
+    document.getElementById("modemeDRX").style.width = "330px";
+
+    document.getElementById("modemOperatorMCCMNC").style.width = "300px";
+    document.getElementById("modemOperatorName").style.width = "320px";
+    document.getElementById("modemACT").style.width = "300px";
+    document.getElementById("modemRSRP").style.width = "300px";
+    document.getElementById("modemRSRQ").style.width = "300px";
+
+    document.getElementById("mqttState").style.width = "290px";
+    document.getElementById("mqttBrokerHostname").style.width = "290px";
+    document.getElementById("mqttBrokerPort").style.width = "290px";
+    document.getElementById("mqttUsername").style.width = "290px";
+    document.getElementById("mqttPassword").style.width = "290px";
+    document.getElementById("mqttTLS").style.width = "290px";
+    document.getElementById("mqttTLSSecTag").style.width = "290px";
+
+    document.getElementById("nodeName").style.width = "290px";
+    document.getElementById("temperature").style.width = "251px";
+    document.getElementById("battery").style.width = "251px";
   }
 }
 
@@ -608,7 +638,8 @@ async function openShellModal() {
     navigator.userAgent.match(/iPad|iPod|iPhone/i) || // Using iPhone
     navigator.userAgent.match(/Android/i) || // Using android phone
     navigator.userAgent.match(/BlackBerry/i) || // Using Blackberry
-    navigator.userAgent.match(/IEMobile/i) // Using window phone
+    navigator.userAgent.match(/IEMobile/i) || // Using window phone
+    navigator.userAgent.match(/Opera Mini/i) // Using Opera browser in Android
   ) {
     document.getElementById("shell_textbox").style.height = "500px";
     document.getElementById("shell_textbox").style.width = "800px";

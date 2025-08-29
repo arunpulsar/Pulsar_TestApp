@@ -2933,6 +2933,10 @@ async function incomingData(event) {
               }
             }
 
+            // To restore the width
+            var prewidth1 = document.getElementById("modemRSRP").style.width;
+            var prewidth2 = document.getElementById("modemRSRQ").style.width;
+
             if (string_check.includes("Modem RSRP:")) {
               if (modemMetrics.modemState.includes("ONLINE")) {
                 // Show Modem RSRP in dBm
@@ -2947,6 +2951,7 @@ async function incomingData(event) {
                 } else {
                   document.getElementById("modemRSRP").style = "background-color:red"; // Poor
                 }
+                document.getElementById("modemRSRP").style.width = prewidth1;
               }
             }
 
@@ -2962,6 +2967,7 @@ async function incomingData(event) {
                 } else {
                   document.getElementById("modemRSRQ").style = "background-color:red"; // Fair to Poor
                 }
+                document.getElementById("modemRSRQ").style.width = prewidth2;
               }
             }
 
@@ -3579,20 +3585,20 @@ function toggle_connection_type() {
     document.getElementById("btnbl").style.display = "none";
     document.getElementById("btncloudsetup").style.display = "none";
     document.getElementById("btnprod").style.display = "none";
-    document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
-    document.getElementById("cloudTunnelImg").style.display = "none";
+    //document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+    //document.getElementById("cloudTunnelImg").style.display = "none";
     sendTX("+++");
     setTimeout(reload_webpage, 1000);
   } else if (connectionType === "bluetooth") {
     if (navigator.serial) {
       connectionType = "serial";
       document.getElementById("connectionImage").src = "img/usb-disconnected.svg";
-      document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+      //document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
       //document.querySelector('.static_image img').src = "img/Picture1.png";
       document.getElementById("bt_range").style.display = "none";
       document.getElementById("reflecte_devinfo").style.display = "block";
-      document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
-      document.getElementById("cloudTunnelImg").style.display = "block";
+      //document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+      //document.getElementById("cloudTunnelImg").style.display = "block";
       setTimeout(reload_webpage, 1000);
     }
   }
@@ -3684,7 +3690,7 @@ async function sendAT(cmd, IsShell = false) {
   if (IsShell == true) {
     cmd = "bt_shell," + cmd;
   }
-/*
+  /*
   // ----------------------------------------------------------------------
   // For debug in console only
   const now = new Date();
@@ -3695,7 +3701,7 @@ async function sendAT(cmd, IsShell = false) {
   const localTimeWithMs = `${hours}:${minutes}:${seconds}.${milliseconds}`;
   console.log(localTimeWithMs + " - BT->" + cmd);
   // -----------------------------------------------------------------------
-*/
+  */
   CommandSent = cmd;
   if (cmd === "AT+PWRLVL") {
     cmd_sent = "AT+PWRLVL";
@@ -4712,8 +4718,8 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
   if ("serial" in navigator && connectionType === "serial") {
     document.getElementById("connectionImage").src = "img/usb-disconnected.svg";
     document.getElementById("connectionImage").style.display = "block";
-    document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
-    document.getElementById("cloudTunnelImg").style.display = "block";
+    //document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
+    //document.getElementById("cloudTunnelImg").style.display = "block";
     document.getElementById("bt_range").style.display = "none";
     document.getElementById("reflecte_devinfo").style.display = "block";
   } else {
@@ -4728,7 +4734,7 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
     document.getElementById("btnsendfile").style.display = "none";
     document.getElementById("btngenfile").style.display = "none";
     document.getElementById("btnbl").style.display = "none";
-    document.getElementById("cloudTunnelImg").style.display = "none";
+    //document.getElementById("cloudTunnelImg").style.display = "none";
   }
 });
 
