@@ -150,6 +150,15 @@ var lang_map = lang_array.map((a) => a.English);
 var param_num = param_info.map((a) => a.pnum);
 var param_val = param_info.map((a) => a.pvalue);
 
+// For REFLECT-E LED UI
+var LED_ON_time = 0;   // unit in ms.
+var LED_OFF_time = 0;  // unit in ms.
+var LED_color = "Off";
+var LED_color_src = "img/pulsarlogo_off.svg"; // To store the img name for different color
+var LED_ON_tid;
+var LED_OFF_tid;
+var LED_POLL_tid;
+
 //Test
 let connectionType = "";
 let receivedDataArray = [];
@@ -510,6 +519,39 @@ function param_start() {
   }
 }
 
+// Flow: ON-> wait for On time-> OFF-> wait for Off time
+// Timer interval for turn ON LED UI
+function LED_ON_start() {
+  //console.log("Turn LED ON - " + LED_color_src);
+  clearTimeout(LED_OFF_tid);
+  // Turn ON LED
+  document.getElementById("id_pulsarlogo").src = LED_color_src; // Replace pulsarlogo with different color img
+  LED_ON_tid = setInterval(LED_OFF_start, LED_ON_time); // on time in ms, then call turn OFF LED
+}
+
+// Timer interval for turn OFF LED UI
+function LED_OFF_start() {
+  //console.log("Turn LED Off");
+  clearTimeout(LED_ON_tid);
+  // Turn off LED
+  document.getElementById("id_pulsarlogo").src = "img/pulsarlogo_off.svg";
+  LED_OFF_tid = setInterval(LED_ON_start, LED_OFF_time); // Off time in ms, then call turn ON LED
+}
+
+// Timer interval for Poll LED MODE cmd
+function LED_POLL_start() {
+  clearTimeout(LED_POLL_tid);
+  if (connectionType === "serial") {
+    sendTX("LED MODE");
+    CommandSent = "LED MODE";
+  } else if (connectionType === "bluetooth") {
+    sendAT("LED MODE");
+    CommandSent = "LED MODE";
+  }
+  // Start get echo after 1s.
+  echo_tid = setInterval(echo_start, 1000);
+}
+
 function echo_start() {
   // do some stuff...
   // no need to recall the function (it's an interval, it'll loop forever)
@@ -562,7 +604,13 @@ function datem_start() {
     document.getElementById("trace-message").innerHTML = lang_map[114]; //"Acquiring DATEM data. Please wait...";
     document.getElementById("home-message").innerHTML = lang_map[114]; //"Acquiring DATEM data. Please wait...";
     button_press = 11;
-    echo_tid = setInterval(echo_start, 5000);
+
+    if (isReflectE == 1) {
+      // For REFLECT-E call poll LED mode
+      LED_POLL_tid = setInterval(LED_POLL_start, 5000);
+    } else {
+      echo_tid = setInterval(echo_start, 5000);
+    }
   } else {
     // clearTimeout(p104_tid);
     // clearTimeout(p605_tid);
@@ -794,6 +842,7 @@ function tids_trace_reset() {
   clearTimeout(echo_tid);
   clearTimeout(datem_tid);
   clearTimeout(param_tid);
+  clearTimeout(LED_POLL_tid);
   //p104_tid = false;
   //p605_tid = false;
   param_set1_tid = false;
@@ -1816,6 +1865,16 @@ async function listenRX() {
                 break;
             }
             document.getElementById("reflecte_access-box").innerText = access_string;
+
+            // For REFLECT-E only
+            isReflectE = 1; // Set flag in USB
+            // For REFLECT-E, simulate the LED on UI.
+            document.getElementById("id_pulsarlogo").src = "img/pulsarlogo_off.svg";
+            // Trigger LED mode flashing
+            LED_color_src = "img/pulsarlogo_off.svg";
+            clearTimeout(LED_OFF_tid);
+            clearTimeout(LED_ON_tid);
+            LED_OFF_tid = setInterval(LED_ON_start, LED_OFF_time); // Off time, than call LED ON
           } else {
             // Process any remaining data asynchronously
             // could log dump here
@@ -1942,6 +2001,58 @@ async function processReceivedData() {
     ) {
       log(" ← " + hexToAscii(receiveBufferHex));
     }
+
+    // -----------------------------------------------------------------
+    // Check for LED MODE reply
+    // It will return: XX,XX,Color [On time ms, off time ms, color]
+    // Color: Green, Amber, Red, Blue, Purple, Teal, White, Off
+    if (doc_value == "LED MODE" && isReflectE == 1) {
+      if (
+        hexToAscii(receiveBufferHex).includes("Green") ||
+        hexToAscii(receiveBufferHex).includes("Amber") ||
+        hexToAscii(receiveBufferHex).includes("Red") ||
+        hexToAscii(receiveBufferHex).includes("Blue") ||
+        hexToAscii(receiveBufferHex).includes("Purple") ||
+        hexToAscii(receiveBufferHex).includes("Teal") ||
+        hexToAscii(receiveBufferHex).includes("White") ||
+        hexToAscii(receiveBufferHex).includes("Off")
+      ) {
+        var parts = hexToAscii(receiveBufferHex).split(",");
+        if (parts.length != 3) {
+          //throw new IllegalArgumentException("Input must be in the format 'int,int,color'");
+          console.log("Input must be in the format 'int,int,color'- " + hexToAscii(receiveBufferHex));
+        } else {
+          // Valid input, so do decode and update
+          LED_ON_time = parseInt(parts[0].trim()) + 500; // try add a little to ON time
+          LED_OFF_time = parseInt(parts[1].trim());
+          LED_color = parts[2].trim();
+
+          //console.log("LED mode: On time=" + LED_ON_time + "ms, Off time=" + LED_OFF_time + "ms");
+          //console.log("LED color = " + LED_color);
+          // Update Pulsar Logo with different LED color
+          if (LED_color.includes("Green")) {
+            LED_color_src = "img/pulsarlogo_green.svg";
+          } else if (LED_color.includes("Amber")) {
+            LED_color_src = "img/pulsarlogo_amber.svg";
+          } else if (LED_color.includes("Red")) {
+            LED_color_src = "img/pulsarlogo_red.svg";
+          } else if (LED_color.includes("Blue")) {
+            LED_color_src = "img/pulsarlogo_blue.svg";
+          } else if (LED_color.includes("Purple")) {
+            LED_color_src = "img/pulsarlogo_purple.svg";
+          } else if (LED_color.includes("Teal")) {
+            LED_color_src = "img/pulsarlogo_teal.svg";
+          } else if (LED_color.includes("White")) {
+            LED_color_src = "img/pulsarlogo_white.svg";
+          } else {
+            // Default
+            LED_color_src = "img/pulsarlogo_off.svg";
+          }
+          //document.getElementById("id_pulsarlogo").src = LED_color_src;
+        }
+      }
+    }
+
     if (hexToAscii(receiveBufferHex).includes("/P600") && c_state == 3) {
       clearTimeout(bar_responseTimeout);
       updateProgress();
@@ -2416,7 +2527,7 @@ async function incomingData(event) {
         doc_value == "SENDPART2" ||
         doc_value == "SENDPART3"
       ) {
-/*
+        /*
         // --------------------------------------------------------------------------
         // For debug in console only
         const now = new Date();
@@ -2427,7 +2538,7 @@ async function incomingData(event) {
         const localTimeWithMs = `${hours}:${minutes}:${seconds}.${milliseconds}`;
         console.log(localTimeWithMs + " - BT2<-" + string_check);
         // -------------------------------------------------------------------------
-*/
+        */
 
         var hex = Uint8tohex(readInValue);
         // if((button_press == 10) || ((button_press == 8) && (doc_value == "GET ECHO")))
@@ -2495,13 +2606,67 @@ async function incomingData(event) {
                 else if (string_check.includes("OK")) update_range(new_power_lvl);
               }
 
-              if (shell_open == 1 || cloudModal_open == 1) {
+              if (shell_open == 1 || cloudModal_open == 1 || doc_value == "LED MODE") {
                 // Dont log the command in the DATA LOG
               } else {
                 log(" ← " + string_check);
               }
             }
           }
+
+          // -----------------------------------------------------------------
+          // Check for LED MODE reply
+          // It will return: XX,XX,Color [On time ms, off time ms, color]
+          // Color: Green, Amber, Red, Blue, Purple, Teal, White, Off
+          if (doc_value == "LED MODE" && isReflectE == 1) {
+            // only for Reflect-E
+            if (
+              string_check.includes("Green") ||
+              string_check.includes("Amber") ||
+              string_check.includes("Red") ||
+              string_check.includes("Blue") ||
+              string_check.includes("Purple") ||
+              string_check.includes("Teal") ||
+              string_check.includes("White") ||
+              string_check.includes("Off")
+            ) {
+              var parts = string_check.split(",");
+              if (parts.length != 3) {
+                //throw new IllegalArgumentException("Input must be in the format 'int,int,color'");
+                console.log("Input must be in the format 'int,int,color'- " + string_check);
+              } else {
+                // Valid input, do decode and update
+                LED_ON_time = parseInt(parts[0].trim()) + 500; // add a little to ON time
+                LED_OFF_time = parseInt(parts[1].trim());
+                LED_color = parts[2].trim();
+
+                //console.log("LED mode: On time=" + LED_ON_time + "ms, Off time=" + LED_OFF_time + "ms");
+                //console.log("LED color = " + LED_color);
+                // Update Pulsar Logo with different LED color
+                if (LED_color.includes("Green")) {
+                  LED_color_src = "img/pulsarlogo_green.svg";
+                } else if (LED_color.includes("Amber")) {
+                  LED_color_src = "img/pulsarlogo_amber.svg";
+                } else if (LED_color.includes("Red")) {
+                  LED_color_src = "img/pulsarlogo_red.svg";
+                } else if (LED_color.includes("Blue")) {
+                  LED_color_src = "img/pulsarlogo_blue.svg";
+                } else if (LED_color.includes("Purple")) {
+                  LED_color_src = "img/pulsarlogo_purple.svg";
+                } else if (LED_color.includes("Teal")) {
+                  LED_color_src = "img/pulsarlogo_teal.svg";
+                } else if (LED_color.includes("White")) {
+                  LED_color_src = "img/pulsarlogo_white.svg";
+                } else {
+                  // Default
+                  LED_color_src = "img/pulsarlogo_off.svg";
+                }
+                //document.getElementById("id_pulsarlogo").src = LED_color_src;
+              }
+            }
+          }
+          // -------------------------------------------------------------------
+
           if (string_check.includes("REFLECT-E") && doc_value == "/WHO") {
             document.getElementById("reflecte_devinfo").style.display = "block";
             document.querySelector(".static_image img").src = "img/Picture1.png";
@@ -2546,6 +2711,14 @@ async function incomingData(event) {
             contSensorMode_bt();
             param_set1_tid = setInterval(param_set1_start, 3000);
             isReflectE = 1;
+
+            // For REFLECT-E, simulate the LED on UI.
+            document.getElementById("id_pulsarlogo").src = "img/pulsarlogo_off.svg";
+            // Trigger LED mode flashing
+            LED_color_src = "img/pulsarlogo_off.svg";
+            clearTimeout(LED_OFF_tid);
+            clearTimeout(LED_ON_tid);
+            LED_OFF_tid = setInterval(LED_ON_start, LED_OFF_time); // Off time, than call LED ON
             // console.log("isReflectE = " + isReflectE);
           }
 
@@ -2675,7 +2848,7 @@ async function incomingData(event) {
 
           // =================================================================================
           // This part handle BT shell reply
-
+          /*
           // ------------------------------------------------------------------------------
           // For debug in console only
           const now = new Date();
@@ -2685,6 +2858,7 @@ async function incomingData(event) {
           const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
           const localTimeWithMs = `${hours}:${minutes}:${seconds}.${milliseconds}`;
           console.log(localTimeWithMs + " - BT<-" + string_check);
+          */
           // -----------------------------------------------------------------------------
 
           // For showing reply to shell
@@ -3547,6 +3721,7 @@ async function sendTX(data, isHex = false) {
         !stringToSend.includes("clear_metrics") &&
         !stringToSend.includes("Reflect_fw_success") &&
         !stringToSend.includes("sleep disable") &&
+        !stringToSend.includes("LED MODE") &&  // Don't log in DATA LOG box
         cloudModal_open == 0 &&
         // prodModal_open == 0 &&
         BootLoader_launced == 0 &&
@@ -3728,6 +3903,7 @@ async function sendAT(cmd, IsShell = false) {
     cmd != "Reflect_fw_start" &&
     cmd != "Reflect_fw_success" &&
     cmd != "clear_metrics" &&
+    cmd != "LED MODE" &&  // Don't log in DATALOG box
     !BootLoader_launced &&
     !(isTraceOn == 1 && (cmd == "/P104" || cmd == "/P605"))
   ) {
