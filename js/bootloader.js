@@ -221,7 +221,7 @@ function BLWriteAddr_lowermemory(address, data) {
   // );
 
   // Update the log section in the UI to indicate the write operation
-  updateLogSection(`Writing ${data.length} bytes to address: ${address}...`, "yellow");
+  updateLogSection(`Writing ${data.length} bytes to address: 0x${address.toString(16).toUpperCase()}...`, "yellow");
 
   // Ensure that the data is in array form (either native array or Uint8Array)
   if (!Array.isArray(data)) {
@@ -302,7 +302,7 @@ function BLWriteAddr_highermemory(address, data) {
   // );
 
   // Update the log section to indicate the write operation
-  updateLogSection(`Writing ${data.length} bytes to address: ${address}...`, "yellow");
+  updateLogSection(`Writing ${data.length} bytes to address: 0x${address.toString(16).toUpperCase()}...`, "yellow");
 
   // Ensure that the incoming data is in array form (either native array or Uint8Array)
   if (!Array.isArray(data)) {
@@ -483,7 +483,8 @@ function interpretBLHex(incoming_data, conv) {
     //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Erasing at address: 12544...`,
     //   `color:yellow;`
     // );
-    updateLogSection(`Erasing at address: 12544...`, "yellow");
+    //updateLogSection(`Erasing at address: 12544...`, "yellow");
+    updateLogSection(`Erasing at address: 0x3100...`, "yellow");
   }
 
   // Handle other responses based on command type
@@ -591,7 +592,11 @@ function handleWriteResponse(result) {
       //   } bytes written successfully at address: ${writeAddress + 65536} ✓`, // Log success message
       //   `color:lime;`
       // );
-      updateLogSection(`${result.dataBytes[4]} bytes written successfully at address: ${writeAddress + 65536} ✓`, "lime", "incoming");
+      updateLogSection(
+        `${result.dataBytes[4]} bytes written successfully at address: 0x${(writeAddress + 65536).toString(16)} ✓`,
+        "lime",
+        "incoming"
+      );
       clearhigher_WriteInterval(); // Clear higher write interval after success
     } else {
       // If it's not the erase operation, log success with the original address
@@ -601,7 +606,11 @@ function handleWriteResponse(result) {
       //   } bytes written successfully at address: ${writeAddress} ✓`, // Log success message
       //   `color:lime;`
       // );
-      updateLogSection(`${result.dataBytes[4]} bytes written successfully at address: ${writeAddress} ✓`, "lime", "incoming");
+      updateLogSection(
+        `${result.dataBytes[4]} bytes written successfully at address: 0x${writeAddress.toString(16).toUpperCase()} ✓`,
+        "lime",
+        "incoming"
+      );
       clearlower_WriteInterval(); // Clear lower write interval after success
     }
 
@@ -633,7 +642,7 @@ function handleEraseResponse(result) {
     //   }] <- Erase successful at address: ${eraseAddress} ✓`, // Log success message
     //   `color:lime`
     // );
-    updateLogSection(`Erase successful at address: ${eraseAddress} ✓`, "lime", "incoming"); // Update the log section
+    updateLogSection(`Erase successful at address: 0x${eraseAddress.toString(16).toUpperCase()} ✓`, "lime", "incoming"); // Update the log section
 
     lastErasedAddress = eraseAddress; // Update the last erased address
     if (lastErasedAddress == 74240) {
@@ -666,7 +675,8 @@ async function sendNextWrite() {
       //   `%c[${new Date().toLocaleTimeString("en-US", { hour12: false }) + "." + new Date().getMilliseconds()}] -> Erasing at address: 74240...`,
       //   `color:yellow;`
       // );
-      updateLogSection(`Erasing at address: 74240...`, "yellow");
+      //updateLogSection(`Erasing at address: 74240...`, "yellow");
+      updateLogSection(`Erasing at address: 0x12200...`, "yellow");
       BLEraseAddr(74240); // Trigger the erase at address 74240
     } else {
       // If address is not 74240, get the memory chunk by index
@@ -684,7 +694,7 @@ async function sendNextWrite() {
           //   }] -> Erasing at address: ${INITIAL_ERASE_ADDRESS} for ${INITIAL_ERASE_SIZE} bytes...`,
           //   `color:yellow;`
           // );
-          updateLogSection(`Erasing at address: ${INITIAL_ERASE_ADDRESS} for ${INITIAL_ERASE_SIZE} bytes...`, "yellow");
+          updateLogSection(`Erasing at address: 0x${INITIAL_ERASE_ADDRESS.toString(16).toUpperCase()} for ${INITIAL_ERASE_SIZE} bytes...`, "yellow");
           BLEraseAddr(INITIAL_ERASE_ADDRESS); // Trigger erase at the initial address
           lastErasedAddress = INITIAL_ERASE_ADDRESS;
         } else if (writeAddress >= nextEraseBoundary || writeAddress + dataLength > nextEraseBoundary) {
@@ -696,7 +706,7 @@ async function sendNextWrite() {
           //   }] -> Erasing at address: ${nextEraseAddress} for ${ERASE_SIZE} bytes...`,
           //   `color:yellow;`
           // );
-          updateLogSection(`Erasing at address: ${nextEraseAddress} for ${ERASE_SIZE} bytes...`, "yellow");
+          updateLogSection(`Erasing at address: 0x${nextEraseAddress.toString(16).toUpperCase()} for ${ERASE_SIZE} bytes...`, "yellow");
           BLEraseAddr(nextEraseAddress); // Trigger erase at the next address boundary
           lastErasedAddress = nextEraseAddress;
         } else {

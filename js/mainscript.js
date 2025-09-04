@@ -1,4 +1,4 @@
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && navigator.serviceWorker.controller != null) {
   navigator.serviceWorker
     .register("./sw.js")
     .then(function (registration) {
@@ -151,8 +151,8 @@ var param_num = param_info.map((a) => a.pnum);
 var param_val = param_info.map((a) => a.pvalue);
 
 // For REFLECT-E LED UI
-var LED_ON_time = 0;   // unit in ms.
-var LED_OFF_time = 0;  // unit in ms.
+var LED_ON_time = 0; // unit in ms.
+var LED_OFF_time = 0; // unit in ms.
 var LED_color = "Off";
 var LED_color_src = "img/pulsarlogo_off.svg"; // To store the img name for different color
 var LED_ON_tid;
@@ -548,8 +548,8 @@ function LED_POLL_start() {
     sendAT("LED MODE");
     CommandSent = "LED MODE";
   }
-  // Start get echo after 1s.
-  echo_tid = setInterval(echo_start, 1000);
+  // Start get echo after 3s.
+  echo_tid = setInterval(echo_start, 3000);
 }
 
 function echo_start() {
@@ -1340,6 +1340,8 @@ function Uint8tohex(incoming_data) {
     } else {
       echo_start();
     }
+  } else {
+    console.log("Invalid received length! - cmd = " + doc_value + " length = " + s.byteLength);
   }
   return a;
 }
@@ -1849,22 +1851,30 @@ async function listenRX() {
             let access_string = "";
             switch (reflecte_access) {
               case 1:
-                access_string = lang_map[153];
+                access_string = lang_map[153]; // Customer
                 break;
               case 2:
-                access_string = lang_map[154];
+                access_string = lang_map[154]; // Service
                 break;
               case 3:
-                access_string = lang_map[155];
+                access_string = lang_map[155]; // Goldcard
                 break;
               case 4:
-                access_string = lang_map[156];
+                access_string = lang_map[156]; // Production
                 break;
               default:
-                access_string = lang_map[153];
+                access_string = lang_map[153]; // Customer
                 break;
             }
             document.getElementById("reflecte_access-box").innerText = access_string;
+            // Need access level for enable Update firmware
+            if (reflecte_access >= 2 && reflecte_access <= 4) {
+              // Allow update firmware
+              document.getElementById("btnbl").style.display = "";  // Show Update fw button
+            } else {
+              // Not allow update firmware
+              document.getElementById("btnbl").style.display = "none";  // Hide Update fw button
+            }
 
             // For REFLECT-E only
             isReflectE = 1; // Set flag in USB
@@ -1990,6 +2000,15 @@ async function processReceivedData() {
           }, 10 * 60 * 1000); // 10 minutes in milliseconds
         } else {
           document.getElementById("btnprod").style.display = "none";
+        }
+
+        // Need access level for enable Update firmware
+        if (afterColon.includes("CUSTOMER")) {
+          // Not allow update firmware
+          document.getElementById("btnbl").style.display = "none";  // Hide Update fw button
+        } else {
+          // Allow update firmware
+          document.getElementById("btnbl").style.display = "";  // Show Update fw button
         }
       }
     }
@@ -2150,8 +2169,12 @@ async function processReceivedData() {
       if (hexToAscii(receiveBufferHex).includes("/P641")) {
         hideLoadingScreen_succesful();
       }
-      await delay(100);
-      handle_breakpoint_update(hexToAscii(receiveBufferHex));
+
+      // Exclude P239
+      if (!hexToAscii(receiveBufferHex).includes("/P239")) {
+        await delay(100);
+        handle_breakpoint_update(hexToAscii(receiveBufferHex));
+      }
     }
     if (hexToAscii(receiveBufferHex).includes("/P926") && CommandSent == "fwStringUpdate") {
       const extracted_fwversion = extractFwVersion(hexToAscii(receiveBufferHex));
@@ -2375,18 +2398,20 @@ function interpretHex(incoming_data) {
   const byteArray = receiveBufferHex.match(/.{1,2}/g).map((byte) => parseInt(byte, 16));
   for (let i = 0; i < byteArray.length; i++) {
     check = byteArray[i];
-    if (i >= 46 && i < 246 && doc_value == "GET ECHO") {
-      // Changed from (i >= 42) && (i < 242)
-      echo[i - 46] = (check * 1000) / 255; // Changed from echo[i-42]
-    } else if (i >= 46 && i < 246 && doc_value == "GET DATEM") {
-      // Changed from (i >= 42) && (i < 242)
-      datem[i - 46] = (check * 1000) / 255; // Changed from datem[i-42]
+    if (byteArray.length == 246) {  // Only update echo/datem if valid length
+      if (i >= 46 && i < 246 && doc_value == "GET ECHO") {
+        // Changed from (i >= 42) && (i < 242)
+        echo[i - 46] = (check * 1000) / 255; // Changed from echo[i-42]
+      } else if (i >= 46 && i < 246 && doc_value == "GET DATEM") {
+        // Changed from (i >= 42) && (i < 242)
+        datem[i - 46] = (check * 1000) / 255; // Changed from datem[i-42]
+      }
     }
     // a.push(s.getUint8(i));
     a.push("0x" + check.toString(16).padStart(2, "0"));
   }
 
-  if (doc_value == "GET ECHO" || doc_value == "GET DATEM") {
+  if ((doc_value == "GET ECHO" || doc_value == "GET DATEM") && byteArray.length == 246) {
     // Populate the dynamic variables
     //these are wrong calculations
     level_var = getVal(0);
@@ -2433,14 +2458,14 @@ function interpretHex(incoming_data) {
     myChart.data.labels = xdata;
     myChart.config.options.scales.x.title.text = p104_units;
     myChart.update();
-  } else if (doc_value == "SENDPART1") {
+  } else if (doc_value == "SENDPART1" && byteArray.length == 240) {
     offset = 0;
     for (let i = 0; i < 60; i++) {
       param_verify(i);
     }
     param_set2_start();
     param_set2_tid = setInterval(param_set2_start, 5000);
-  } else if (doc_value == "SENDPART2") {
+  } else if (doc_value == "SENDPART2" && byteArray.length == 240) {
     temp_set2_storage = receiveBufferHex;
     offset = 1;
     for (let i = 0; i < 60; i++) {
@@ -2449,7 +2474,7 @@ function interpretHex(incoming_data) {
     }
     param_set3_start();
     param_set3_tid = setInterval(param_set3_start, 5000);
-  } else if (doc_value == "SENDPART3") {
+  } else if (doc_value == "SENDPART3" && byteArray.length == 152) {
     offset = 2;
     for (let i = 0; i < param_info.length - offset * 60; i++) {
       param_verify(i);
@@ -2484,6 +2509,8 @@ function interpretHex(incoming_data) {
     document.getElementById("avgSig").value = getVal(4).toFixed(2);
     document.getElementById("capSupply").value = getVal(5).toFixed(2);
     // console.log(receiveBufferHex);
+  } else {
+    console.log("USB Invalid length - cmd =  " + doc_value + ", length = " + byteArray.length);
   }
   return a;
 }
@@ -2506,7 +2533,7 @@ async function incomingData(event) {
     if (BootLoader_launced) {
       listenRX_BL();
     }
-    if (isIgnore_2 === 2) {
+    if (isIgnore_2 == 2) {
       //NEED TO CHECK
       isIgnore_2 = 0;
       //await delay(2 * 1000);
@@ -2671,7 +2698,7 @@ async function incomingData(event) {
             document.getElementById("reflecte_devinfo").style.display = "block";
             document.querySelector(".static_image img").src = "img/Picture1.png";
             document.getElementById("btngenfile").style.display = "";
-            document.getElementById("btnbl").style.display = "";
+            document.getElementById("btnbl").style.display = "none"; // Hide Update fw button
             document.getElementById("btncloudsetup").style.display = ""; // Show Cloud setting
 
             const reflecte_metrics = parseMetrics(string_check); // Parse the metrics from data
@@ -2691,22 +2718,31 @@ async function incomingData(event) {
             let access_string = "";
             switch (reflecte_access) {
               case 1:
-                access_string = lang_map[153];
+                access_string = lang_map[153]; // Customer
                 break;
               case 2:
-                access_string = lang_map[154];
+                access_string = lang_map[154]; // Service
                 break;
               case 3:
-                access_string = lang_map[155];
+                access_string = lang_map[155]; // Goldcard
                 break;
               case 4:
-                access_string = lang_map[156];
+                access_string = lang_map[156]; // Production
                 break;
               default:
-                access_string = lang_map[153];
+                access_string = lang_map[153]; // Customer
                 break;
             }
             document.getElementById("reflecte_access-box").innerText = access_string;
+            // Need access level for enable Update firmware
+            if (reflecte_access >= 2 && reflecte_access <= 4) {
+              // Allow update firmware
+              document.getElementById("btnbl").style.display = ""; // Show Update fw button
+            } else {
+              // Not allow update firmware
+              document.getElementById("btnbl").style.display = "none"; // Hide Update fw button
+            }
+
             clearTimeout(who_timeout);
             contSensorMode_bt();
             param_set1_tid = setInterval(param_set1_start, 3000);
@@ -2843,7 +2879,10 @@ async function incomingData(event) {
               hideLoadingScreen_succesful();
             }
 
-            handle_breakpoint_update(string_check);
+            // Exclude P239
+            if (!string_check.includes("/P239")) {
+              handle_breakpoint_update(string_check);
+            }
           }
 
           // =================================================================================
@@ -3442,7 +3481,7 @@ async function incomingData(event) {
       }
     }
   } catch (error) {
-    console.error("line 3229: Error in incomingData:", error);
+    console.error("Error in incomingData:", error);
     setTimeout(reload_webpage);
   }
 }
@@ -3626,6 +3665,7 @@ async function sendATL(cmd) {
     await inboundChar.writeValue(encoder.encode(commandToSend));
   } catch (error) {
     log(lang_map[78] + error); //log('Failed: ' + error);
+    console.log(lang_map[78] + error); //log('Failed: ' + error);
   }
 }
 
@@ -3721,7 +3761,7 @@ async function sendTX(data, isHex = false) {
         !stringToSend.includes("clear_metrics") &&
         !stringToSend.includes("Reflect_fw_success") &&
         !stringToSend.includes("sleep disable") &&
-        !stringToSend.includes("LED MODE") &&  // Don't log in DATA LOG box
+        !stringToSend.includes("LED MODE") && // Don't log in DATA LOG box
         cloudModal_open == 0 &&
         // prodModal_open == 0 &&
         BootLoader_launced == 0 &&
@@ -3774,6 +3814,7 @@ function toggle_connection_type() {
       document.getElementById("reflecte_devinfo").style.display = "block";
       //document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
       //document.getElementById("cloudTunnelImg").style.display = "block";
+      document.getElementById("btnbl").style.display = "none";     // Hide Update fw button
       setTimeout(reload_webpage, 1000);
     }
   }
@@ -3903,7 +3944,7 @@ async function sendAT(cmd, IsShell = false) {
     cmd != "Reflect_fw_start" &&
     cmd != "Reflect_fw_success" &&
     cmd != "clear_metrics" &&
-    cmd != "LED MODE" &&  // Don't log in DATALOG box
+    cmd != "LED MODE" && // Don't log in DATALOG box
     !BootLoader_launced &&
     !(isTraceOn == 1 && (cmd == "/P104" || cmd == "/P605"))
   ) {
@@ -4896,6 +4937,7 @@ document.addEventListener("DOMContentLoaded", function () //this is what happens
     document.getElementById("connectionImage").style.display = "block";
     //document.getElementById("cloudTunnelImg").src = "img/cloud-tunneling-off.svg";
     //document.getElementById("cloudTunnelImg").style.display = "block";
+    document.getElementById("btnbl").style.display = "none"; // Hide Update fw button
     document.getElementById("bt_range").style.display = "none";
     document.getElementById("reflecte_devinfo").style.display = "block";
   } else {
