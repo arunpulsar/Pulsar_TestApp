@@ -1197,20 +1197,26 @@ function Uint8tohex(incoming_data) {
   for (let i = 0; i < s.byteLength; i++) {
     check = s.getUint8(i);
     // Only do update echo/datem if the recevied correct byte length
-    if (s.byteLength == 247) {
-      if (i >= 46 && i <= 246 && doc_value == "GET ECHO") {
-        //(((doc_value == "GET ECHO") && (button_press == 8)) || (button_press == 10))) // Changed from (i >= 42) && (i < 242)
-        echo[i - 46] = (check * 1000) / 255; // Changed from echo[i-42]
-      } else if (i >= 46 && i <= 246 && doc_value == "GET DATEM") {
-        //(((doc_value == "GET DATEM") && (button_press == 8)) || (button_press == 11)))  // Changed from (i >= 42) && (i < 242)
-        datem[i - 46] = (check * 1000) / 255; // Changed from datem[i-42]
+    if ((isReflectE == 0 && s.byteLength == 246) || (isReflectE == 1 && s.byteLength == 247)) {
+      // Check if valid data length
+      if (i >= 46 && i < s.byteLength) {
+        if (doc_value == "GET ECHO") { // Update echo trace
+          echo[i - 46] = (check * 1000) / 255; // Changed from echo[i-42]
+        } else if (doc_value == "GET DATEM") { // Update datem trace
+          datem[i - 46] = (check * 1000) / 255; // Changed from datem[i-42]
+        }
       }
     }
     // a.push(s.getUint8(i));
     a.push("0x" + ("00" + s.getUint8(i).toString(16)).slice(-2));
   }
 
-  if ((doc_value == "GET ECHO" || doc_value == "GET DATEM") && s.byteLength == 247) {
+  if (
+    (doc_value == "GET ECHO" || doc_value == "GET DATEM") &&
+    ((s.byteLength == 247 && isReflectE == 1) || (s.byteLength == 246 && isReflectE == 0)) // REFLECT-E: 247 bytes, REFLECT: 246 bytes
+  ) {
+    // REFLECT: 246 = 46 bytes + 200 bytes Echo/ Datem trace
+    // REFLECT-E: 247 = 46 bytes + 201 bytes Echo/Datem trace
     // Populate the dynamic variables
     level_var = hexToFloat(
       "0x" +
@@ -1310,8 +1316,9 @@ function Uint8tohex(incoming_data) {
     myChart.data.labels = xdata;
     myChart.config.options.scales.x.title.text = p104_units;
     myChart.update();
-  } else if (doc_value == "SENDPART1" && s.byteLength == 241) {
-    // 241 = 60 * 4 + 1
+  } else if (doc_value == "SENDPART1" && ((s.byteLength == 241 && isReflectE == 1) || (s.byteLength == 240 && isReflectE == 0))) {
+    // REFLECT: 240 = 60 * 4
+    // REFLECT-E: 241 = 60 * 4 + 1
     offset = 0;
     for (let i = 0; i < 60; i++) {
       param_verify(i);
@@ -1320,8 +1327,9 @@ function Uint8tohex(incoming_data) {
     //console.log("Got Part1");
     param_set2_start();
     param_set2_tid = setInterval(param_set2_start, 5000);
-  } else if (doc_value == "SENDPART2" && s.byteLength == 241) {
-    // 241 = 60 * 4 + 1
+  } else if (doc_value == "SENDPART2" && ((s.byteLength == 241 && isReflectE == 1) || (s.byteLength == 240 && isReflectE == 0))) {
+    // REFLECT: 240 = 60 * 4
+    // REFLECT-E: 241 = 60 * 4 + 1
     offset = 1;
     for (let i = 0; i < 60; i++) {
       param_verify(i);
@@ -1329,7 +1337,12 @@ function Uint8tohex(incoming_data) {
     //console.log("Got Part2");
     param_set3_start();
     param_set3_tid = setInterval(param_set3_start, 5000);
-  } else if (doc_value == "SENDPART3" && s.byteLength == 153) {
+  } else if (doc_value == "SENDPART3" && ((s.byteLength == 153 && isReflectE == 1) || (s.byteLength == 152 && isReflectE == 0))) {
+    // REFLECT
+    // (param_info.length - offset * 60) * 4
+    // = (158 - 2*60) * 4
+    // = 152
+    // REFLECT-E
     // (param_info.length - offset * 60) * 4 + 1
     // = (158 - 2*60) * 4 + 1
     // = 153
