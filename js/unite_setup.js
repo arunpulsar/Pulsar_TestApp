@@ -11,8 +11,12 @@ function cloud_setup() {
     CommandSent = "+++";
   } else if (connectionType === "bluetooth") {
     cloudModal_open = 1;
-    sendAT("sleep disable", true);
-    CommandSent = "sleep disable";
+    sendAT("/r", true); // Send dummy cmd to wake up the Shell
+    setTimeout(() => {
+      sendAT("sleep disable", true);
+      CommandSent = "sleep disable";
+    }, 500); // Call send "sleep disable" after 500ms
+
     openCloudModal();
   }
 }

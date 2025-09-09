@@ -390,7 +390,20 @@ function trace_start() {
     clearTimeout(param_tid);
     //p104_tid = setInterval(p104_start, 1000);//5000);
     //param_set1_tid = setInterval(param_set1_start, 5000);
-    param_set1_start();
+    if (isReflectE == 1) {
+      if (connectionType === "bluetooth") {
+        sendAT("/r"); // Send dummy cmd to wake up the UART
+      }
+      // After 1s, change P239 to 5, so it can get echo and datem trace
+      setTimeout(() => {
+        contSensorMode_bt(); // Change P239 to 5
+        setTimeout(() => {
+          param_set1_start(); // After 4s, call get sendpart1
+        }, 4000);
+      }, 1000);
+    } else {
+      param_set1_start();
+    }
     //button_press = 14;
   }
 }
@@ -2979,6 +2992,7 @@ async function incomingData(event) {
               document.getElementById("uptime").value = formattedUptime;
               document.getElementById("uptime-label").style.backgroundColor = "white";
 
+              await delay(1000); // Delay for 1s
               // Send next command
               sendAT("modem apn", true);
               CommandSent = "modem apn";
@@ -3093,6 +3107,55 @@ async function incomingData(event) {
 
                 document.getElementById("modemRSRQ").value = "";
                 document.getElementById("modemRSRQ-label").style.backgroundColor = "white";
+
+                // Turn those label to white
+                document.getElementById("modemOperatorName").value = "";
+                document.getElementById("modemOperatorName-label").style.backgroundColor = "white";
+
+                document.getElementById("modeOperatorSelect").value = "";
+                document.getElementById("modeOperatorSelect-label").style.backgroundColor = "white";
+
+                document.getElementById("modemRadioMode").value = "";
+                document.getElementById("modemRadioMode-label").style.backgroundColor = "white";
+
+                document.getElementById("modemeDRX").value = "";
+                document.getElementById("modemeDRX-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttState").value = "";
+                document.getElementById("mqttState-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttBrokerHostname").value = "";
+                document.getElementById("mqttBrokerHostname-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttBrokerPort").value = "";
+                document.getElementById("mqttBrokerPort-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttUsername").value = "";
+                document.getElementById("mqttUsername-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttTLS").value = "";
+                document.getElementById("mqttTLS-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttTLSSecTag").value = "";
+                document.getElementById("mqttTLSSecTag-label").style.backgroundColor = "white";
+
+                document.getElementById("nodeName").value = "";
+                document.getElementById("nodeName-label").style.backgroundColor = "white";
+
+                document.getElementById("reportInterval").value = "";
+                document.getElementById("reportInterval-label").style.backgroundColor = "white";
+
+                document.getElementById("rebootDelay").value = "";
+                document.getElementById("rebootDelay-label").style.backgroundColor = "white";
+
+                document.getElementById("temperature").value = "";
+                document.getElementById("temperature-label").style.backgroundColor = "white";
+
+                document.getElementById("battery").value = "";
+                document.getElementById("battery-label").style.backgroundColor = "white";
+
+                document.getElementById("GNSSinterval").value = "";
+                document.getElementById("GNSSinterval-label").style.backgroundColor = "white";
               }
             }
 
@@ -3263,6 +3326,55 @@ async function incomingData(event) {
 
                 document.getElementById("modemRSRQ").value = "";
                 document.getElementById("modemRSRQ-label").style.backgroundColor = "white";
+
+                // Turn those label to white
+                document.getElementById("modemOperatorName").value = "";
+                document.getElementById("modemOperatorName-label").style.backgroundColor = "white";
+
+                document.getElementById("modeOperatorSelect").value = "";
+                document.getElementById("modeOperatorSelect-label").style.backgroundColor = "white";
+
+                document.getElementById("modemRadioMode").value = "";
+                document.getElementById("modemRadioMode-label").style.backgroundColor = "white";
+
+                document.getElementById("modemeDRX").value = "";
+                document.getElementById("modemeDRX-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttState").value = "";
+                document.getElementById("mqttState-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttBrokerHostname").value = "";
+                document.getElementById("mqttBrokerHostname-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttBrokerPort").value = "";
+                document.getElementById("mqttBrokerPort-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttUsername").value = "";
+                document.getElementById("mqttUsername-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttTLS").value = "";
+                document.getElementById("mqttTLS-label").style.backgroundColor = "white";
+
+                document.getElementById("mqttTLSSecTag").value = "";
+                document.getElementById("mqttTLSSecTag-label").style.backgroundColor = "white";
+
+                document.getElementById("nodeName").value = "";
+                document.getElementById("nodeName-label").style.backgroundColor = "white";
+
+                document.getElementById("reportInterval").value = "";
+                document.getElementById("reportInterval-label").style.backgroundColor = "white";
+
+                document.getElementById("rebootDelay").value = "";
+                document.getElementById("rebootDelay-label").style.backgroundColor = "white";
+
+                document.getElementById("temperature").value = "";
+                document.getElementById("temperature-label").style.backgroundColor = "white";
+
+                document.getElementById("battery").value = "";
+                document.getElementById("battery-label").style.backgroundColor = "white";
+
+                document.getElementById("GNSSinterval").value = "";
+                document.getElementById("GNSSinterval-label").style.backgroundColor = "white";
               }
             }
           }
